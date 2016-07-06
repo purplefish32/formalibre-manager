@@ -1,0 +1,16 @@
+version: '2'
+services:
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: db
+        MYSQL_USER: user
+        MYSQL_PASSWORD: pass
+  web:
+    build: web
+    volumes:
+      - ./files/:/var/www/html/slim/:rw
+    ports:
+      - 80:80
