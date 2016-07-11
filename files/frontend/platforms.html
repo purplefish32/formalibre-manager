@@ -1,0 +1,25 @@
+<div class="row">
+  <div class="col-md-10">
+    <div class="box">
+      <table class="table">
+        <tr>
+          <th>Name</th>
+          <th>Subdomain</th>
+          <th>Description</th>
+          <th>Plan</th>
+          <th>End date</th>
+          <th>Max users</th>
+          <th>Max disk space</th>
+          <th>Contact name</th>
+          <th>Contact phone</th>
+          <th>Contact email</th>
+        </tr>
+        <tr ng-repeat="platform in platforms">
+          <td>{{platform.name}}</td>
+          <td>{{platform.subdomain}}</td>
+          <td>{{platform.description}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

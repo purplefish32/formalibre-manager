@@ -101,6 +101,30 @@ fos_rest:
         json: true
     body_listener: true
 
+guzzle:
+    clients:
+        api:
+            base_url: "http://backend"
+            headers:
+                Accept: "application/json"
+
+nelmio_cors:
+    defaults:
+        allow_credentials: false
+        allow_origin: []
+        allow_headers: []
+        allow_methods: []
+        expose_headers: []
+        max_age: 0
+        hosts: []
+        origin_regex: false
+    paths:
+        '^/':
+            allow_origin: ['*']
+            allow_headers: ['X-Custom-Auth']
+            allow_methods: ['POST', 'PUT', 'GET', 'DELETE']
+            max_age: 3600
+
 #fos_http_cache:
 #    cache_control:
 #        rules:

@@ -25,9 +25,16 @@ class Platform
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
     private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="subdomain", type="string", length=16, nullable=false)
+     */
+    private $subdomain;
 
     /**
      * @var string
@@ -68,6 +75,30 @@ class Platform
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set subdomain
+     *
+     * @param string $subdomain
+     *
+     * @return Platform
+     */
+    public function setSubdomain($subdomain)
+    {
+        $this->subdomain = $subdomain;
+
+        return $this;
+    }
+
+    /**
+     * Get subdomain
+     *
+     * @return string
+     */
+    public function getSubdomain()
+    {
+        return $this->subdomain;
     }
 
     /**

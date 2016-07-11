@@ -1,37 +1,63 @@
 version: '2'
 services:
-  adminer:
-    image: clue/adminer
+  lb:
+    restart: always
+    image: 'dockercloud/haproxy:latest'
     ports:
-      - 88:80
+      - '80:80'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    links:
+      - frontend
+      - api
+      - adminer
+
+  adminer:
+    restart: always
+    image: clue/adminer
     links:
       - db
+    environment:
+      VIRTUAL_HOST: http://adminer.manager.loc
+
   db:
     image: mysql:5.7
     restart: always
+    volumes:
+      - mysql:/var/lib/mysql
     environment:
         MYSQL_ROOT_PASSWORD: root
         MYSQL_DATABASE: db
         MYSQL_USER: user
         MYSQL_PASSWORD: pass
-        
-  backend:
-    build: api
+
+  frontend:
+    restart: always
+    image: httpd
     volumes:
-      - ./files/backend/:/var/www/html/:rw
-    ports:
-      - 82:80
+      - ./files/frontend/:/usr/local/apache2/htdocs/
+    links:
+      - api
+    environment:
+      VIRTUAL_HOST: http://manager.loc
+
   api:
+    restart: always
     build: api
     volumes:
       - ./files/api/:/var/www/html/:rw
-    ports:
-      - 81:80
-  web:
-    build: web
-    volumes:
-      - ./files/front/:/var/www/html/:rw
-    ports:
-      - 80:80
     links:
-      - api
+      - backend
+    environment:
+      VIRTUAL_HOST: http://api.manager.loc
+
+  backend:
+    restart: always
+    build: backend
+    volumes:
+      - ./files/backend/:/var/www/html/:rw
+    links:
+      - db
+
+volumes:
+  mysql:
