@@ -1,5 +1,11 @@
 version: '2'
 services:
+  adminer:
+    image: clue/adminer
+    ports:
+      - 88:80
+    links:
+      - db
   db:
     image: mysql:5.7
     restart: always
@@ -8,9 +14,24 @@ services:
         MYSQL_DATABASE: db
         MYSQL_USER: user
         MYSQL_PASSWORD: pass
+        
+  backend:
+    build: api
+    volumes:
+      - ./files/backend/:/var/www/html/:rw
+    ports:
+      - 82:80
+  api:
+    build: api
+    volumes:
+      - ./files/api/:/var/www/html/:rw
+    ports:
+      - 81:80
   web:
     build: web
     volumes:
-      - ./files/:/var/www/html/slim/:rw
+      - ./files/front/:/var/www/html/:rw
     ports:
       - 80:80
+    links:
+      - api

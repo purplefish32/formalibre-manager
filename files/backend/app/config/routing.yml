@@ -1,0 +1,10 @@
+#_welcome:
+#    pattern:  /
+#    defaults:
+#        _controller: FrameworkBundle:Redirect:redirect
+#        route: get_servers
+#        permanent: true # this for 301
+
+_app:
+    resource: "@AppBundle/Controller/AppController.php"
+    type:     rest

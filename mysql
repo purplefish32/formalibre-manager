@@ -1,0 +1,25 @@
+-- Adminer 4.2.5 MySQL dump
+
+SET NAMES utf8;
+SET time_zone = '+00:00';
+SET foreign_key_checks = 0;
+SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
+
+DROP TABLE IF EXISTS `server`;
+CREATE TABLE `server` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `ip` varchar(18) NOT NULL,
+  `description` longtext NOT NULL,
+  `type` enum('VPS','Bare metal') NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `server` (`id`, `name`, `ip`, `description`, `type`) VALUES
+(1,	'ns22401.ovh.net',	'91.121.2.72',	'???',	'Bare metal'),
+(2,	'stark.claroline.com',	'37.187.255.56',	'ClarolineConnect production server',	'Bare metal'),
+(3,	'ns3003213.ovh.net',	'37.59.7.19',	'???',	'Bare metal'),
+(4,	'ns3271448.ovh.net',	'37.59.56.228',	'???',	'Bare metal'),
+(5,	'ns398964.ovh.net',	'37.59.43.32',	'???',	'Bare metal');
+
+-- 2016-07-06 20:09:37

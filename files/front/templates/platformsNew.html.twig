@@ -1,0 +1,76 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}Create platform{% endblock %}
+
+{% block breadcrumb %}Create platform{% endblock %}
+
+{% block body %}
+<div class="box box-primary">
+    <div class="box-body">
+        <form class="form" action="{{ path_for('platforms_new') }}" method="post">
+            <fieldset>
+                <legend>Platform details</legend>
+                <div class="form-group">
+                    <label for="name">Name</label> (Example : Forma Libre)
+                    <input type="text" name="name" value="" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="subdomain">Subdomain</label> (Less than 16 characters, lowercase - Example : formalibre)
+                    <div class="input-group">
+                        <input type="text" name="subdomain" value="" class="form-control" maxlength="16">
+                        <span class="input-group-addon">.claroline.com</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <fieldset class="radiogroup">
+                        <label class="control-label">Plan</label>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="plan" value="free">Free
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="plan" value="paid">Paid
+                            </label>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="form-group">
+                    <label for="endDate">End date</label>
+                    <div class="input-group">
+                      <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                      </div>
+                      <input type="text" name="endDate" class="datemask form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="subdomain">Max users</label>
+                    <input type="text" name="maxUsers" value="" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="subdomain">Max disk space</label> (Generaly Nb users x 250Mo)
+                    <input type="text" name="maxDisk" value="" class="form-control">
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Contact details</legend>
+                <div class="form-group">
+                    <label for="contactName">Contact name</label>
+                    <input type="text" name="contactName" value="" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="contactPhone">Contact phone</label>
+                    <input type="text" name="contactPhone" value="" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="contactEmail">Contact email</label>
+                    <input type="text" name="contactEmail" value="" class="form-control">
+                </div>
+                <input type="submit" name="submit" value="Create" class="btn btn-primary">
+            </fieldset>
+        </form>
+    </div>
+</div>
+{% endblock %}

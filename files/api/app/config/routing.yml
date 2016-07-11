@@ -1,0 +1,14 @@
+#_welcome:
+#    pattern:  /
+#    defaults:
+#        _controller: FrameworkBundle:Redirect:redirect
+#        route: get_servers
+#        permanent: true # this for 301
+
+_server:
+    resource: "@ServerBundle/Controller/ServerController.php"
+    type:     rest
+
+_platform:
+    resource: "@PlatformBundle/Controller/PlatformController.php"
+    type:     rest
