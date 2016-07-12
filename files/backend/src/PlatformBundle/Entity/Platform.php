@@ -44,6 +44,27 @@ class Platform
     private $description;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="contactName", type="string", length=255, nullable=false)
+     */
+    private $contactName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="contactEmail", type="string", length=255, nullable=false)
+     */
+    private $contactEmail;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="contactPhone", type="string", length=255, nullable=false)
+     */
+    private $contactPhone;
+
+    /**
      * Get id
      *
      * @return int
@@ -123,5 +144,77 @@ class Platform
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set contactName
+     *
+     * @param string $contactName
+     *
+     * @return Platform
+     */
+    public function setContactName($contactName)
+    {
+        $this->description = $contactName;
+
+        return $this;
+    }
+
+    /**
+     * Get contactName
+     *
+     * @return string
+     */
+    public function getContactName()
+    {
+        return $this->contactName;
+    }
+
+    /**
+     * Set contactEmail
+     *
+     * @param string $contactEmail
+     *
+     * @return Platform
+     */
+    public function setContactEmail($contactEmail)
+    {
+        $this->description = $contactEmail;
+
+        return $this;
+    }
+
+    /**
+     * Get contactEmail
+     *
+     * @return string
+     */
+    public function getContactEmail()
+    {
+        return $this->contactEmail;
+    }
+
+    /**
+     * Set contactPhone
+     *
+     * @param string $contactPhone
+     *
+     * @return Platform
+     */
+    public function setContactPhone($contactPhone)
+    {
+        $this->description = $contactPhone;
+
+        return $this;
+    }
+
+    /**
+     * Get contactPhone
+     *
+     * @return string
+     */
+    public function getContactPhone()
+    {
+        return $this->contactPhone;
     }
 }

@@ -67,36 +67,19 @@
             <i class="fa fa-building"></i> <span>Entities</span>
           </a>
         </li>
+      -->
         <li>
-          <a href="{{ path_for('servers') }}">
+          <a ng-href="/#/servers">
             <i class="fa fa-server"></i> <span>Servers</span>
           </a>
         </li>
-      -->
       </ul>
     </section>
     <!-- /.sidebar -->
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>{% block title %}Dashboard{% endblock %}</h1>
-      <ol class="breadcrumb">
-        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">{% block breadcrumb %}Dashboard{% endblock %}</li>
-      </ol>
-    </section>
-
-    <!-- Main content -->
-    <section class="content">
-      <!-- Info boxes -->
-      <div class="container" ng-view>
-      </div>
-    </section>
-    <!-- /.content -->
-  </div>
+  <div class="content-wrapper" ng-view></div>
   <!-- /.content-wrapper -->
 
   <footer class="main-footer">
@@ -122,7 +105,7 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.1/inputmask/inputmask.date.extensions.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.1/inputmask/inputmask.extensions.min.js"></script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-route.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-route.min.js"></script>
 <script type="text/javascript" src="js/app.js"></script>
 
 <!-- Page script -->
