@@ -13,6 +13,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\FormTypeInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PlatformController extends FOSRestController
@@ -57,7 +58,8 @@ class PlatformController extends FOSRestController
             $limit,
             $offset
         );
-        return $platforms;
+        $view = $this->view($platforms, Response::HTTP_OK);
+        return $this->handleView($view);
     }
 
     /**
@@ -86,7 +88,8 @@ class PlatformController extends FOSRestController
         if (false === $platform) {
             throw $this->createNotFoundException("Platform does not exist.");
         }
-        return $platform;
+        $view = $this->view($platform, Response::HTTP_OK);
+        return $this->handleView($view);
     }
 
     /**
@@ -107,6 +110,7 @@ class PlatformController extends FOSRestController
      */
     public function postPlatformsAction(Request $request)
     {
+        //return($request->getHeaders());
         $data = json_decode($request->getContent(), true);
         $platformManager = $this->getPlatformManager();
         $platform = $platformManager->createPlatform();
@@ -118,7 +122,14 @@ class PlatformController extends FOSRestController
 
             return $this->handleView($view);
         }
-        $view = $this->view($form->getErrors(), Response::HTTP_BAD_REQUEST);
+
+        $errors = $this->getErrorsFromForm($form);
+        $data = [
+            'message' => 'Validation error',
+            'errors' => $errors
+        ];
+
+        $view = $this->view($data, Response::HTTP_BAD_REQUEST);
 
         return $this->handleView($view);
     }
@@ -145,34 +156,33 @@ class PlatformController extends FOSRestController
      */
     public function putPlatformsAction(Request $request, $id)
     {
-        $repository = $this->getDoctrine()
-          ->getRepository('PlatformBundle:Platform');
-        $platform = $repository->findOneById(array('id' => $id));
+        $platformManager = $this->getPlatformManager();
 
-        if (NULL === $platform) {
-            $platformManager = $this->getPlatformManager();
-            $platform = $platformManager->createPlatform();
-            $statusCode = Response::HTTP_CREATED;
-        } else {
-            $statusCode = Response::HTTP_NO_CONTENT;
+        $platform = $platformManager->loadPlatform($id);
+
+        if (!$platform) {
+            throw $this->createNotFoundException();
         }
+
+        $data = json_decode($request->getContent(), true);
 
         $form = $this->createForm(PlatformType::class, $platform);
-        $form->submit($request);
+        $form->submit($data);
 
         if ($form->isValid()) {
-            $platformManager->persistAndFlush($platform);
-            die("flushed");
-            //return $this->routeRedirectView('get_note', array('id' => $note->id), $statusCode);
+            $platformManager->savePlatform($platform);
+            $view = $this->view(null, Response::HTTP_NO_CONTENT);
+            return $this->handleView($view);
         }
 
-        /*echo dump($form->getTransformationFailure());
-        var_dump($this->getErrorMessages($form));
-        die();
+        $errors = $this->getErrorsFromForm($form);
+        $data = [
+            'message' => 'Validation error',
+            'errors' => $errors
+        ];
 
-        $view = $this->view($form->getErrors(), Response::HTTP_BAD_REQUEST);
+        $view = $this->view($form->getErrors(), $statusCode);
         return $this->handleView($view);
-        return $form;*/
     }
 
     /**
@@ -197,11 +207,28 @@ class PlatformController extends FOSRestController
         $platform = $repository->findOneBy(array('id' => $id));
 
         if (NULL === $platform) {
-            throw $this->createNotFoundException("Platform does not exist.");
+            throw $this->createNotFoundException();
         }
 
         $platformManager->removePlatform($platform);
 
         return $this->view(null, Response::HTTP_NO_CONTENT);
     }
+
+    private function getErrorsFromForm(FormInterface $form)
+    {
+        $errors = array();
+        foreach ($form->getErrors() as $error) {
+            $errors[] = $error->getMessage();
+        }
+        foreach ($form->all() as $childForm) {
+            if ($childForm instanceof FormInterface) {
+                if ($childErrors = $this->getErrorsFromForm($childForm)) {
+                    $errors[$childForm->getName()] = $childErrors;
+                }
+            }
+        }
+        return $errors;
+    }
+
 }
