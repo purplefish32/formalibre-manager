@@ -58,6 +58,8 @@ services:
       - ./files/backend/:/var/www/html/:rw
     links:
       - db
+    ports:
+      - 88:80
 
 volumes:
   mysql:

@@ -18,6 +18,8 @@ class ServerType extends AbstractType
             ->add('ip', null, array('required' => false))
             ->add('name', null, array('required' => false))
             ->add('description', null, array('required' => false))
+            ->add('provider', null, array('required' => false))
+            ->add('type', null, array('required' => true))
         ;
     }
 

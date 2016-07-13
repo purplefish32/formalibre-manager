@@ -56,14 +56,18 @@ class AppController extends FOSRestController
    */
   public function postPlatformsAction(Request $request)
   {
+      $platform = json_decode($request->getContent());
+      //$platform = $data->platform;
       $client = $this->get('guzzle.client.api');
-      $response = $client->post(
-          '/platforms',
-          [
-            'json' => json_decode($request->getContent())
-          ],
-          array()
+      $response = $client->request(
+        'POST',
+        '/platforms',
+        [
+          'json' => $platform
+        ]
+
       );
+
       return json_decode($response->getBody(), true);
   }
 
@@ -153,21 +157,27 @@ class AppController extends FOSRestController
      */
     public function postServersAction(Request $request)
     {
-        $serverManager = $this->getServerManager();
-        $server = $serverManager->createServer();
+      $data = json_decode($request->getContent());
+      $server = $data->server;
+      $client = $this->get('guzzle.client.api');
+      $response = $client->request(
+        'POST',
+        '/servers',
+        [
+          'json' => [
+            "server" => [
+              "ip" => $server->ip,
+              "name" => $server->name,
+              "description" => $server->description,
+              "provider" => $server->provider,
+              "type" => $server->type,
+            ]
+          ]
+        ]
 
-        $form = $this->createForm(ServerType::class, $server);
-        $form->handleRequest($request);
+      );
 
-        if ($form->isValid()) {
-            $serverManager->saveServer($server);
-            $view = $this->view($server, Response::HTTP_OK);
-
-            return $this->handleView($view);
-        }
-        $view = $this->view($form->getErrors(), Response::HTTP_BAD_REQUEST);
-
-        return $this->handleView($view);
+      return json_decode($response->getBody(), true);
     }
 
     /**

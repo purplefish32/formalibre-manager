@@ -25,6 +25,7 @@ class Platform
     /**
      * @var string
      *
+     * @Assert\NotBlank(message = "Choose a valid name.")
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
     private $name;
@@ -32,6 +33,8 @@ class Platform
     /**
      * @var string
      *
+     * @Assert\NotBlank(message = "Choose a valid subdomain.")
+     * @Assert\Length(max=16)
      * @ORM\Column(name="subdomain", type="string", length=16, nullable=false)
      */
     private $subdomain;
@@ -46,6 +49,7 @@ class Platform
     /**
      * @var string
      *
+     * @Assert\NotBlank(message = "Choose a valid contact name.")
      * @ORM\Column(name="contactName", type="string", length=255, nullable=false)
      */
     private $contactName;
@@ -53,6 +57,7 @@ class Platform
     /**
      * @var string
      *
+     * @Assert\NotBlank(message = "Choose a valid contact email.")
      * @ORM\Column(name="contactEmail", type="string", length=255, nullable=false)
      */
     private $contactEmail;
@@ -60,7 +65,7 @@ class Platform
     /**
      * @var string
      *
-     * @ORM\Column(name="contactPhone", type="string", length=255, nullable=false)
+     * @ORM\Column(name="contactPhone", type="string", length=255, nullable=true)
      */
     private $contactPhone;
 
@@ -155,7 +160,7 @@ class Platform
      */
     public function setContactName($contactName)
     {
-        $this->description = $contactName;
+        $this->contactName = $contactName;
 
         return $this;
     }
@@ -179,7 +184,7 @@ class Platform
      */
     public function setContactEmail($contactEmail)
     {
-        $this->description = $contactEmail;
+        $this->contactEmail = $contactEmail;
 
         return $this;
     }
@@ -203,7 +208,7 @@ class Platform
      */
     public function setContactPhone($contactPhone)
     {
-        $this->description = $contactPhone;
+        $this->contactPhone = $contactPhone;
 
         return $this;
     }

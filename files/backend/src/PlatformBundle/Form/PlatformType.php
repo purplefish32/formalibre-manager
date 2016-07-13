@@ -5,6 +5,7 @@ namespace PlatformBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class PlatformType extends AbstractType
 {
@@ -15,8 +16,12 @@ class PlatformType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', null, array('required' => false))
-            ->add('description', null, array('required' => false)) //TODO
+            ->add('name')
+            ->add('subdomain', TextType::class)
+            ->add('description', TextType::class)
+            ->add('contactName', TextType::class)
+            ->add('contactEmail', TextType::class)
+            ->add('contactPhone', TextType::class)
         ;
     }
 
@@ -29,10 +34,5 @@ class PlatformType extends AbstractType
             'csrf_protection' => false,
             'data_class' => 'PlatformBundle\Entity\Platform'
         ));
-    }
-
-    public function getName()
-    {
-        return '';
     }
 }

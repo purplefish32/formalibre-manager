@@ -107,12 +107,11 @@ class PlatformController extends FOSRestController
      */
     public function postPlatformsAction(Request $request)
     {
+        $data = json_decode($request->getContent(), true);
         $platformManager = $this->getPlatformManager();
         $platform = $platformManager->createPlatform();
-
         $form = $this->createForm(PlatformType::class, $platform);
-        $form->handleRequest($request);
-
+        $form->submit($data);
         if ($form->isValid()) {
             $platformManager->savePlatform($platform);
             $view = $this->view($platform, Response::HTTP_OK);
