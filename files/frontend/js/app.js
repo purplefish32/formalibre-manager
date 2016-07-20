@@ -27,6 +27,15 @@ angular.module("managerApp", ['ngRoute'])
                 controller: "ServerNewController",
                 templateUrl: "serverNew.html"
             })
+            .when("/server/edit/:id", {
+                controller: "ServerEditController",
+                templateUrl: "serverEdit.html",
+                resolve: {
+                  server: function(Servers) {
+                    return Servers.getServer(id);
+                  }
+                }
+            })
             .when("/platform/new", {
                 controller: "PlatformNewController",
                 templateUrl: "platformNew.html"
@@ -59,6 +68,16 @@ angular.module("managerApp", ['ngRoute'])
                     alert("Error finding servers.");
                 });
         }
+
+        this.getServer = function(:id) {
+            return $http.get("http://api.manager.loc/server/" + id).
+                then(function(response) {
+                    return response;
+                }, function(response) {
+                    console.log(response);
+                    alert("Error finding server.");
+                });
+        }
     })
     .controller("ListController", function() {
         console.log("hi");
@@ -69,7 +88,7 @@ angular.module("managerApp", ['ngRoute'])
     .controller("ServersController", function(servers, $scope) {
         $scope.servers = servers.data;
     })
-    .controller("ServerNewController", function($scope, $http) {
+    .controller("ServerNewController", function($window, $scope, $http) {
         $scope.submitForm=function(){
             var data = {};
             data.server = $scope.server;
@@ -79,10 +98,27 @@ angular.module("managerApp", ['ngRoute'])
               {headers: {'Content-Type': 'application/json'}}
             )
             .then(function(response) {
-                return response;
+                $window.location.href = '/#/servers';
             }, function(response) {
                 console.log(response);
                 alert("Error creating server.");
+            });
+        }
+    })
+    .controller("ServerEditController", function($window, $scope, $http) {
+        $scope.submitForm=function(){
+            var data = {};
+            data.server = $scope.server;
+            $http.put(
+              "http://api.manager.loc/servers/" + data.server.id,
+              JSON.stringify(data),
+              {headers: {'Content-Type': 'application/json'}}
+            )
+            .then(function(response) {
+                $window.location.href = '/#/servers';
+            }, function(response) {
+                console.log(response);
+                alert("Error editing server.");
             });
         }
     })

@@ -19,6 +19,7 @@
               <th>Provider</th>
               <th>Type</th>
               <th>Description</th>
+              <th>Edit</th>
             </tr>
             <tr ng-repeat="server in servers">
               <td>{{server.name}}</td>
@@ -26,11 +27,12 @@
               <td>{{server.provider}}</td>
               <td>{{server.type}}</td>
               <td>{{server.description}}</td>
+              <td><a ng-href="#/server/edit/{{server.id}}" class="btn btn-default btn-xs"><i class="fa fa-edit"></i></a></td>
             </tr>
           </table>
         </div>
         <div class="box-footer">
-          <a href="#/server/new" class="btn btn-primary">New Server</a>
+          <a ng-href="#/server/new" class="btn btn-primary">New Server</a>
         </div>
       </div>
     </section>
