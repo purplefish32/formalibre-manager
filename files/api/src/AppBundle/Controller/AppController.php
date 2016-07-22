@@ -167,6 +167,8 @@ class AppController extends FOSRestController
      *   }
      * )
      *
+     * @Annotations\View()
+     *
      * @param Request $request the request object
      * @param int     $id      the server id
      *
@@ -176,13 +178,9 @@ class AppController extends FOSRestController
      */
     public function getServerAction(Request $request, $id)
     {
-        $repository = $this->getDoctrine()
-          ->getRepository('ServerBundle:Server');
-        $server = $repository->findOneBy(array('id' => $id));
-        if (false === $server) {
-            throw $this->createNotFoundException("Server does not exist.");
-        }
-        return $server;
+      $client = $this->get('guzzle.client.api');
+      $response = $client->get('/servers/' . $id);
+      return json_decode($response->getBody(), true);
     }
 
     /**
@@ -248,34 +246,27 @@ class AppController extends FOSRestController
      */
     public function putServersAction(Request $request, $id)
     {
-        $repository = $this->getDoctrine()
-          ->getRepository('ServerBundle:Server');
-        $server = $repository->findOneById(array('id' => $id));
+      $data = json_decode($request->getContent());
+      $server = $data->server;
+      $client = $this->get('guzzle.client.api');
+      $response = $client->request(
+        'PUT',
+        '/servers',
+        [
+          'json' => [
+            "server" => [
+              "ip" => $server->ip,
+              "name" => $server->name,
+              "description" => $server->description,
+              "provider" => $server->provider,
+              "type" => $server->type,
+            ]
+          ]
+        ]
 
-        if (NULL === $server) {
-            $serverManager = $this->getServerManager();
-            $server = $serverManager->createServer();
-            $statusCode = Response::HTTP_CREATED;
-        } else {
-            $statusCode = Response::HTTP_NO_CONTENT;
-        }
+      );
 
-        $form = $this->createForm(ServerType::class, $server);
-        $form->submit($request);
-
-        if ($form->isValid()) {
-            $serverManager->persistAndFlush($server);
-            die("flushed");
-            //return $this->routeRedirectView('get_note', array('id' => $note->id), $statusCode);
-        }
-
-        /*echo dump($form->getTransformationFailure());
-        var_dump($this->getErrorMessages($form));
-        die();
-
-        $view = $this->view($form->getErrors(), Response::HTTP_BAD_REQUEST);
-        return $this->handleView($view);
-        return $form;*/
+      return json_decode($response->getBody(), true);
     }
 
     /**

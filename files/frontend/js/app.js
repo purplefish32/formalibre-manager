@@ -31,8 +31,8 @@ angular.module("managerApp", ['ngRoute'])
                 controller: "ServerEditController",
                 templateUrl: "serverEdit.html",
                 resolve: {
-                  server: function(Servers) {
-                    return Servers.getServer(id);
+                  server: function(Servers, $route) {
+                    return Servers.getServer($route.current.params.id);
                   }
                 }
             })
@@ -69,8 +69,8 @@ angular.module("managerApp", ['ngRoute'])
                 });
         }
 
-        this.getServer = function(:id) {
-            return $http.get("http://api.manager.loc/server/" + id).
+        this.getServer = function(id) {
+            return $http.get("http://api.manager.loc/servers/" + id).
                 then(function(response) {
                     return response;
                 }, function(response) {
@@ -105,7 +105,8 @@ angular.module("managerApp", ['ngRoute'])
             });
         }
     })
-    .controller("ServerEditController", function($window, $scope, $http) {
+    .controller("ServerEditController", function(server, $window, $scope, $http) {
+        $scope.server = server.data;
         $scope.submitForm=function(){
             var data = {};
             data.server = $scope.server;
