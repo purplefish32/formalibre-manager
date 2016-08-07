@@ -1,5 +1,5 @@
-angular.module("managerApp", ['ngRoute'])
-    .config(function($routeProvider, $locationProvider) {
+angular.module("managerApp", ['ngRoute', 'ui-notification'])
+    .config(function($routeProvider, $locationProvider, NotificationProvider) {
         $routeProvider
             .when("/", {
                 templateUrl: "dashboard.html",
@@ -44,6 +44,15 @@ angular.module("managerApp", ['ngRoute'])
                 redirectTo: "/404",
                 templateUrl: "404.html",
             })
+        NotificationProvider.setOptions({
+            delay: 10000,
+            startTop: 20,
+            startRight: 10,
+            verticalSpacing: 20,
+            horizontalSpacing: 20,
+            positionX: 'right',
+            positionY: 'top'
+        });
         // use the HTML5 History API
         //$locationProvider.html5Mode(true);
     })
@@ -88,7 +97,7 @@ angular.module("managerApp", ['ngRoute'])
     .controller("ServersController", function(servers, $scope) {
         $scope.servers = servers.data;
     })
-    .controller("ServerNewController", function($window, $scope, $http) {
+    .controller("ServerNewController", function($window, $scope, $http, Notification) {
         $scope.submitForm=function(){
             var data = {};
             data.server = $scope.server;
@@ -98,10 +107,11 @@ angular.module("managerApp", ['ngRoute'])
               {headers: {'Content-Type': 'application/json'}}
             )
             .then(function(response) {
+                Notification.success('Your new server has been added to the list');
                 $window.location.href = '/#/servers';
             }, function(response) {
+                Notification.error('Error creating server, please try again');
                 console.log(response);
-                alert("Error creating server.");
             });
         }
     })
@@ -116,10 +126,11 @@ angular.module("managerApp", ['ngRoute'])
               {headers: {'Content-Type': 'application/json'}}
             )
             .then(function(response) {
+                Notification.success('Your server has been edited');
                 $window.location.href = '/#/servers';
             }, function(response) {
+                Notification.success("Error editing server, please try again");
                 console.log(response);
-                alert("Error editing server.");
             });
         }
     })
@@ -133,10 +144,11 @@ angular.module("managerApp", ['ngRoute'])
               {headers: {'Content-Type': 'application/json'}}
             )
             .then(function(response) {
+                Notification.success('Your new platform has been added to the list');
                 return response;
             }, function(response) {
+                Notification.error('Error creating platform, please try again');
                 console.log(response);
-                alert("Error creating platform.");
             });
         }
     })
