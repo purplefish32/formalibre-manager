@@ -11,7 +11,7 @@
     </section>
     <!-- Main content -->
     <section class="content">
-      <form class="form" ng-submit="submitForm()">
+      <form class="form" ng-submit="edit()">
         <div class="box">
           <div class="box-body">
                 <fieldset>
@@ -26,11 +26,19 @@
                     </div>
                     <div class="form-group">
                         <label for="provider">Provider</label>
-                        <input type="text" name="provider" ng-model="server.provider" class="form-control">
+                        <select name="provider" ng-model="server.provider" class="form-control">
+                            <option value="OVH" selected>OVH</option>
+                            <option value="SoYouStart">SoYouStart</option>
+                            <option value="Other">Other</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="type">Type</label>
-                        <input type="text" name="type" ng-model="server.type" class="form-control">
+                        <select name="type" ng-model="server.type" class="form-control">
+                            <option value="Bare Metal" selected>Bare Metal</option>
+                            <option value="VPS">VPS</option>
+                            <option value="Other">Other</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="description">Description</label>
@@ -40,7 +48,7 @@
           </div>
           <div class="box-footer">
             <input type="submit" class="btn btn-primary">
-            <button class="btn btn-danger">Delete</button>
+            <a ng-click="delete(server)"class="btn btn-danger">Delete</a>
           </div>
         </div>
       </form>

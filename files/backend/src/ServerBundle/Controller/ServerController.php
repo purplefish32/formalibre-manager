@@ -146,9 +146,14 @@ class ServerController extends FOSRestController
      */
     public function putServersAction(Request $request, $id)
     {
-        $repository = $this->getDoctrine()
-          ->getRepository('ServerBundle:Server');
-        $server = $repository->findOneById(array('id' => $id));
+        $logger = $this->get('logger');
+        $logger->error($id);
+
+
+        $serverManager = $this->getServerManager();
+        $server = $serverManager->loadServer($id);
+
+        $logger->error($server->getProvider());
 
         if (NULL === $server) {
             $serverManager = $this->getServerManager();
@@ -158,22 +163,30 @@ class ServerController extends FOSRestController
             $statusCode = Response::HTTP_NO_CONTENT;
         }
 
+        $logger->error("here");
+
+
         $form = $this->createForm(ServerType::class, $server);
-        $form->submit($request);
+        $form->handleRequest($request);
+
+        $logger->error("there");
+        $logger->error($form->isValid());
 
         if ($form->isValid()) {
+            $logger->error("valid");
+            $data = json_decode($request->getContent());
+            if($data->server->ip){
+                $logger->error("hi");
+                $server->setIp($data->server->ip);
+            }
             $serverManager->persistAndFlush($server);
-            die("flushed");
-            //return $this->routeRedirectView('get_note', array('id' => $note->id), $statusCode);
+            $view = $this->view($server, $statusCode);
+            return $this->handleView($view);
         }
-
-        /*echo dump($form->getTransformationFailure());
-        var_dump($this->getErrorMessages($form));
-        die();
 
         $view = $this->view($form->getErrors(), Response::HTTP_BAD_REQUEST);
         return $this->handleView($view);
-        return $form;*/
+
     }
 
     /**

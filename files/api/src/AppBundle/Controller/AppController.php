@@ -251,15 +251,15 @@ class AppController extends FOSRestController
       $client = $this->get('guzzle.client.api');
       $response = $client->request(
         'PUT',
-        '/servers',
+        '/servers/' . $id,
         [
           'json' => [
-            "server" => [
-              "ip" => $server->ip,
-              "name" => $server->name,
-              "description" => $server->description,
-              "provider" => $server->provider,
-              "type" => $server->type,
+            'server' => [
+              'ip' => $server->ip,
+              'name' => $server->name,
+              'description' => $server->description,
+              'provider' => $server->provider,
+              'type' => $server->type,
             ]
           ]
         ]
@@ -285,17 +285,8 @@ class AppController extends FOSRestController
      */
     public function deleteServersAction(Request $request, $id)
     {
-        $serverManager = $this->getServerManager();
-        $repository = $this->getDoctrine()
-          ->getRepository('ServerBundle:Server');
-        $server = $repository->findOneBy(array('id' => $id));
-
-        if (NULL === $server) {
-            throw $this->createNotFoundException("Server does not exist.");
-        }
-
-        $serverManager->removeServer($server);
-
-        return $this->view(null, Response::HTTP_NO_CONTENT);
+        $client = $this->get('guzzle.client.api');
+        $response = $client->request('DELETE','/servers/' . $id);
+        return json_decode($response->getBody(), true);
     }
 }

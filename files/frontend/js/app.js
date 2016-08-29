@@ -1,5 +1,5 @@
-angular.module("managerApp", ['ngRoute', 'ui-notification'])
-    .config(function($routeProvider, $locationProvider, NotificationProvider) {
+angular.module("managerApp", ['ngRoute', 'ui-notification', 'angular-loading-bar'])
+    .config(function($routeProvider, $locationProvider, NotificationProvider, cfpLoadingBarProvider) {
         $routeProvider
             .when("/", {
                 templateUrl: "dashboard.html",
@@ -53,6 +53,8 @@ angular.module("managerApp", ['ngRoute', 'ui-notification'])
             positionX: 'right',
             positionY: 'top'
         });
+
+        cfpLoadingBarProvider.includeSpinner = false;
         // use the HTML5 History API
         //$locationProvider.html5Mode(true);
     })
@@ -115,15 +117,15 @@ angular.module("managerApp", ['ngRoute', 'ui-notification'])
             });
         }
     })
-    .controller("ServerEditController", function(server, $window, $scope, $http) {
+    .controller("ServerEditController", function(server, $window, $scope, $http, Notification) {
         $scope.server = server.data;
-        $scope.submitForm=function(){
+        $scope.edit=function(){
             var data = {};
             data.server = $scope.server;
             $http.put(
-              "http://api.manager.loc/servers/" + data.server.id,
-              JSON.stringify(data),
-              {headers: {'Content-Type': 'application/json'}}
+                "http://api.manager.loc/servers/" + $scope.server.id,
+                JSON.stringify(data),
+                {headers: {'Content-Type': 'application/json'}}
             )
             .then(function(response) {
                 Notification.success('Your server has been edited');
@@ -133,6 +135,20 @@ angular.module("managerApp", ['ngRoute', 'ui-notification'])
                 console.log(response);
             });
         }
+        $scope.delete=function(){
+            $http.delete(
+                "http://api.manager.loc/servers/" + $scope.server.id,
+                JSON.stringify($scope.server),
+                {headers: {'Content-Type': 'application/json'}}
+            )
+            .then(function(response) {
+                Notification.success('Your server has been deleted');
+                $window.location.href = '/#/servers';
+            }, function(response) {
+                Notification.success("Error deleting server, please try again");
+                console.log(response);
+            });
+          }
     })
     .controller("PlatformNewController", function($scope, $http) {
         $scope.submitForm=function(){

@@ -21,20 +21,28 @@
                         <input type="text" name="name" ng-model="server.name" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="ip">IP</label>
+                        <label for="ip">IP</label> (IPV4)
                         <input type="text" name="ip" ng-model="server.ip" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="provider">Provider</label>
-                        <input type="text" name="provider" ng-model="server.provider" class="form-control">
+                        <select name="provider" ng-model="server.provider" class="form-control">
+                            <option value="OVH" selected>OVH</option>
+                            <option value="SoYouStart">SoYouStart</option>
+                            <option value="Other">Other</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="type">Type</label>
-                        <input type="text" name="type" ng-model="server.type" class="form-control">
+                        <select name="type" ng-model="server.type" class="form-control">
+                            <option value="Bare Metal" selected>Bare Metal</option>
+                            <option value="VPS">VPS</option>
+                            <option value="Other">Other</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="description">Description</label>
-                        <input type="text" name="description" ng-model="server.description" class="form-control">
+                        <textarea name="description" ng-model="server.description" class="form-control"></textarea>
                     </div>
                 </fieldset>
           </div>
