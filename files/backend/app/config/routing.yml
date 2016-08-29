@@ -5,10 +5,10 @@
 #        route: get_servers
 #        permanent: true # this for 301
 
-_server:
-    resource: "@ServerBundle/Controller/ServerController.php"
-    type:     rest
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /doc
 
-_platform:
-    resource: "@PlatformBundle/Controller/PlatformController.php"
+rest_api:
+    resource: "@FormaLibreRestBundle/Resources/config/routing.yml"
     type:     rest

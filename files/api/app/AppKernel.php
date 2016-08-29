@@ -20,7 +20,7 @@ class AppKernel extends Kernel
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             new FOS\HttpCacheBundle\FOSHttpCacheBundle(),
             new Bazinga\Bundle\HateoasBundle\BazingaHateoasBundle(),
-            new AppBundle\AppBundle(),
+            new FormaLibre\AppBundle\AppBundle(),
             new EightPoints\Bundle\GuzzleBundle\GuzzleBundle(),
             new Nelmio\CorsBundle\NelmioCorsBundle(),
         ];
