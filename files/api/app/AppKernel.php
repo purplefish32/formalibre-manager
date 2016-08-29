@@ -20,9 +20,9 @@ class AppKernel extends Kernel
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             new FOS\HttpCacheBundle\FOSHttpCacheBundle(),
             new Bazinga\Bundle\HateoasBundle\BazingaHateoasBundle(),
-            new FormaLibre\AppBundle\AppBundle(),
             new EightPoints\Bundle\GuzzleBundle\GuzzleBundle(),
             new Nelmio\CorsBundle\NelmioCorsBundle(),
+            new FormaLibre\RestBundle\FormaLibreRestBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

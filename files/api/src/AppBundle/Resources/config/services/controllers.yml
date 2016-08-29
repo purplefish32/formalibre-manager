@@ -1,5 +1,0 @@
-services:
-  app.server_manager:
-    class: ServerBundle\Manager\ServerManager
-    arguments:
-      em: "@doctrine.orm.entity_manager"
