@@ -9,6 +9,6 @@ NelmioApiDocBundle:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
     prefix:   /doc
 
-rest_api:
-    resource: "@FormaLibreRestBundle/Resources/config/routing.yml"
-    type:     rest
+api:
+    type: rest
+    resource: "routing_api.yml"

@@ -1,0 +1,5 @@
+services:
+  app.platform_manager:
+    class: PlatformBundle\Manager\PlatformManager
+    arguments:
+      em: "@doctrine.orm.entity_manager"

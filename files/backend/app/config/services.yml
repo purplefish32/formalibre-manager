@@ -2,3 +2,54 @@
 # http://symfony.com/doc/current/book/service_container.html
 parameters:
 #    parameter_name: value
+
+services:
+    # -- DOCTRINE ENTITY REPOSITORY --
+    fl.doctrine_entity_repository.server:
+        class: FormaLibre\RestBundle\Entity\Repository\ServerEntityRepository #Bug See end of video 15
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - FormaLibre\RestBundle\Entity\Server
+
+    # -- EVENTS --
+    fl.event.listener.content_type_listener:
+        class: FormaLibre\RestBundle\Event\Listener\ContentTypeListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+    # -- SERVICE --
+    fl.server.manager:
+        class: FormaLibre\RestBundle\Manager\ServerManager
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@fl.form.handler.server.interface"
+            - "@fl.factory.server"
+            - "@fl.repository.doctrine.server"
+
+    # -- FACTORY --
+    fl.factory.server:
+        class: FormaLibre\RestBundle\Factory\ServerFactory
+
+    # -- FORM HANDLER --
+    fl.form.handler.server.interface:
+        class: FormaLibre\RestBundle\Form\Handler\FormHandler
+        arguments:
+            - "@form.factory"
+            - "@fl.form.type.server"
+
+    fl.form.type.server:
+        class: FormaLibre\RestBundle\Form\Type\ServerType
+        tags:
+            - { name: form.type, alias: server }
+
+    # -- REPOSITORY --
+    fl.repository.doctrine.common:
+        class: FormaLibre\RestBundle\Repository\Doctrine\CommonDoctrineRepository
+        arguments:
+            - "@doctrine.orm.entity_manager"
+
+    fl.repository.doctrine.server:
+        class: FormaLibre\RestBundle\Repository\Doctrine\DoctrineServerRepository
+        arguments:
+            - "@fl.repository.doctrine.common"
+            - "@fl.doctrine_entity_repository.server"

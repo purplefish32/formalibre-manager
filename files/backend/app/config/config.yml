@@ -26,7 +26,7 @@ framework:
     trusted_proxies: ~
     session:
         # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
-        handler_id:  session.handler.native_file
+        handler_id:  ~
         save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
     fragments:       ~
     http_method_override: true
@@ -70,36 +70,41 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 
+# Nelmio API Doc
+nelmio_api_doc:
+    sandbox:
+        accept_type:        "application/json"
+        body_format:
+            formats:        [ "json" ]
+            default_format: "json"
+        request_format:
+            formats:
+                json:       "application/json"
+
 fos_rest:
-    disable_csrf_role: ROLE_API
+    body_listener: true
+    format_listener:  true
     param_fetcher_listener: true
     view:
-        mime_types:
-            json: ['application/json', 'application/json;version=1.0', 'application/json;version=1.1', 'application/json;version=1.2']
         view_response_listener: 'force'
         formats:
-            xml:  false
+            jsonp: true
             json: true
-        templating_formats:
-            html: false
+            xml: false
+            rss: false
+        mime_types:
+            json: ['application/json', 'application/x-json']
+            jpg:  ['image/jpeg']
+            png:  ['image/png']
+        jsonp_handler: ~
+    routing_loader:
+        default_format:  json
+        include_format:  false
     format_listener:
         rules:
-            - { path: ^/, priorities: [ json ], fallback_format: json, prefer_extension: false }
-    versioning:
-        enabled: true
-        resolvers:
-            media_type:
-                enabled: true
+            - { path: ^/, priorities: [ json, jsonp ], fallback_format: ~, prefer_extension: false }
     exception:
-        codes:
-            'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
-            'Doctrine\ORM\OptimisticLockException': HTTP_CONFLICT
-        messages:
-            'Symfony\Component\Routing\Exception\ResourceNotFoundException': true
-    allowed_methods_listener: true
-    access_denied_listener:
-        json: true
-    body_listener: true
+        enabled: true
 
 #fos_http_cache:
 #    cache_control:
