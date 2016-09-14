@@ -119,9 +119,9 @@ angular.module("managerApp", ['ngRoute', 'ui-notification', 'angular-loading-bar
     })
     .controller("ServerEditController", function(server, $window, $scope, $http, Notification) {
         $scope.server = server.data;
-        $scope.edit=function(){
+        $scope.edit = function(){
             var data = {};
-            data.server = $scope.server;
+            data = $scope.server;
             $http.put(
                 "http://api.manager.loc/servers/" + $scope.server.id,
                 JSON.stringify(data),

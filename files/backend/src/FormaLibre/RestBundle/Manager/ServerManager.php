@@ -60,8 +60,6 @@ class ServerManager implements ManagerInterface
      * @return mixed
      */
     public function post(array $parameters, array $options = []) {
-
-
         $serverDTO = $this->formHandler->handle(
             new ServerDTO(),
             $parameters,
@@ -75,18 +73,30 @@ class ServerManager implements ManagerInterface
     }
 
     /**
-    * @param ServerInterface $serverInterface
-    * @param array           $parameters
-    * @return mixed
-    */
-    public function put($resource, array $parameters, array $options = []) {
-        return $this->formHandler->handle(
-            $resource,
+     * @param  ServerInterface      $server
+     * @param  array                $parameters
+     * @param  array                $options
+     * @return mixed
+     */
+    public function put($server, array $parameters, array $options = [])
+    {
+        //$this->guardAccountImplementsInterface($account);
+        /** @var AccountInterface $account */
+        //WTF data transformer TODO
+        $serverDTO = $this->dataTransformer->convertToDTO($server);
+        $serverDTO = $this->formHandler->handle(
+            $serverDTO,
             $parameters,
-            "PUT"
+            Request::METHOD_PUT,
+            $options
         );
+        $this->repository->refresh($server);
+        $server = $this->dataTransformer->updateFromDTO($server, $serverDTO);
+        $this->repository->save($server);
+        return $account;
     }
 
+    //TODO check example
     /**
      * @param ServerInterface $serverInterface
      * @param array           $parameters
@@ -100,6 +110,7 @@ class ServerManager implements ManagerInterface
         );
     }
 
+    //TODO check example
     /**
     * @param ServerInterface $serverInterface
     * @return mixed

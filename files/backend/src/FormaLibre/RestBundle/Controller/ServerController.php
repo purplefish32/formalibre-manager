@@ -80,10 +80,10 @@ class ServerController extends FOSRestController implements ClassResourceInterfa
     }
 
     /**
-     * Gets a collection of the given User's Accounts.
+     * Gets a collection of Servers.
      *
      * @ApiDoc(
-     *   output = "AppBundle\Entity\Account",
+     *   output = "FormaLibre\RestBundle\Entity\Server",
      *   statusCodes = {
      *     200 = "Returned when successful",
      *     404 = "Returned when not found"
@@ -93,8 +93,8 @@ class ServerController extends FOSRestController implements ClassResourceInterfa
      * @throws NotFoundHttpException when does not exist
      *
      * @Annotations\View(serializerGroups={
-     *   "accounts_all",
-     *   "users_summary"
+     *   "servers_all",
+     *   "servers_summary"
      * })
      *
      * @return View
@@ -104,6 +104,47 @@ class ServerController extends FOSRestController implements ClassResourceInterfa
         $servers =  $this->getManager()->all();
         $view = $this->view($servers, 200);
         return $this->handleView($view);
+    }
+
+
+    /**
+     * Replaces existing Server from the submitted data
+     *
+     * @ApiDoc(
+     *   resource = true,
+     *   input = "FormaLibre\RestBundle\Form\ServerType",
+     *   output = "FormaLibre\RestBundle\Entity\Server",
+     *   statusCodes = {
+     *     204 = "Returned when successful",
+     *     400 = "Returned when errors",
+     *     404 = "Returned when not found"
+     *   }
+     * )
+     *
+     * @param Request $request the request object
+     * @param int     $id      the server id
+     *
+     * @return FormTypeInterface|RouteRedirectView
+     *
+     * @throws NotFoundHttpException when does not exist
+     */
+    public function putAction(Request $request, $id)
+    {
+        $requestedServer = $this->getServerRepository()->findOneById($id);
+
+        try {
+            $server = $this->getManager()->put(
+                $requestedServer,
+                $request->request->all()
+            );
+            return $server;
+            $routeOptions = [
+                'serverId'  => $server->getId()
+            ];
+            return $this->routeRedirectView('get_servers', $routeOptions, Response::HTTP_NO_CONTENT);
+        } catch (InvalidFormException $e) {
+            return $e->getForm();
+        }
     }
 
     /**
