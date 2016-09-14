@@ -21,7 +21,6 @@ services:
     fl.server.manager:
         class: FormaLibre\RestBundle\Manager\ServerManager
         arguments:
-            - "@doctrine.orm.entity_manager"
             - "@fl.form.handler.server.interface"
             - "@fl.factory.server"
             - "@fl.repository.doctrine.server"

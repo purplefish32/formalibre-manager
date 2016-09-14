@@ -25,13 +25,11 @@ class ServerManager implements ManagerInterface
     private $em;
 
     public function __construct(
-        EntityManager $entityManager,
         FormHandler $formHandler,
         ServerFactory $serverFactory,
         ServerRepositoryInterface $serverRepository
     )
     {
-        $this->em = $entityManager;
         $this->formHandler = $formHandler;
         $this->factory = $serverFactory;
         $this->repository = $serverRepository;
@@ -45,7 +43,7 @@ class ServerManager implements ManagerInterface
         if ($id === null) {
             throw new BadRequestHttpException('A server ID was not specified.');
         }
-        return $this->getRepository()->findOneById($id);
+        return $this->repository->findOneById($id);
     }
 
     /**
@@ -55,7 +53,9 @@ class ServerManager implements ManagerInterface
      */
     public function all($limit = 50, $offset = 0) {
 
-        return $this->getRepository()->findBy(array(), array(), $limit, $offset);
+        return $this->repository->findAll()->slice($offset, 2);
+        //return $this->repository->findBy(array(), array(), $limit, $offset);
+        //return $this->repository->findAllForUser($this->user)->slice($offset, $limit);
     }
 
     /**
@@ -109,10 +109,4 @@ class ServerManager implements ManagerInterface
     public function delete($resource) {
         return $this->formHandler->delete($resource);
     }
-
-    /*public function getRepository()
-    {
-        return $this->em->getRepository('FormaLibreRestBundle:Server');
-    }*/
-
 }

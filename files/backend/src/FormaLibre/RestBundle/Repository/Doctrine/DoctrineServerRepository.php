@@ -7,6 +7,7 @@ use FormaLibre\RestBundle\Model\ServerInterface;
 use FormaLibre\RestBundle\Repository\ServerRepositoryInterface;
 use FormaLibre\RestBundle\Entity\Repository\ServerEntityRepository;
 use FormaLibre\RestBundle\Repository\RepositoryInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Class DoctrineServerRepository
@@ -67,5 +68,15 @@ class DoctrineServerRepository implements ServerRepositoryInterface, RepositoryI
     public function findOneById($id)
     {
         return $this->serverEntityRepository->find($id);
+    }
+
+    /**
+     * @param   $id
+     * @return  mixed
+     */
+    public function findAll()
+    {
+        $servers = $this->serverEntityRepository->findAll();
+        return new ArrayCollection($servers);
     }
 }
