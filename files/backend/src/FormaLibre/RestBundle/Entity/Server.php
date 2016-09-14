@@ -9,7 +9,7 @@ use JMS\Serializer\Annotation as JMSSerializer;
 
 /**
  * Server
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="FormaLibre\RestBundle\Entity\Repository\ServerEntityRepository")
  * @ORM\Table(name="server")
  * @JMSSerializer\ExclusionPolicy("all")
  */
