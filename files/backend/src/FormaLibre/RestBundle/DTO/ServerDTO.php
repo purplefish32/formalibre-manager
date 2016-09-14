@@ -41,6 +41,7 @@ class ServerDTO implements SymfonyFormDTO
     {
         return self::class;
     }
+    
     /**
      * @return string
      */

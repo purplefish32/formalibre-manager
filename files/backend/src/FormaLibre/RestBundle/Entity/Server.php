@@ -71,6 +71,15 @@ class Server implements ServerInterface, \JsonSerializable
      */
     private $description;
 
+    public function __construct($ip = null, $name = null, $type = null, $provider = null, $description = null)
+    {
+       $this->ip = $ip;
+       $this->name = $name;
+       $this->type = $type;
+       $this->provider = $provider;
+       $this->description = $description;
+    }
+
     /**
      * Get id
      *

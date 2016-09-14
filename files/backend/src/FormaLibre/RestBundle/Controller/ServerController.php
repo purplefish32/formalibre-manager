@@ -10,7 +10,8 @@ use FOS\RestBundle\Controller\Annotations;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FormaLibre\RestBundle\Manager\ServerManager;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
+//use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class ServerController extends FOSRestController implements ClassResourceInterface
 {
@@ -34,17 +35,22 @@ class ServerController extends FOSRestController implements ClassResourceInterfa
      */
     public function postAction(Request $request)
     {
-        //return $this->getManager()->post($data, []);
-
-        //return $request->request->all();
+        /*$logger = $this->get('logger');
+        $logger->error('An error occurred');
+        $logger->error($request);*/
 
         try {
+
           $server = $this->getManager()->post($request->request->all());
+
           $routeOptions = [
-              'accountId'  => $server->getId()
+              'serverId'  => $server->getId()
           ];
+
           return $this->routeRedirectView('get_servers', $routeOptions, Response::HTTP_CREATED);
+
         } catch (InvalidFormException $e) {
+
           return $e->getForm();
         }
     }

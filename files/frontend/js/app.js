@@ -101,11 +101,11 @@ angular.module("managerApp", ['ngRoute', 'ui-notification', 'angular-loading-bar
     })
     .controller("ServerNewController", function($window, $scope, $http, Notification) {
         $scope.submitForm=function(){
-            var data = {};
-            data.server = $scope.server;
+            var server = {};
+            server = $scope.server;
             $http.post(
               "http://api.manager.loc/servers",
-              JSON.stringify(data),
+              JSON.stringify(server),
               {headers: {'Content-Type': 'application/json'}}
             )
             .then(function(response) {

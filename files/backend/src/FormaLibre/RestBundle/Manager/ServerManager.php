@@ -52,10 +52,7 @@ class ServerManager implements ManagerInterface
      * @return array
      */
     public function all($limit = 50, $offset = 0) {
-
-        return $this->repository->findAll()->slice($offset, 2);
-        //return $this->repository->findBy(array(), array(), $limit, $offset);
-        //return $this->repository->findAllForUser($this->user)->slice($offset, $limit);
+        return $this->repository->findAll()->slice($offset, $limit);
     }
 
     /**
@@ -64,14 +61,15 @@ class ServerManager implements ManagerInterface
      */
     public function post(array $parameters, array $options = []) {
 
+
         $serverDTO = $this->formHandler->handle(
             new ServerDTO(),
             $parameters,
             Request::METHOD_POST,
             $options
         );
-
         $server = $this->factory->createFromDTO($serverDTO);
+
         $this->repository->save($server);
         return $server;
     }
