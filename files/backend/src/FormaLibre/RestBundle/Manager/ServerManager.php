@@ -2,7 +2,8 @@
 
 namespace FormaLibre\RestBundle\Manager;
 
-use FormaLibre\RestBundle\Entity\Server;
+#use FormaLibre\RestBundle\Entity\Server;
+use FormaLibre\RestBundle\DataTransformer\ServerDataTransformer;
 use FormaLibre\RestBundle\DTO\ServerDTO;
 use FormaLibre\RestBundle\Form\Type\ServerType;
 use FormaLibre\RestBundle\Form\Handler\FormHandler;
@@ -22,15 +23,20 @@ class ServerManager implements ManagerInterface
     */
     private $formHandler;
 
-    private $em;
+    /**
+     * @var ServerDataTransformer
+     */
+    private $dataTransformer;
 
     public function __construct(
         FormHandler $formHandler,
+        ServerDataTransformer $dataTransformer,
         ServerFactory $serverFactory,
         ServerRepositoryInterface $serverRepository
     )
     {
         $this->formHandler = $formHandler;
+        $this->dataTransformer = $dataTransformer;
         $this->factory = $serverFactory;
         $this->repository = $serverRepository;
     }
@@ -80,9 +86,9 @@ class ServerManager implements ManagerInterface
      */
     public function put($server, array $parameters, array $options = [])
     {
-        //$this->guardAccountImplementsInterface($account);
-        /** @var AccountInterface $account */
-        //WTF data transformer TODO
+        $this->guardServerImplementsInterface($server);
+        
+        /** @var ServerInterface $server */
         $serverDTO = $this->dataTransformer->convertToDTO($server);
         $serverDTO = $this->formHandler->handle(
             $serverDTO,
@@ -93,7 +99,7 @@ class ServerManager implements ManagerInterface
         $this->repository->refresh($server);
         $server = $this->dataTransformer->updateFromDTO($server, $serverDTO);
         $this->repository->save($server);
-        return $account;
+        return $server;
     }
 
     //TODO check example
@@ -118,4 +124,14 @@ class ServerManager implements ManagerInterface
     public function delete($resource) {
         return $this->formHandler->delete($resource);
     }
+
+    /**
+    * @param $server
+    */
+   private function guardServerImplementsInterface($server)
+   {
+       if (!$server instanceof ServerInterface) {
+           throw new \InvalidArgumentException('Expected passed Server to implement ServerInterface');
+       }
+   }
 }

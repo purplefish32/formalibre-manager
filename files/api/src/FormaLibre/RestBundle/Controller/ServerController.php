@@ -134,21 +134,18 @@ class ServerController extends FOSRestController
      */
     public function putServersAction(Request $request, $id)
     {
-      $data = json_decode($request->getContent());
-      $server = $data->server;
+      $server = json_decode($request->getContent());
       $client = $this->get('guzzle.client.api');
       $response = $client->request(
         'PUT',
         '/servers/' . $id,
         [
           'json' => [
-            'server' => [
               'ip' => $server->ip,
               'name' => $server->name,
-              'description' => $server->description,
               'provider' => $server->provider,
               'type' => $server->type,
-            ]
+              'description' => $server->description
           ]
         ]
 

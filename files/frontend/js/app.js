@@ -131,7 +131,7 @@ angular.module("managerApp", ['ngRoute', 'ui-notification', 'angular-loading-bar
                 Notification.success('Your server has been edited');
                 $window.location.href = '/#/servers';
             }, function(response) {
-                Notification.success("Error editing server, please try again");
+                Notification.error("Error editing server, please try again");
                 console.log(response);
             });
         }

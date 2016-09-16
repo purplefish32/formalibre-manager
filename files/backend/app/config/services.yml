@@ -4,9 +4,14 @@ parameters:
 #    parameter_name: value
 
 services:
+
+    # -- DATA TRANSFORMERs --
+    fl.data_transformer.server_data_transformer:
+        class: FormaLibre\RestBundle\DataTransformer\ServerDataTransformer
+
     # -- DOCTRINE ENTITY REPOSITORY --
     fl.doctrine_entity_repository.server:
-        class: FormaLibre\RestBundle\Entity\Repository\ServerEntityRepository #Bug See end of video 15
+        class: FormaLibre\RestBundle\Entity\Repository\ServerEntityRepository
         factory: ["@doctrine", getRepository]
         arguments:
             - FormaLibre\RestBundle\Entity\Server
@@ -22,6 +27,7 @@ services:
         class: FormaLibre\RestBundle\Manager\ServerManager
         arguments:
             - "@fl.form.handler.server.interface"
+            - "@fl.data_transformer.server_data_transformer"
             - "@fl.factory.server"
             - "@fl.repository.doctrine.server"
 

@@ -35,10 +35,6 @@ class ServerController extends FOSRestController implements ClassResourceInterfa
      */
     public function postAction(Request $request)
     {
-        /*$logger = $this->get('logger');
-        $logger->error('An error occurred');
-        $logger->error($request);*/
-
         try {
 
           $server = $this->getManager()->post($request->request->all());
@@ -154,7 +150,6 @@ class ServerController extends FOSRestController implements ClassResourceInterfa
      */
     private function getManager()
     {
-
         return $this->get('fl.server.manager');
     }
 
