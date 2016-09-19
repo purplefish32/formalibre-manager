@@ -1,8 +1,8 @@
 angular.
   module('Servers',[]).
-  service("Servers", ["$http",function($http) {
+  service("Servers", ["$http","Config",function($http,Config) {
       this.getServers = function() {
-          return $http.get("http://api.manager.loc/servers").
+          return $http.get(Config.api_url+"servers").
               then(function(response) {
                   return response;
               }, function(response) {
@@ -12,7 +12,7 @@ angular.
       }
 
       this.getServer = function(id) {
-          return $http.get("http://api.manager.loc/servers/" + id).
+          return $http.get(Config.api_url+"/servers/" + id).
               then(function(response) {
                   return response;
               }, function(response) {

@@ -1,8 +1,8 @@
 angular.
   module('Platforms', []).
-  service("Platforms", ['$http',function($http) {
+  service("Platforms", ['$http',"Config",function($http,Config) {
     this.getPlatforms = function() {
-        return $http.get("http://api.manager.loc/platforms").
+        return $http.get(Config.api_url+"platforms").
             then(function(response) {
                 return response;
             }, function(response) {

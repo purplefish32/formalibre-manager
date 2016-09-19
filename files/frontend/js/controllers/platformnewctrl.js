@@ -1,11 +1,11 @@
 angular.
   module("PlatformNewController",[]).
-  controller("PlatformNewController", ["$scope", "$http",function($scope, $http) {
+  controller("PlatformNewController", ["$scope", "$http","Config",function($scope, $http,Config) {
     $scope.submitForm=function(){
         var data = {};
         data.platform = $scope.platform;
         $http.post(
-          "http://api.manager.loc/platforms",
+          Config.api_url+"platforms",
           JSON.stringify(data),
           {headers: {'Content-Type': 'application/json'}}
         )

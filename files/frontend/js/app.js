@@ -1,4 +1,8 @@
-angular.module("managerApp", [
+protocol ="http://"
+base_url = "manager.loc/"
+
+angular.
+  module("managerApp", [
     'ngRoute',
     'ui-notification',
     'angular-loading-bar',    
@@ -11,4 +15,7 @@ angular.module("managerApp", [
     'ServerNewController',
     'ServerEditController',
     'PlatformNewController'
-  ])
+  ]).
+  value('Config', {
+    api_url:protocol+"api."+base_url
+  })

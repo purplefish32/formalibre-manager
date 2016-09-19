@@ -1,10 +1,10 @@
 angular.
   module("ServerNewController",[]).
-  controller("ServerNewController", ["$window", "$scope", "$http", "Notification",function($window, $scope, $http, Notification) {
+  controller("ServerNewController", ["$window", "$scope", "$http", "Notification","Config",function($window, $scope, $http, Notification,Config) {
     $scope.submitForm=function(){
         var server = $scope.server;
         $http.post(
-          "http://api.manager.loc/servers",
+          Config.api_url+"servers",
           JSON.stringify(server),
           {headers: {'Content-Type': 'application/json'}}
         )
