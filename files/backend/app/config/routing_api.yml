@@ -1,3 +1,7 @@
 servers:
     type: rest
     resource: FormaLibre\RestBundle\Controller\ServerController
+
+platforms:
+    type: rest
+    resource: FormaLibre\RestBundle\Controller\PlatformController

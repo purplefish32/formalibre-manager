@@ -71,22 +71,35 @@ swiftmailer:
     spool:     { type: memory }
 
 fos_rest:
-    param_fetcher_listener: true
     disable_csrf_role: ROLE_API
+    body_listener: true
+    format_listener:  true
+    param_fetcher_listener: true
     view:
-        mime_types:
-            json: ['application/json', 'application/json;version=1.0', 'application/json;version=1.1', 'application/json;version=1.2']
         view_response_listener: 'force'
         formats:
+            jsonp: true
             json: true
+            xml: false
+            rss: false
+        mime_types:
+            json: ['application/json', 'application/x-json']
+            jpg:  ['image/jpeg']
+            png:  ['image/png']
+        jsonp_handler: ~
+    routing_loader:
+        default_format:  json
+        include_format:  false
     format_listener:
         rules:
-            - { path: ^/, priorities: [ json ], fallback_format: json, prefer_extension: false }
+            - { path: ^/, priorities: [ json, jsonp ], fallback_format: ~, prefer_extension: false }
+    exception:
+        enabled: true
 
 guzzle:
     clients:
         api:
-            base_url: "http://backend"
+            base_url: "http://backend/app_dev.php/"
             headers:
                 Accept: "application/json"
 

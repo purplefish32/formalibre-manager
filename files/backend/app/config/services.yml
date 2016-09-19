@@ -9,12 +9,21 @@ services:
     fl.data_transformer.server_data_transformer:
         class: FormaLibre\RestBundle\DataTransformer\ServerDataTransformer
 
+    fl.data_transformer.platform_data_transformer:
+        class: FormaLibre\RestBundle\DataTransformer\PlatformDataTransformer
+
     # -- DOCTRINE ENTITY REPOSITORY --
     fl.doctrine_entity_repository.server:
         class: FormaLibre\RestBundle\Entity\Repository\ServerEntityRepository
         factory: ["@doctrine", getRepository]
         arguments:
             - FormaLibre\RestBundle\Entity\Server
+
+    fl.doctrine_entity_repository.platform:
+        class: FormaLibre\RestBundle\Entity\Repository\PlatformEntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - FormaLibre\RestBundle\Entity\Platform
 
     # -- EVENTS --
     fl.event.listener.content_type_listener:
@@ -31,9 +40,20 @@ services:
             - "@fl.factory.server"
             - "@fl.repository.doctrine.server"
 
+    fl.platform.manager:
+        class: FormaLibre\RestBundle\Manager\PlatformManager
+        arguments:
+            - "@fl.form.handler.platform.interface"
+            - "@fl.data_transformer.platform_data_transformer"
+            - "@fl.factory.platform"
+            - "@fl.repository.doctrine.platform"
+
     # -- FACTORY --
     fl.factory.server:
         class: FormaLibre\RestBundle\Factory\ServerFactory
+
+    fl.factory.platform:
+        class: FormaLibre\RestBundle\Factory\PlatformFactory
 
     # -- FORM HANDLER --
     fl.form.handler.server.interface:
@@ -47,6 +67,17 @@ services:
         tags:
             - { name: form.type, alias: server }
 
+    fl.form.handler.platform.interface:
+        class: FormaLibre\RestBundle\Form\Handler\FormHandler
+        arguments:
+            - "@form.factory"
+            - "@fl.form.type.platform"
+
+    fl.form.type.platform:
+        class: FormaLibre\RestBundle\Form\Type\ServerType
+        tags:
+            - { name: form.type, alias: platform }
+
     # -- REPOSITORY --
     fl.repository.doctrine.common:
         class: FormaLibre\RestBundle\Repository\Doctrine\CommonDoctrineRepository
@@ -58,3 +89,9 @@ services:
         arguments:
             - "@fl.repository.doctrine.common"
             - "@fl.doctrine_entity_repository.server"
+
+    fl.repository.doctrine.platform:
+        class: FormaLibre\RestBundle\Repository\Doctrine\DoctrinePlatformRepository
+        arguments:
+            - "@fl.repository.doctrine.common"
+            - "@fl.doctrine_entity_repository.platform"

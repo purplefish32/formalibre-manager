@@ -9,6 +9,10 @@ NelmioApiDocBundle:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
     prefix:   /doc
 
-rest_api:
-    resource: "@FormaLibreRestBundle/Controller/ServerController.php"
+servers_api:
+    resource: FormaLibre\RestBundle\Controller\ServerController
+    type:     rest
+
+platforms_api:
+    resource: FormaLibre\RestBundle\Controller\PlatformController
     type:     rest
