@@ -1,5 +1,12 @@
 angular.
-  module('Router', []).
+  module('Router', [
+      'ngRoute',
+      'ServersController',
+      'ListController',
+      'PlatformsController',
+      'ServerNewController',
+      'ServerEditController',
+      'PlatformNewController']).
   config(['$routeProvider', '$locationProvider', 'NotificationProvider', 'cfpLoadingBarProvider',function($routeProvider, $locationProvider, NotificationProvider, cfpLoadingBarProvider) {
     $routeProvider
         .when("/", {
@@ -25,13 +32,8 @@ angular.
             templateUrl: "serverNew.html"
         })
         .when("/server/edit/:id", {
-            controller: "ServerEditController",
-            templateUrl: "serverEdit.html",
-            resolve: {
-              server: function(Servers, $route) {
-                return Servers.getServer($route.current.params.id);
-              }
-            }
+            controller: "ServerNewController",
+            templateUrl: "serverNew.html",
         })
         .when("/platform/new", {
             controller: "PlatformNewController",
