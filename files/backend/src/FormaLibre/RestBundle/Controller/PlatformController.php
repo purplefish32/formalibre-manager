@@ -48,6 +48,28 @@ class PlatformController extends FOSRestController implements ClassResourceInter
     return $this->handleView($view);
   }
 
+  /**
+  * Deletes a specific Platform by ID
+  *
+  * @ApiDoc(
+  *  description="Deletes an existing Platform",
+  *  statusCodes={
+  *         204="Returned when an existing Platform has been successfully deleted",
+  *         403="Returned when trying to delete a non existent Platform"
+  *     }
+  * )
+  *
+  * @param int         $id       the platform id
+  * @return View
+  */
+ public function deleteAction($id)
+ {
+     $requestedPlatform = $this->getPlatformRepository()->findOneById($id);
+     $this->getPlatformManager()->delete($requestedPlatform);
+
+     return new View(null, Response::HTTP_NO_CONTENT);
+ }
+
 
   /**
    * Returns the required Manager for this controller.
@@ -60,9 +82,9 @@ class PlatformController extends FOSRestController implements ClassResourceInter
   }
 
   /**
-   * @return \AppBundle\Repository\Restricted\RestrictedAccountRepository
+   * @return \FormaLibre\RestBundle\Repository\Doctrine\DoctrineAccountRepository
    */
-  private function getServerRepository()
+  private function getPlatformRepository()
   {
       return $this->get('fl.doctrine_entity_repository.platform');
   }

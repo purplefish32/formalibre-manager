@@ -141,6 +141,28 @@ class ServerController extends FOSRestController implements ClassResourceInterfa
     }
 
     /**
+    * Deletes a specific Server by ID
+    *
+    * @ApiDoc(
+    *  description="Deletes an existing Server",
+    *  statusCodes={
+    *         204="Returned when an existing Server has been successfully deleted",
+    *         403="Returned when trying to delete a non existent Server"
+    *     }
+    * )
+    *
+    * @param int         $id       the server id
+    * @return View
+    */
+   public function deleteAction($id)
+   {
+       $requestedServer = $this->getServerRepository()->findOneById($id);
+       $this->getServerManager()->delete($requestedServer);
+
+       return new View(null, Response::HTTP_NO_CONTENT);
+   }
+
+    /**
      * Returns the required Manager for this controller.
      *
      * @return \FormaLibre\RestBundle\Manager\ServerManager
@@ -151,7 +173,7 @@ class ServerController extends FOSRestController implements ClassResourceInterfa
     }
 
     /**
-     * @return \AppBundle\Repository\Restricted\RestrictedAccountRepository
+     * @return \FormaLibre\RestBundle\Repository\Doctrine\DoctrineServerRepository
      */
     private function getServerRepository()
     {
