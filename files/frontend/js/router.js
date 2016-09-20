@@ -18,11 +18,7 @@ angular.
         .when("/servers", {
             controller: "ServersController",
             templateUrl: "servers.html",
-            resolve: {
-              servers: function(Servers) {
-                return Servers.getServers();
-              }
-            }
+
         })
         .when("/server/new", {
             controller: "ServerNewController",

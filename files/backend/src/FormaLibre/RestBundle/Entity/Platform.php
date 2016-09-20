@@ -2,15 +2,18 @@
 
 namespace FormaLibre\RestBundle\Entity;
 
+use FormaLibre\RestBundle\Model\PlatformInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use JMS\Serializer\Annotation as JMSSerializer;
 
 /**
  * Platform
- *
+ * @ORM\Entity(repositoryClass="FormaLibre\RestBundle\Entity\Repository\PlatformEntityRepository")
  * @ORM\Table(name="platform")
- * @ORM\Entity(repositoryClass="FormaLibre\RestBundle\Repository\PlatformRepository")
+ * @JMSSerializer\ExclusionPolicy("all")
  */
-class Platform
+class Platform implements PlatformInterface, \JsonSerializable
 {
     /**
      * @var int
@@ -18,6 +21,8 @@ class Platform
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMSSerializer\Expose
+     * @JMSSerializer\Type("string")
      */
     private $id;
 
@@ -25,6 +30,8 @@ class Platform
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @JMSSerializer\Expose
+     * @JMSSerializer\Type("string")
      */
     private $name;
 
@@ -32,6 +39,8 @@ class Platform
      * @var string
      *
      * @ORM\Column(name="subdomain", type="string", length=255)
+     * @JMSSerializer\Expose
+     * @JMSSerializer\Type("string")
      */
     private $subdomain;
 
@@ -39,6 +48,8 @@ class Platform
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=255)
+     * @JMSSerializer\Expose
+     * @JMSSerializer\Type("string")
      */
     private $description;
 
@@ -46,6 +57,8 @@ class Platform
      * @var string
      *
      * @ORM\Column(name="plan", type="string", length=255)
+     * @JMSSerializer\Expose
+     * @JMSSerializer\Type("string")
      */
     private $plan;
 
@@ -53,6 +66,8 @@ class Platform
      * @var string
      *
      * @ORM\Column(name="endDate", type="string", length=255)
+     * @JMSSerializer\Expose
+     * @JMSSerializer\Type("string")
      */
     private $endDate;
 
@@ -60,6 +75,8 @@ class Platform
      * @var string
      *
      * @ORM\Column(name="maxUsers", type="string", length=255)
+     * @JMSSerializer\Expose
+     * @JMSSerializer\Type("string")
      */
     private $maxUsers;
 
@@ -67,6 +84,8 @@ class Platform
      * @var string
      *
      * @ORM\Column(name="maxDiskSpace", type="string", length=255)
+     * @JMSSerializer\Expose
+     * @JMSSerializer\Type("string")
      */
     private $maxDiskSpace;
 
@@ -74,6 +93,8 @@ class Platform
      * @var string
      *
      * @ORM\Column(name="contactName", type="string", length=255)
+     * @JMSSerializer\Expose
+     * @JMSSerializer\Type("string")
      */
     private $contactName;
 
@@ -81,6 +102,8 @@ class Platform
      * @var string
      *
      * @ORM\Column(name="contactEmail", type="string", length=255)
+     * @JMSSerializer\Expose
+     * @JMSSerializer\Type("string")
      */
     private $contactEmail;
 
@@ -88,6 +111,8 @@ class Platform
      * @var string
      *
      * @ORM\Column(name="contactPhone", type="string", length=255)
+     * @JMSSerializer\Expose
+     * @JMSSerializer\Type("string")
      */
     private $contactPhone;
 
@@ -341,5 +366,24 @@ class Platform
     {
         return $this->contactPhone;
     }
-}
 
+    /**
+     * @return mixed
+     */
+    function jsonSerialize()
+    {
+        return [
+            'id'           => $this->id,
+            'name'         => $this->name,
+            'subdomain'    => $this->subdomain,
+            'description'  => $this->description,
+            'plan'         => $this->plan,
+            'endDate'      => $this->endDate,
+            'maxUsers'     => $this->maxUsers,
+            'maxDiskSpace' => $this->maxDiskSpace,
+            'contactName'  => $this->contactName,
+            'contactEmail' => $this->contactEmail,
+            'contactPhone' => $this->contactPhone,
+        ];
+    }
+}

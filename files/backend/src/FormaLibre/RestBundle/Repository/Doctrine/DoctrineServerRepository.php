@@ -2,7 +2,6 @@
 
 namespace FormaLibre\RestBundle\Repository\Doctrine;
 
-use FormaLibre\RestBundle\Model\UserInterface;
 use FormaLibre\RestBundle\Model\ServerInterface;
 use FormaLibre\RestBundle\Repository\ServerRepositoryInterface;
 use FormaLibre\RestBundle\Entity\Repository\ServerEntityRepository;
