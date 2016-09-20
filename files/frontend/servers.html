@@ -27,7 +27,10 @@
               <td>{{server.provider}}</td>
               <td>{{server.type}}</td>
               <td>{{server.description}}</td>
-              <td><a ng-href="#/server/edit/{{server.id}}" class="btn btn-default btn-xs"><i class="fa fa-edit"></i></a></td>
+              <td>
+                <a ng-href="#/server/edit/{{server.id}}" ng-if="server.hasOwnProperty('id')" class="btn btn-default btn-xs"><i class="fa fa-edit"></i></a>
+                <img src="http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.16.1/images/loader-large.gif" height="22px" width="24px" ng-if="!server.hasOwnProperty('id')">
+              </td>
             </tr>
           </table>
           <div class="callout callout-info" ng-if="!servers.length">
