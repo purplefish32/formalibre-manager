@@ -87,7 +87,7 @@ class ServerManager implements ManagerInterface
     public function put($server, array $parameters, array $options = [])
     {
         $this->guardServerImplementsInterface($server);
-        
+
         /** @var ServerInterface $server */
         $serverDTO = $this->dataTransformer->convertToDTO($server);
         $serverDTO = $this->formHandler->handle(
@@ -102,27 +102,14 @@ class ServerManager implements ManagerInterface
         return $server;
     }
 
-    //TODO check example
-    /**
-     * @param ServerInterface $serverInterface
-     * @param array           $parameters
-     * @return mixed
-     */
-    public function patch($resource, array $parameters, array $options = []) {
-        return $this->formHandler->handle(
-            $resource,
-            $parameters,
-            "PATCH"
-        );
-    }
-
-    //TODO check example
     /**
     * @param ServerInterface $serverInterface
     * @return mixed
     */
     public function delete($resource) {
-        return $this->formHandler->delete($resource);
+        $this->guardServerImplementsInterface($resource);
+        
+        return $this->repository->delete($resource);
     }
 
     /**

@@ -157,6 +157,7 @@ class ServerController extends FOSRestController implements ClassResourceInterfa
    public function deleteAction($id)
    {
        $requestedServer = $this->getServerRepository()->findOneById($id);
+       //return $requestedServer;
        $this->getServerManager()->delete($requestedServer);
 
        return new View(null, Response::HTTP_NO_CONTENT);

@@ -35,7 +35,7 @@ interface ManagerInterface
      * @param array           $parameters
      * @return mixed
      */
-    public function patch($resource, array $parameters, array $options);
+    //public function patch($resource, array $parameters, array $options);
 
     /**
      * @param ServerInterface $serverInterface
