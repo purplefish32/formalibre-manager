@@ -15,42 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ServerController extends FOSRestController implements ClassResourceInterface
 {
-
-
-    /**
-     * Create a new Server.
-     *
-     * @ApiDoc(
-     *   output = "FormaLibre\RestBundle\Entity\Server",
-     *   statusCodes = {
-     *     200 = "Returned when successful",
-     *     404 = "Returned when not found"
-     *   }
-     * )
-     *
-     * @param JSON $data
-     *
-     * @throws NotFoundHttpException when does not exist
-     *
-     */
-    public function postAction(Request $request)
-    {
-        try {
-
-          $server = $this->getManager()->post($request->request->all());
-
-          $routeOptions = [
-              'serverId'  => $server->getId()
-          ];
-
-          return $this->routeRedirectView('get_servers', $routeOptions, Response::HTTP_CREATED);
-
-        } catch (InvalidFormException $e) {
-
-          return $e->getForm();
-        }
-    }
-
     /**
      * Get a single Server.
      *
@@ -68,11 +32,9 @@ class ServerController extends FOSRestController implements ClassResourceInterfa
      *
      * @return View
      */
-    public function getAction($id)
+    public function getAction($serverId)
     {
-        $server =  $this->getManager()->get($id); //$this->getServerRepository()->findOneById($id);
-        $view = $this->view($server, 200);
-        return $this->handleView($view);
+        return $this->getServerManager()->get($serverId);
     }
 
     /**
@@ -97,11 +59,44 @@ class ServerController extends FOSRestController implements ClassResourceInterfa
      */
     public function cgetAction()
     {
-        $servers =  $this->getManager()->all();
+        $servers =  $this->getServerManager()->all();
         $view = $this->view($servers, 200);
         return $this->handleView($view);
     }
 
+    /**
+    * Create a new Server.
+    *
+    * @ApiDoc(
+    *   output = "FormaLibre\RestBundle\Entity\Server",
+    *   statusCodes = {
+    *     200 = "Returned when successful",
+    *     404 = "Returned when not found"
+    *   }
+    * )
+    *
+    * @param JSON $data
+    *
+    * @throws NotFoundHttpException when does not exist
+    *
+    */
+    public function postAction(Request $request)
+    {
+        try {
+
+            $server = $this->getServerManager()->post($request->request->all());
+
+            $routeOptions = [
+                'serverId'  => $server->getId()
+            ];
+
+            return $this->routeRedirectView('get_server', $routeOptions, Response::HTTP_CREATED);
+
+        } catch (InvalidFormException $e) {
+
+            return $e->getForm();
+        }
+    }
 
     /**
      * Replaces existing Server from the submitted data
@@ -129,15 +124,17 @@ class ServerController extends FOSRestController implements ClassResourceInterfa
         $requestedServer = $this->getServerRepository()->findOneById($id);
 
         try {
-            $server = $this->getManager()->put(
+
+            $server = $this->getServerManager()->put(
                 $requestedServer,
                 $request->request->all()
             );
-            return $server;
             $routeOptions = [
                 'serverId'  => $server->getId()
             ];
+
             return $this->routeRedirectView('get_servers', $routeOptions, Response::HTTP_NO_CONTENT);
+
         } catch (InvalidFormException $e) {
             return $e->getForm();
         }
@@ -148,7 +145,7 @@ class ServerController extends FOSRestController implements ClassResourceInterfa
      *
      * @return \FormaLibre\RestBundle\Manager\ServerManager
      */
-    private function getManager()
+    private function getServerManager()
     {
         return $this->get('fl.server.manager');
     }
