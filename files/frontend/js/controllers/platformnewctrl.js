@@ -1,5 +1,5 @@
 angular.
-  module("PlatformNewController",[]).
+  module("PlatformNewController",['Platforms']).
   controller("PlatformNewController", ["$scope", "$http","Config",function($scope, $http,Config) {
     $scope.submitForm=function(){
         var data = {};

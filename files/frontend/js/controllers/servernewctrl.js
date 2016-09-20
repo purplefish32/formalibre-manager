@@ -1,5 +1,5 @@
 angular.
-  module("ServerNewController",[]).
+  module("ServerNewController",["Servers",'ui-notification']).
   controller("ServerNewController", ["$scope", "Notification","Servers","$routeParams","$location",function($scope, Notification,Servers,$routeParams,$location) {
     $scope.submitForm=function(){
         var server = $scope.server;

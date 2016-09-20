@@ -1,5 +1,12 @@
 angular.
-  module('Router', []).
+  module('Router', [
+      'ngRoute',
+      'ServersController',
+      'ListController',
+      'PlatformsController',
+      'ServerNewController',
+      'ServerEditController',
+      'PlatformNewController']).
   config(['$routeProvider', '$locationProvider', 'NotificationProvider', 'cfpLoadingBarProvider',function($routeProvider, $locationProvider, NotificationProvider, cfpLoadingBarProvider) {
     $routeProvider
         .when("/", {
