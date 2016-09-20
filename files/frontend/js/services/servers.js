@@ -1,23 +1,43 @@
 angular.
-  module('Servers',[]).
-  service("Servers", ["$http","Config",function($http,Config) {
-      this.getServers = function() {
-          return $http.get(Config.api_url+"servers").
-              then(function(response) {
-                  return response;
-              }, function(response) {
-                  console.log(response);
-                  alert("Error finding servers.");
-              });
+  module('Servers',['ngResource']).
+  service("Servers", ["$http","Config","$resource",function($http,Config,$resource) {
+      data = $resource(Config.api_url+"servers/:id",{id:"@id"});
+      data.list=[];
+
+      data.tryToAdd = function(server,successCb,ErrorCb) {
+        data.list.push(server);
+
+        var removeServerByIp = function (ip){
+          var idx =
+            data.list.findIndex(function(srv){return srv.ip == ip;});
+
+          if (idx)
+          {
+            data.list.splice(idx,1);
+          }
+        }
+
+        var saveit = function(){
+            data.save(server,function () {
+                successCb();
+            }, function() {
+              ErrorCb();
+              removeServerByIp(server.ip);
+            }
+          );
+        }
+
+        saveit();
       }
 
-      this.getServer = function(id) {
-          return $http.get(Config.api_url+"/servers/" + id).
-              then(function(response) {
-                  return response;
-              }, function(response) {
-                  console.log(response);
-                  alert("Error finding server.");
-              });
+      data.refresh = function() {
+        data.query(function(response){
+          angular.copy (response, data.list)
+        });
       }
+
+      data.refresh();
+
+      return data;
+
   }])
