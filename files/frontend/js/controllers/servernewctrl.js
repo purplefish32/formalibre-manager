@@ -1,6 +1,18 @@
 angular.
   module("ServerNewController",["Servers",'ui-notification']).
   controller("ServerNewController", ["$scope", "Notification","Servers","$routeParams","$location",function($scope, Notification,Servers,$routeParams,$location) {
+
+    if($routeParams.id)
+    {
+      Servers.waitForData(function(){
+            Servers.findBy({id:$routeParams.id},function (srv) {
+              $scope.server = srv;
+            },function () {
+              Notification.error('Internal Error : unable to find the serer to edit')
+            });
+          })
+    }
+
     $scope.submitForm=function(){
         var server = $scope.server;
 
