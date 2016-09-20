@@ -21,7 +21,7 @@
               <th>Description</th>
               <th>Edit</th>
             </tr>
-            <tr ng-repeat="server in servers">
+            <tr ng-repeat="server in servers | orderBy:'name'">
               <td>{{server.name}}</td>
               <td>{{server.ip}}</td>
               <td>{{server.provider}}</td>
