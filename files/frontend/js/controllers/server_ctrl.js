@@ -1,7 +1,6 @@
 angular.
-  module("ServerNewController",["Servers",'ui-notification']).
-  controller("ServerNewController", ["$scope", "Notification","Servers","$routeParams","$location",function($scope, Notification,Servers,$routeParams,$location) {
-
+  module("ServerController",["Servers",'ui-notification','ui.bootstrap']).
+  controller("ServerController", ["$scope", "Notification","Servers","$routeParams","$location","$uibModal",function($scope, Notification,Servers,$routeParams,$location,$uibModal) {
     if($routeParams.id)
     {
       Servers.waitForData(function(){
@@ -11,6 +10,27 @@ angular.
               Notification.error('Internal Error : unable to find the serer to edit')
             });
           })
+
+    $scope.delete = function (server) {
+      Servers.tryToRemove(server.id,
+        function(response) {
+          Notification.success('Server '+server.name+' has been deleted');
+        },
+        function(response) {
+          Notification.error('Error removing server : '+server.name);
+        });
+      }
+
+      $scope.open = function (size,server) {
+        $scope.modalInstance = $uibModal.open({
+          animation: true,
+          ariaLabelledBy: 'modal-title',
+          ariaDescribedBy: 'modal-body',
+          templateUrl: 'myModalContent.html',
+          controller: 'ServerController',
+          scope: $scope
+        });
+      }
     }
 
     $scope.submitForm=function(){

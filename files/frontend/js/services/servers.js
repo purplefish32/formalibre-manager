@@ -17,6 +17,13 @@ angular.
         data.initToken.reject(false);
       }
 
+      var removeInList = function(idx) {
+        if (idx>=0)
+        {
+          data.list.splice(idx,1);
+        }
+      }
+
       data.tryToAdd = function(server,successCb,ErrorCb) {
         data.list.push(server);
 
@@ -24,10 +31,7 @@ angular.
           var idx =
             data.list.findIndex(function(srv){return srv.ip == ip;});
 
-          if (idx>=0)
-          {
-            data.list.splice(idx,1);
-          }
+          removeInList(idx);
         }
 
         data.save(server,function (response,id) {
@@ -84,6 +88,14 @@ angular.
         }
 
         return result;
+      }
+
+      data.tryToRemove = function (id,SucessCb,ErrorCb) {
+        data.findIdxBy({id:id},function (idx) {
+          data.remove({id:id},function () {
+            removeInList(idx);
+          },ErrorCb)
+        }, ErrorCb)
       }
 
       data.refresh();

@@ -48,9 +48,19 @@
           </div>
           <div class="box-footer">
             <input type="submit" class="btn btn-primary">
+            <a ng-click="open(len,server)"class="btn btn-danger" >Delete</a> <!--ng-if="server.hasOwnProperty('id')"-->
           </div>
         </div>
       </form>
+        <script type="text/ng-template" id="myModalContent.html">
+          <div class="modal-header">
+              <h3 class="modal-title" id="modal-title">Do you really want to suppress the {{server.name}} server ?</h3>
+          </div>
+          <div class="modal-footer">
+              <button class="btn btn-primary" type="button" ng-click="delete(server)">Delete</button>
+              <!--button class="btn btn-warning" type="button" ng-click="closeModal()">Cancel</button-->
+          </div>
+      </script>
     </section>
     <!-- /.content -->
   </div>
