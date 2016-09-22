@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use GuzzleHttp\Exception\RequestException;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ServerController extends FOSRestController
 {
@@ -94,7 +95,7 @@ class ServerController extends FOSRestController
       $server = json_decode($request->getContent());
 
       $client = $this->get('guzzle.client.api');
-      $response = $client->request(
+      $responseBackend = $client->request(
         'POST',
         '/servers',
         [
@@ -109,7 +110,19 @@ class ServerController extends FOSRestController
 
       );
 
-      return json_decode($response->getBody(), true);
+      $server = json_decode($responseBackend->getBody());
+
+      $response = new Response($responseBackend->getBody());
+      $response->setStatusCode($responseBackend->getStatusCode());
+
+      if ($responseBackend->getHeader("Location")) {
+          $location = $this->generateUrl('get_servers', array(), UrlGeneratorInterface::ABSOLUTE_URL) . "/" . $server->id;
+          $response->headers->set("Location", $location);
+      }
+
+      $response->headers->set('Content-Type', 'application/json');
+
+      return $response;
     }
 
     /**
@@ -151,6 +164,7 @@ class ServerController extends FOSRestController
 
       );
 
+
       return json_decode($response->getBody(), true);
     }
 
@@ -171,7 +185,8 @@ class ServerController extends FOSRestController
     public function deleteServersAction(Request $request, $id)
     {
         $client = $this->get('guzzle.client.api');
-        $response = $client->request('DELETE','/servers/' . $id);
+        $response = $client->request('DELETE','/servers/' . $id, ['json' => []]);
+
         return json_decode($response->getBody(), true);
     }
 }
