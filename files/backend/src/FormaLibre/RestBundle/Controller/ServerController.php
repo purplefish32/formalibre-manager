@@ -10,8 +10,8 @@ use FOS\RestBundle\Controller\Annotations;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FormaLibre\RestBundle\Manager\ServerManager;
 use Symfony\Component\HttpFoundation\Request;
-//use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ServerController extends FOSRestController implements ClassResourceInterface
 {
@@ -86,11 +86,15 @@ class ServerController extends FOSRestController implements ClassResourceInterfa
 
             $server = $this->getServerManager()->post($request->request->all());
 
-            $routeOptions = [
-                'serverId'  => $server->getId()
+            $additionalHeaders = [
+                'Location'  => $this->generateUrl('get_servers', array(), UrlGeneratorInterface::ABSOLUTE_URL) . "/" . $server->getId()
             ];
 
-            return $this->routeRedirectView('get_server', $routeOptions, Response::HTTP_CREATED);
+            //return $this->routeRedirectView('get_server', $additionalHeaders, Response::HTTP_CREATED);
+
+            $view = $this->view($server, Response::HTTP_CREATED, $additionalHeaders);
+
+            return $this->handleView($view);
 
         } catch (InvalidFormException $e) {
 
