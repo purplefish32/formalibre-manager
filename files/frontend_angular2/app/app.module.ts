@@ -13,7 +13,8 @@ import { routing } from './app.routing'
 import { DashboardComponent }      from './dashboard/dashboard.component';
 import { ServersService }      from './servers/servers.service';
 import { ServersComponent }      from './servers/servers.component';
-import { ServerDetailComponent } from './servers/server-detail.component'
+import { ServerDetailComponent } from './servers/server-detail.component';
+import { ServerEditComponent } from './servers/server-edit.component';
 
 @NgModule({
   imports: [
@@ -24,8 +25,9 @@ import { ServerDetailComponent } from './servers/server-detail.component'
   declarations: [
     AppComponent,
     DashboardComponent,
-    ServersComponent ,
-    ServerDetailComponent
+    ServersComponent,
+    ServerDetailComponent,
+    ServerEditComponent
   ],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy},
