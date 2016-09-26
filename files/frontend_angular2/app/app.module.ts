@@ -2,6 +2,11 @@ import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule }    from '@angular/http';
 
+import {
+  LocationStrategy,
+  HashLocationStrategy
+} from '@angular/common';
+
 import { AppComponent }  from './app.component';
 import { routing } from './app.routing'
 
@@ -23,6 +28,7 @@ import { ServerDetailComponent } from './servers/server-detail.component'
     ServerDetailComponent
   ],
   providers: [
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
     ServersService,
   ],
   bootstrap: [ AppComponent ]
