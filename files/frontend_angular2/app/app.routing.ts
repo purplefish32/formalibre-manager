@@ -11,6 +11,10 @@ const appRoutes: Routes = [
     component: DashboardComponent
   },
   {
+    path: 'dashboard',
+    component: DashboardComponent
+  },
+  {
     path: 'servers',
     component: ServersComponent
   },
