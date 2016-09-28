@@ -31,9 +31,9 @@ class ServerController extends FOSRestController implements ClassResourceInterfa
      *
      * @return View
      */
-    public function getAction($serverId)
+    public function getAction($id)
     {
-        return $this->getServerManager()->get($serverId);
+        return $this->getServerManager()->get($id);
     }
 
     /**
@@ -127,7 +127,7 @@ class ServerController extends FOSRestController implements ClassResourceInterfa
                 $request->request->all()
             );
             $routeOptions = [
-                'serverId' => $server->getId(),
+                'id' => $server->getId(),
             ];
 
             return $this->routeRedirectView('get_servers', $routeOptions, Response::HTTP_NO_CONTENT);
@@ -154,7 +154,6 @@ class ServerController extends FOSRestController implements ClassResourceInterfa
    public function deleteAction($id)
    {
        $requestedServer = $this->getServerRepository()->findOneById($id);
-       //return $requestedServer;
        $this->getServerManager()->delete($requestedServer);
 
        return new View(null, Response::HTTP_NO_CONTENT);
@@ -177,4 +176,5 @@ class ServerController extends FOSRestController implements ClassResourceInterfa
     {
         return $this->get('fl.doctrine_entity_repository.server');
     }
+    
 }

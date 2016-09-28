@@ -2,7 +2,6 @@
 
 namespace FormaLibre\RestBundle\Manager;
 
-//use FormaLibre\RestBundle\Entity\Server;
 use FormaLibre\RestBundle\DataTransformer\ServerDataTransformer;
 use FormaLibre\RestBundle\DTO\ServerDTO;
 use FormaLibre\RestBundle\Form\Handler\FormHandler;
