@@ -9,8 +9,7 @@ use FormaLibre\RestBundle\Repository\RepositoryInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Class DoctrinePlatformRepository
- * @package FormaLibre\RestBundle\Repository\Doctrine
+ * Class DoctrinePlatformRepository.
  */
 class DoctrinePlatformRepository implements PlatformRepositoryInterface, RepositoryInterface
 {
@@ -25,8 +24,9 @@ class DoctrinePlatformRepository implements PlatformRepositoryInterface, Reposit
 
     /**
      * DoctrineUserRepository constructor.
-     * @param   CommonDoctrineRepository    $commonRepository
-     * @param   PlatformEntityRepository     $platformEntityRepository
+     *
+     * @param CommonDoctrineRepository $commonRepository
+     * @param PlatformEntityRepository $platformEntityRepository
      */
     public function __construct(CommonDoctrineRepository $commonRepository, PlatformEntityRepository $platformEntityRepository)
     {
@@ -43,26 +43,27 @@ class DoctrinePlatformRepository implements PlatformRepositoryInterface, Reposit
     }
 
     /**
-     * @param   PlatformInterface    $platform
-     * @param   array               $arguments
+     * @param PlatformInterface $platform
+     * @param array             $arguments
      */
-    public function save(PlatformInterface $platform, array $arguments = ['flush'=>true])
+    public function save(PlatformInterface $platform, array $arguments = ['flush' => true])
     {
         $this->commonRepository->save($platform, $arguments);
     }
 
     /**
-     * @param   PlatformInterface    $platform
-     * @param   array               $arguments
+     * @param PlatformInterface $platform
+     * @param array             $arguments
      */
-    public function delete(PlatformInterface $platform, array $arguments = ['flush'=>true])
+    public function delete(PlatformInterface $platform, array $arguments = ['flush' => true])
     {
         $this->commonRepository->delete($platform, $arguments);
     }
 
     /**
      * @param   $id
-     * @return  mixed
+     *
+     * @return mixed
      */
     public function findOneById($id)
     {
@@ -71,11 +72,13 @@ class DoctrinePlatformRepository implements PlatformRepositoryInterface, Reposit
 
     /**
      * @param   $id
-     * @return  mixed
+     *
+     * @return mixed
      */
     public function findAll()
     {
         $platforms = $this->platformEntityRepository->findAll();
+
         return new ArrayCollection($platforms);
     }
 }

@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Platform
+ * Platform.
  *
  * @ORM\Table(name="platform")
  * @ORM\Entity()
@@ -70,7 +70,7 @@ class Platform
     private $contactPhone;
 
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -80,7 +80,7 @@ class Platform
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -94,7 +94,7 @@ class Platform
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -104,7 +104,7 @@ class Platform
     }
 
     /**
-     * Set subdomain
+     * Set subdomain.
      *
      * @param string $subdomain
      *
@@ -118,7 +118,7 @@ class Platform
     }
 
     /**
-     * Get subdomain
+     * Get subdomain.
      *
      * @return string
      */
@@ -128,7 +128,7 @@ class Platform
     }
 
     /**
-     * Set description
+     * Set description.
      *
      * @param string $description
      *
@@ -142,7 +142,7 @@ class Platform
     }
 
     /**
-     * Get description
+     * Get description.
      *
      * @return string
      */
@@ -152,7 +152,7 @@ class Platform
     }
 
     /**
-     * Set contactName
+     * Set contactName.
      *
      * @param string $contactName
      *
@@ -166,7 +166,7 @@ class Platform
     }
 
     /**
-     * Get contactName
+     * Get contactName.
      *
      * @return string
      */
@@ -176,7 +176,7 @@ class Platform
     }
 
     /**
-     * Set contactEmail
+     * Set contactEmail.
      *
      * @param string $contactEmail
      *
@@ -190,7 +190,7 @@ class Platform
     }
 
     /**
-     * Get contactEmail
+     * Get contactEmail.
      *
      * @return string
      */
@@ -200,7 +200,7 @@ class Platform
     }
 
     /**
-     * Set contactPhone
+     * Set contactPhone.
      *
      * @param string $contactPhone
      *
@@ -214,7 +214,7 @@ class Platform
     }
 
     /**
-     * Get contactPhone
+     * Get contactPhone.
      *
      * @return string
      */

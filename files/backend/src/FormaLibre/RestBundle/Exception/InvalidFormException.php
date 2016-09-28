@@ -4,7 +4,7 @@ namespace FormaLibre\RestBundle\Exception;
 
 class InvalidFormException extends \RuntimeException
 {
-    const DEFAULT_ERROR_MESSAGE = "The data submitted to the form was invalid.";
+    const DEFAULT_ERROR_MESSAGE = 'The data submitted to the form was invalid.';
 
     protected $form;
 

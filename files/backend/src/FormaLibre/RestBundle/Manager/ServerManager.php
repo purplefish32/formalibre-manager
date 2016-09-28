@@ -2,25 +2,21 @@
 
 namespace FormaLibre\RestBundle\Manager;
 
-#use FormaLibre\RestBundle\Entity\Server;
+//use FormaLibre\RestBundle\Entity\Server;
 use FormaLibre\RestBundle\DataTransformer\ServerDataTransformer;
 use FormaLibre\RestBundle\DTO\ServerDTO;
-use FormaLibre\RestBundle\Form\Type\ServerType;
 use FormaLibre\RestBundle\Form\Handler\FormHandler;
 use FormaLibre\RestBundle\Model\ServerInterface;
-use FormaLibre\RestBundle\Repository\ServerRepository;
 use FormaLibre\RestBundle\Repository\ServerRepositoryInterface;
 use FormaLibre\RestBundle\Factory\ServerFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use JMS\DiExtraBundle\Annotation as DI;
-use Doctrine\ORM\EntityManager;
 
 class ServerManager implements ManagerInterface
 {
     /**
-    * @var FormHandlerInterface
-    */
+     * @var FormHandlerInterface
+     */
     private $formHandler;
 
     /**
@@ -33,8 +29,7 @@ class ServerManager implements ManagerInterface
         ServerDataTransformer $dataTransformer,
         ServerFactory $serverFactory,
         ServerRepositoryInterface $serverRepository
-    )
-    {
+    ) {
         $this->formHandler = $formHandler;
         $this->dataTransformer = $dataTransformer;
         $this->factory = $serverFactory;
@@ -43,29 +38,36 @@ class ServerManager implements ManagerInterface
 
     /**
      * @param $id
+     *
      * @return mixed
      */
-    public function get($id) {
+    public function get($id)
+    {
         if ($id === null) {
             throw new BadRequestHttpException('A server ID was not specified.');
         }
+
         return $this->repository->findOneById($id);
     }
 
     /**
      * @param $limit
      * @param $offset
+     *
      * @return array
      */
-    public function all($limit = 50, $offset = 0) {
+    public function all($limit = 50, $offset = 0)
+    {
         return $this->repository->findAll()->slice($offset, $limit);
     }
 
     /**
      * @param array $parameters
+     *
      * @return mixed
      */
-    public function post(array $parameters, array $options = []) {
+    public function post(array $parameters, array $options = [])
+    {
         $serverDTO = $this->formHandler->handle(
             new ServerDTO(),
             $parameters,
@@ -75,13 +77,15 @@ class ServerManager implements ManagerInterface
         $server = $this->factory->createFromDTO($serverDTO);
 
         $this->repository->save($server);
+
         return $server;
     }
 
     /**
-     * @param  ServerInterface      $server
-     * @param  array                $parameters
-     * @param  array                $options
+     * @param ServerInterface $server
+     * @param array           $parameters
+     * @param array           $options
+     *
      * @return mixed
      */
     public function put($server, array $parameters, array $options = [])
@@ -99,20 +103,23 @@ class ServerManager implements ManagerInterface
         $this->repository->refresh($server);
         $server = $this->dataTransformer->updateFromDTO($server, $serverDTO);
         $this->repository->save($server);
+
         return $server;
     }
 
     /**
-    * @param ServerInterface $serverInterface
-    * @return mixed
-    */
-    public function delete($resource) {
+     * @param ServerInterface $serverInterface
+     *
+     * @return mixed
+     */
+    public function delete($resource)
+    {
         $this->guardServerImplementsInterface($resource);
-        
+
         return $this->repository->delete($resource);
     }
 
-    /**
+   /**
     * @param $server
     */
    private function guardServerImplementsInterface($server)
