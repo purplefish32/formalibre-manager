@@ -2,7 +2,6 @@
 
 namespace FormaLibre\RestBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use FOS\RestBundle\Controller\Annotations;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcherInterface;
@@ -10,13 +9,11 @@ use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Form\FormTypeInterface;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use GuzzleHttp\Exception\RequestException;
 
 class PlatformController extends FOSRestController
 {
-  /**
+    /**
    * List all platforms.
    *
    * @ApiDoc(
@@ -41,12 +38,11 @@ class PlatformController extends FOSRestController
       $start = null == $offset ? 0 : $offset + 1;
       $limit = $paramFetcher->get('limit');
       $client = $this->get('guzzle.client.api');
-      $response = $client->get('/platforms?limit=' . $limit . '&offset=' . $offset);
+      $response = $client->get('/platforms?limit='.$limit.'&offset='.$offset);
 
       return json_decode($response->getBody(), true);
   }
-  //
-  //
+
   // /**
   //  * Creates a new platform from the submitted data.
   //  */
@@ -55,30 +51,29 @@ class PlatformController extends FOSRestController
   //     $platform = json_decode($request->getContent());
   //     $client = $this->get('guzzle.client.api');
   //     try {
-  //
+
   //         $response = $client->request(
   //             'POST',
   //             '/platforms',
   //             [
   //                 'json' => $platform
   //             ]
-  //
+
   //         );
-  //
+
   //     } catch (RequestException $e) {
   //         if ($e->getResponse()->getStatusCode() == Response::HTTP_BAD_REQUEST) {
   //             $data = json_decode($e->getResponse()->getBody(), true);
   //             $view = $this->view($data, Response::HTTP_BAD_REQUEST);
-  //
+
   //             return $this->handleView($view);
   //         }
   //     }
-  //
+
   //     return json_decode($response->getBody(), true);
-  //
+
   // }
-  //
-  //
+
   // /**
   //  * Removes a platform.
   //  *

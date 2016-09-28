@@ -2,7 +2,6 @@
 
 namespace FormaLibre\RestBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use FOS\RestBundle\Controller\Annotations;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcherInterface;
@@ -12,7 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use GuzzleHttp\Exception\RequestException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ServerController extends FOSRestController
@@ -42,7 +40,7 @@ class ServerController extends FOSRestController
         $start = null == $offset ? 0 : $offset + 1;
         $limit = $paramFetcher->get('limit');
         $client = $this->get('guzzle.client.api');
-        $response = $client->get('/servers?limit=' . $limit . '&offset=' . $offset);
+        $response = $client->get('/servers?limit='.$limit.'&offset='.$offset);
 
         return json_decode($response->getBody(), true);
     }
@@ -69,9 +67,10 @@ class ServerController extends FOSRestController
      */
     public function getServerAction(Request $request, $id)
     {
-      $client = $this->get('guzzle.client.api');
-      $response = $client->get('/servers/' . $id);
-      return json_decode($response->getBody(), true);
+        $client = $this->get('guzzle.client.api');
+        $response = $client->get('/servers/'.$id);
+
+        return json_decode($response->getBody(), true);
     }
 
     /**
@@ -92,37 +91,37 @@ class ServerController extends FOSRestController
      */
     public function postServersAction(Request $request)
     {
-      $server = json_decode($request->getContent());
+        $server = json_decode($request->getContent());
 
-      $client = $this->get('guzzle.client.api');
-      $responseBackend = $client->request(
+        $client = $this->get('guzzle.client.api');
+        $responseBackend = $client->request(
         'POST',
         '/servers',
         [
           'json' => [
-              "ip" => $server->ip,
-              "name" => $server->name,
-              "provider" => $server->provider,
-              "type" => $server->type,
-              "description" => $server->description
-          ]
+              'ip' => $server->ip,
+              'name' => $server->name,
+              'provider' => $server->provider,
+              'type' => $server->type,
+              'description' => $server->description,
+          ],
         ]
 
       );
 
-      $server = json_decode($responseBackend->getBody());
+        $server = json_decode($responseBackend->getBody());
 
-      $response = new Response($responseBackend->getBody());
-      $response->setStatusCode($responseBackend->getStatusCode());
+        $response = new Response($responseBackend->getBody());
+        $response->setStatusCode($responseBackend->getStatusCode());
 
-      if ($responseBackend->getHeader("Location")) {
-          $location = $this->generateUrl('get_servers', array(), UrlGeneratorInterface::ABSOLUTE_URL) . "/" . $server->id;
-          $response->headers->set("Location", $location);
-      }
+        if ($responseBackend->getHeader('Location')) {
+            $location = $this->generateUrl('get_servers', array(), UrlGeneratorInterface::ABSOLUTE_URL).'/'.$server->id;
+            $response->headers->set('Location', $location);
+        }
 
-      $response->headers->set('Content-Type', 'application/json');
+        $response->headers->set('Content-Type', 'application/json');
 
-      return $response;
+        return $response;
     }
 
     /**
@@ -147,25 +146,24 @@ class ServerController extends FOSRestController
      */
     public function putServersAction(Request $request, $id)
     {
-      $server = json_decode($request->getContent());
-      $client = $this->get('guzzle.client.api');
-      $response = $client->request(
+        $server = json_decode($request->getContent());
+        $client = $this->get('guzzle.client.api');
+        $response = $client->request(
         'PUT',
-        '/servers/' . $id,
+        '/servers/'.$id,
         [
           'json' => [
               'ip' => $server->ip,
               'name' => $server->name,
               'provider' => $server->provider,
               'type' => $server->type,
-              'description' => $server->description
-          ]
+              'description' => $server->description,
+          ],
         ]
 
       );
 
-
-      return json_decode($response->getBody(), true);
+        return json_decode($response->getBody(), true);
     }
 
     /**
@@ -180,12 +178,11 @@ class ServerController extends FOSRestController
      *
      * @param Request $request the request object
      * @param int     $id      the server id
-     *
      */
     public function deleteServersAction(Request $request, $id)
     {
         $client = $this->get('guzzle.client.api');
-        $response = $client->request('DELETE','/servers/' . $id, ['json' => []]);
+        $response = $client->request('DELETE', '/servers/'.$id, ['json' => []]);
 
         return json_decode($response->getBody(), true);
     }
