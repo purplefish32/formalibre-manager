@@ -73,6 +73,7 @@ class PlatformManager implements ManagerInterface
             Request::METHOD_POST,
             $options
         );
+
         $platform = $this->factory->createFromDTO($platformDTO);
 
         $this->repository->save($platform);

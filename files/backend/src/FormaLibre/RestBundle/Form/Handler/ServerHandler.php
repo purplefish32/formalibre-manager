@@ -52,10 +52,7 @@ class ServerHandler implements FormHandlerInterface
 
         $form = $this->formFactory->create(get_class($this->formType), $object, $options);
         $form->submit($parameters, 'PATCH' !== $method);
-        echo $form->isValid() ? 'yep' : 'nope';
-        die;
-                //$form = $this->formFactory->create(new ServerType(), $object, $options);
-        $form->submit($parameters, 'PATCH' !== $method);
+    
         if (!$form->isValid()) {
             throw new InvalidFormException($form);
         }

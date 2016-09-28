@@ -82,11 +82,11 @@ class PlatformDTO implements SymfonyFormDTO
             'subdomain' => $this->subdomain,
             'description' => $this->description,
             'plan' => $this->plan,
-            'endDate' => $this->endDate
-            'maxUsers' => $this->maxUsers
-            'maxDiskSpace' => $this->maxDiskSpace
-            'contactName' => $this->contactName
-            'contactEmail' => $this->contactEmail
+            'endDate' => $this->endDate,
+            'maxUsers' => $this->maxUsers,
+            'maxDiskSpace' => $this->maxDiskSpace,
+            'contactName' => $this->contactName,
+            'contactEmail' => $this->contactEmail,
             'contactPhone' => $this->contactPhone
         ];
     }
