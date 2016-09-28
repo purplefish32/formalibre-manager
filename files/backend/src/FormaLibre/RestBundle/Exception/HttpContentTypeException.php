@@ -1,6 +1,7 @@
 <?php
 
 namespace FormaLibre\RestBundle\Exception;
+
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class HttpContentTypeException extends HttpException

@@ -5,9 +5,8 @@ namespace FormaLibre\RestBundle\Form\Handler;
 use FormaLibre\RestBundle\Exception\InvalidFormException;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormTypeInterface;
-use FormaLibre\RestBundle\Form\Type\PlatformType;
 
-class FormHandler implements FormHandlerInterface
+class PlatformHandler implements FormHandlerInterface
 {
     /**
      * @var FormFactoryInterface
@@ -56,6 +55,7 @@ class FormHandler implements FormHandlerInterface
         if (!$form->isValid()) {
             throw new InvalidFormException($form);
         }
+
         return $form->getData();
     }
 }

@@ -2,24 +2,18 @@
 
 namespace FormaLibre\RestBundle\Controller;
 
-use PlatformBundle\Form\PlatformType;
-use PlatformBundle\Manager\PlatformManager;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use FOS\RestBundle\Controller\Annotations;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Form\FormTypeInterface;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PlatformController extends FOSRestController implements ClassResourceInterface
 {
-  /**
+    /**
    * Gets a collection of Platforms.
    *
    * @ApiDoc(
@@ -43,13 +37,14 @@ class PlatformController extends FOSRestController implements ClassResourceInter
    */
   public function cgetAction(ParamFetcherInterface $paramFetcher)
   {
-    $platforms =  $this->getManager()->all();
-    $view = $this->view($platforms, 200);
-    return $this->handleView($view);
+      $platforms = $this->getManager()->all();
+      $view = $this->view($platforms, 200);
+
+      return $this->handleView($view);
   }
 
-  /**
-  * Deletes a specific Platform by ID
+ /**
+  * Deletes a specific Platform by ID.
   *
   * @ApiDoc(
   *  description="Deletes an existing Platform",
@@ -60,6 +55,7 @@ class PlatformController extends FOSRestController implements ClassResourceInter
   * )
   *
   * @param int         $id       the platform id
+  *
   * @return View
   */
  public function deleteAction($id)
@@ -69,7 +65,6 @@ class PlatformController extends FOSRestController implements ClassResourceInter
 
      return new View(null, Response::HTTP_NO_CONTENT);
  }
-
 
   /**
    * Returns the required Manager for this controller.

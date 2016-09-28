@@ -11,7 +11,7 @@ class PlatformType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -32,7 +32,7 @@ class PlatformType extends AbstractType
     {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'data_class' => 'PlatformBundle\Entity\Platform'
+            'data_class' => 'PlatformBundle\Entity\Platform',
         ));
     }
 }
