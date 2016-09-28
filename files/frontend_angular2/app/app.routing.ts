@@ -17,6 +17,10 @@ const appRoutes: Routes = [
   {
     path: 'server/edit/:id',
     component: ServerEditComponent
+  },
+  {
+    path: 'server/new',
+    component: ServerEditComponent
   }
 ];
 

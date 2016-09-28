@@ -33,6 +33,14 @@ export class ServersService {
                .catch(this.handleError);
   }
 
+  create(server: Server): Promise<Server> {
+    return this.http
+      .post(this.serversUrl, JSON.stringify(server), {headers: this.headers})
+      .toPromise()
+      .then(res => res.json().data)
+      .catch(this.handleError);
+  }
+
   update(server: Server): Promise<Server> {
     const url = `${this.serversUrl}/${server.id}`;
     return this.http

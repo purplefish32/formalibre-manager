@@ -11,7 +11,6 @@ import { Server } from './server'
 
 export class ServerEditComponent implements OnInit {
   server:Server = new Server();
-  submitted = false;
 
   constructor(
     private servers: ServersService,
@@ -25,12 +24,17 @@ export class ServerEditComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       let id = params['id'];
-      this.servers.getServer(id).then(server => this.server = server);
+      if(id)
+        this.servers.getServer(id).then(server => this.server = server);
     });
   }
 
   onSubmit() {
-    this.servers.update(this.server);
+    if(this.server.id) {
+      this.servers.update(this.server);
+    } else {
+      this.servers.create(this.server);
+    }
 
     this.router.navigate(['servers']);
   }
