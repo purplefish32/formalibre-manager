@@ -33,6 +33,14 @@ export class ServersService {
                .catch(this.handleError);
   }
 
+  delete(id: string): Promise<void> {
+    let url = `${this.serversUrl}/${id}`;
+    return this.http.delete(url, {headers: this.headers})
+      .toPromise()
+      .then(() => null)
+      .catch(this.handleError);
+  }
+
   create(server: Server): Promise<Server> {
     return this.http
       .post(this.serversUrl, JSON.stringify(server), {headers: this.headers})

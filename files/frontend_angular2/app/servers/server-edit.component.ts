@@ -39,6 +39,14 @@ export class ServerEditComponent implements OnInit {
     this.router.navigate(['servers']);
   }
 
+  onDelete() {
+    if(this.server.id != '') {
+      console.dir(this.servers.delete(this.server.id));
+
+      this.router.navigate(['servers']);
+    }
+  }
+
   // TODO: Remove this when we're done
   get_diagnostic() {
     return JSON.stringify(this.server);
