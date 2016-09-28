@@ -7,13 +7,16 @@ import { Server } from './server';
 @Injectable()
 export class ServersService {
 
-  private headers = new Headers({'Content-Type': 'application/json'});
-  private serversUrl = 'http://api.manager.loc/servers';  // URL to web api
+  servers = [];
 
-  constructor(private http: Http) { }
+  private headers = new Headers({'Content-Type': 'application/json'});
+  private serversUrl = 'http://api.manager.loc/servers';  // URL to web servers api
+
+  constructor(private http: Http) {
+    this.getServers()
+  }
 
   private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error); // for demo purposes only
     return Promise.reject(error.message || error);
   }
 
@@ -23,4 +26,20 @@ export class ServersService {
                .then(response => response.json() as Server[])
                .catch(this.handleError);
   }
+
+  getServer(id:string): Promise<Server> {
+    return this.getServers()
+               .then(servers => servers.find(server => server.id === id))
+               .catch(this.handleError);
+  }
+
+  update(server: Server): Promise<Server> {
+    const url = `${this.serversUrl}/${server.id}`;
+    return this.http
+      .put(url, JSON.stringify(server), {headers: this.headers})
+      .toPromise()
+      .then(() => server)
+      .catch(this.handleError);
+  }
+
 }

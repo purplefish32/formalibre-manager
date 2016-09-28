@@ -11,22 +11,22 @@
     </section>
     <!-- Main content -->
     <section class="content">
-      <form class="form" ng-submit="edit()">
+      <form class="form" (ngSubmit)="onSubmit()" #serverForm="ngForm">
         <div class="box">
           <div class="box-body">
                 <fieldset>
                     <legend>Server details</legend>
                     <div class="form-group">
                         <label for="name">Name</label> (Usually the server's reverse DNS)
-                        <input type="text" name="name" ng-model="server.name" class="form-control">
+                        <input type="text" name="name" required  [(ngModel)]="server.name" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="ip">IP</label>
-                        <input type="text" name="ip" ng-model="server.ip" class="form-control">
+                        <input type="text" name="ip" required [(ngModel)]="server.ip" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="provider">Provider</label>
-                        <select name="provider" ng-model="server.provider" class="form-control">
+                        <select name="provider" required [(ngModel)]="server.provider" class="form-control">
                             <option value="OVH" selected>OVH</option>
                             <option value="SoYouStart">SoYouStart</option>
                             <option value="Other">Other</option>
@@ -34,7 +34,7 @@
                     </div>
                     <div class="form-group">
                         <label for="type">Type</label>
-                        <select name="type" ng-model="server.type" class="form-control">
+                        <select name="type" required  [(ngModel)]="server.type" class="form-control">
                             <option value="Bare Metal" selected>Bare Metal</option>
                             <option value="VPS">VPS</option>
                             <option value="Other">Other</option>
@@ -42,13 +42,12 @@
                     </div>
                     <div class="form-group">
                         <label for="description">Description</label>
-                        <input type="text" name="description" ng-model="server.description" class="form-control">
+                        <input type="text" name="description" required [(ngModel)]="server.description" class="form-control">
                     </div>
                 </fieldset>
           </div>
           <div class="box-footer">
-            <input type="submit" class="btn btn-primary">
-            <a ng-click="delete(server)"class="btn btn-danger">Delete</a>
+            <button type="submit" class="btn btn-primary" [disabled]="!serverForm.form.valid">Submit</button>
           </div>
         </div>
       </form>
