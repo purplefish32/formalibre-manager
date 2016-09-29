@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ServerDetailComponent } from './server-detail.component'
 import { Server } from './server'
 import { ServersService } from './servers.service'
+import 'rxjs/add/operator/toPromise';
 
 @Component({
   selector: 'servers',
@@ -21,7 +22,7 @@ export class ServersComponent implements OnInit {
 
   getServers(): void {
     console.log('fetching servers');
-    this.serversService.getServers().then(
+    this.serversService.getServers().toPromise().then(
       servers => {
           this.servers = servers;
           console.dir(this.servers);

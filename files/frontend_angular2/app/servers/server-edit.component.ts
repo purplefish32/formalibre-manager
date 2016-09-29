@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Router }            from '@angular/router';
 import { ServersService } from './servers.service';
 import { Server } from './server'
+import 'rxjs/add/operator/toPromise';
 
 @Component({
   selector: 'ServerEdit',
@@ -25,25 +26,21 @@ export class ServerEditComponent implements OnInit {
     this.route.params.subscribe(params => {
       let id = params['id'];
       if(id)
-        this.servers.getServer(id).then(server => this.server = server);
+        this.servers.getServer(id).toPromise().then(server => this.server = server);
     });
   }
 
   onSubmit() {
     if(this.server.id) {
-      this.servers.update(this.server);
+      this.servers.update(this.server).toPromise().then(server=>this.router.navigate(['servers']),()=>this.router.navigate(['servers']));
     } else {
-      this.servers.create(this.server);
+      this.servers.create(this.server).toPromise().then(server=>this.router.navigate(['servers']),()=>this.router.navigate(['servers']));
     }
-
-    this.router.navigate(['servers']);
   }
 
   onDelete() {
     if(this.server.id != '') {
-      console.dir(this.servers.delete(this.server.id));
-
-      this.router.navigate(['servers']);
+      this.servers.delete(this.server.id).toPromise().then(server=>this.router.navigate(['servers']),()=>this.router.navigate(['servers']));
     }
   }
 

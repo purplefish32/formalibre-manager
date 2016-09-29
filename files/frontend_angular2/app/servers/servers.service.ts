@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http } from '@angular/http';
+import { Headers, Http, Response} from '@angular/http';
 import 'rxjs/add/operator/toPromise';
-
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/fromPromise';
 import { Server } from './server';
 
 @Injectable()
@@ -20,42 +23,33 @@ export class ServersService {
     return Promise.reject(error.message || error);
   }
 
-  getServers(): Promise<Server[]> {
+  getServers(): Observable<Server[]> {
     return this.http.get(this.serversUrl)
-               .toPromise()
-               .then(response => response.json() as Server[])
-               .catch(this.handleError);
+               .map(response => response.json());
   }
 
-  getServer(id:string): Promise<Server> {
-    return this.getServers()
+  getServer(id:string): Observable<Server> {
+    var promise = this.getServers().toPromise()
                .then(servers => servers.find(server => server.id === id))
                .catch(this.handleError);
+    return Observable.fromPromise(promise);
   }
 
-  delete(id: string): Promise<void> {
+  delete(id: string): Observable<Response> {
     let url = `${this.serversUrl}/${id}`;
-    return this.http.delete(url, {headers: this.headers})
-      .toPromise()
-      .then(() => null)
-      .catch(this.handleError);
+    return this.http.delete(url, {headers: this.headers});
   }
 
-  create(server: Server): Promise<Server> {
+  create(server: Server): Observable<Server[]> {
     return this.http
       .post(this.serversUrl, JSON.stringify(server), {headers: this.headers})
-      .toPromise()
-      .then(res => res.json().data)
-      .catch(this.handleError);
+      .map(response => response.json())
   }
 
-  update(server: Server): Promise<Server> {
+  update(server: Server): Observable<Response> {
     const url = `${this.serversUrl}/${server.id}`;
     return this.http
-      .put(url, JSON.stringify(server), {headers: this.headers})
-      .toPromise()
-      .then(() => server)
-      .catch(this.handleError);
+      .put(url, JSON.stringify(server), {headers: this.headers});
   }
 
 }
