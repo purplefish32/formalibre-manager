@@ -11,7 +11,7 @@
     </section>
     <!-- Main content -->
     <section class="content">
-      <form class="form" (ngSubmit)="onSubmit()" #serverForm="ngForm">
+      <form class="form" #serverForm="ngForm">
         <div class="box">
           <div class="box-body">
                 <fieldset>
@@ -46,12 +46,12 @@
                     </div>
                 </fieldset>
           </div>
-          <div class="box-footer">
-            <button type="submit" class="btn btn-primary" [disabled]="!serverForm.form.valid">Submit</button>
-            <span  [hidden]="!server || !server.id"><button (click)="onDelete()" class="btn btn-danger">Delete</button></span>
-          </div>
         </div>
       </form>
+      <div class="box-footer">
+        <button (click)="onSubmit()" class="btn btn-primary" [disabled]="!serverForm.form.valid">Submit</button>
+        <span  [hidden]="!server || !server.id"><button (click)="onDelete()" class="btn btn-danger">Delete</button></span>
+      </div>
     </section>
     <!-- /.content -->
   </div>
