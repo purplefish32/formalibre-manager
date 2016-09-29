@@ -4,11 +4,11 @@ namespace FormaLibre\RestBundle\Entity;
 
 use FormaLibre\RestBundle\Model\ServerInterface;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 use JMS\Serializer\Annotation as JMSSerializer;
 
 /**
- * Server
+ * Server.
+ *
  * @ORM\Entity(repositoryClass="FormaLibre\RestBundle\Entity\Repository\ServerEntityRepository")
  * @ORM\Table(name="server")
  * @JMSSerializer\ExclusionPolicy("all")
@@ -73,15 +73,15 @@ class Server implements ServerInterface, \JsonSerializable
 
     public function __construct($ip = null, $name = null, $type = null, $provider = null, $description = null)
     {
-       $this->ip = $ip;
-       $this->name = $name;
-       $this->type = $type;
-       $this->provider = $provider;
-       $this->description = $description;
+        $this->ip = $ip;
+        $this->name = $name;
+        $this->type = $type;
+        $this->provider = $provider;
+        $this->description = $description;
     }
 
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -91,7 +91,7 @@ class Server implements ServerInterface, \JsonSerializable
     }
 
     /**
-     * Set ip
+     * Set ip.
      *
      * @param string $ip
      *
@@ -105,7 +105,7 @@ class Server implements ServerInterface, \JsonSerializable
     }
 
     /**
-     * Get ip
+     * Get ip.
      *
      * @return string
      */
@@ -115,7 +115,7 @@ class Server implements ServerInterface, \JsonSerializable
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -129,7 +129,7 @@ class Server implements ServerInterface, \JsonSerializable
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -139,7 +139,7 @@ class Server implements ServerInterface, \JsonSerializable
     }
 
     /**
-     * Set provider
+     * Set provider.
      *
      * @param string $provider
      *
@@ -153,7 +153,7 @@ class Server implements ServerInterface, \JsonSerializable
     }
 
     /**
-     * Get provider
+     * Get provider.
      *
      * @return string
      */
@@ -163,7 +163,7 @@ class Server implements ServerInterface, \JsonSerializable
     }
 
     /**
-     * Set type
+     * Set type.
      *
      * @param string $type
      *
@@ -177,7 +177,7 @@ class Server implements ServerInterface, \JsonSerializable
     }
 
     /**
-     * Get type
+     * Get type.
      *
      * @return string
      */
@@ -187,7 +187,7 @@ class Server implements ServerInterface, \JsonSerializable
     }
 
     /**
-     * Set description
+     * Set description.
      *
      * @param string $description
      *
@@ -201,7 +201,7 @@ class Server implements ServerInterface, \JsonSerializable
     }
 
     /**
-     * Get description
+     * Get description.
      *
      * @return string
      */
@@ -213,13 +213,13 @@ class Server implements ServerInterface, \JsonSerializable
     /**
      * @return mixed
      */
-    function jsonSerialize()
+    public function jsonSerialize()
     {
         return [
-            'id'          => $this->id,
-            'name'        => $this->name,
-            'proider'     => $this->proider,
-            'type'        => $this->type,
+            'id' => $this->id,
+            'name' => $this->name,
+            'proider' => $this->proider,
+            'type' => $this->type,
             'description' => $this->description,
         ];
     }

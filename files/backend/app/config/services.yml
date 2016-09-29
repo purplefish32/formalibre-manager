@@ -55,6 +55,17 @@ services:
     fl.factory.platform:
         class: FormaLibre\RestBundle\Factory\PlatformFactory
 
+    # -- FORM TYPE --
+    fl.form.type.server:
+      class: FormaLibre\RestBundle\Form\Type\ServerType
+      tags:
+        - { name: form.type, alias: server }
+
+    fl.form.type.platform:
+      class: FormaLibre\RestBundle\Form\Type\PlatformType
+      tags:
+        - { name: form.type, alias: platform }
+
     # -- FORM HANDLER --
     fl.form.handler.server.interface:
         class: FormaLibre\RestBundle\Form\Handler\FormHandler
@@ -62,21 +73,11 @@ services:
             - "@form.factory"
             - "@fl.form.type.server"
 
-    fl.form.type.server:
-        class: FormaLibre\RestBundle\Form\Type\ServerType
-        tags:
-            - { name: form.type, alias: server }
-
     fl.form.handler.platform.interface:
         class: FormaLibre\RestBundle\Form\Handler\FormHandler
         arguments:
             - "@form.factory"
             - "@fl.form.type.platform"
-
-    fl.form.type.platform:
-        class: FormaLibre\RestBundle\Form\Type\ServerType
-        tags:
-            - { name: form.type, alias: platform }
 
     # -- REPOSITORY --
     fl.repository.doctrine.common:

@@ -8,7 +8,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\Controller\Annotations;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use FormaLibre\RestBundle\Manager\ServerManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -32,9 +31,9 @@ class ServerController extends FOSRestController implements ClassResourceInterfa
      *
      * @return View
      */
-    public function getAction($serverId)
+    public function getAction($id)
     {
-        return $this->getServerManager()->get($serverId);
+        return $this->getServerManager()->get($id);
     }
 
     /**
@@ -59,51 +58,46 @@ class ServerController extends FOSRestController implements ClassResourceInterfa
      */
     public function cgetAction()
     {
-        $servers =  $this->getServerManager()->all();
+        $servers = $this->getServerManager()->all();
         $view = $this->view($servers, 200);
+
         return $this->handleView($view);
     }
 
     /**
-    * Create a new Server.
-    *
-    * @ApiDoc(
-    *   output = "FormaLibre\RestBundle\Entity\Server",
-    *   statusCodes = {
-    *     200 = "Returned when successful",
-    *     404 = "Returned when not found"
-    *   }
-    * )
-    *
-    * @param JSON $data
-    *
-    * @throws NotFoundHttpException when does not exist
-    *
-    */
+     * Create a new Server.
+     *
+     * @ApiDoc(
+     *   output = "FormaLibre\RestBundle\Entity\Server",
+     *   statusCodes = {
+     *     200 = "Returned when successful",
+     *     404 = "Returned when not found"
+     *   }
+     * )
+     *
+     * @param JSON $data
+     *
+     * @throws NotFoundHttpException when does not exist
+     */
     public function postAction(Request $request)
     {
         try {
-
             $server = $this->getServerManager()->post($request->request->all());
 
             $additionalHeaders = [
-                'Location'  => $this->generateUrl('get_servers', array(), UrlGeneratorInterface::ABSOLUTE_URL) . "/" . $server->getId()
+                'Location' => $this->generateUrl('get_servers', array(), UrlGeneratorInterface::ABSOLUTE_URL).'/'.$server->getId(),
             ];
-
-            //return $this->routeRedirectView('get_server', $additionalHeaders, Response::HTTP_CREATED);
 
             $view = $this->view($server, Response::HTTP_CREATED, $additionalHeaders);
 
             return $this->handleView($view);
-
         } catch (InvalidFormException $e) {
-
             return $e->getForm();
         }
     }
 
     /**
-     * Replaces existing Server from the submitted data
+     * Replaces existing Server from the submitted data.
      *
      * @ApiDoc(
      *   resource = true,
@@ -128,24 +122,22 @@ class ServerController extends FOSRestController implements ClassResourceInterfa
         $requestedServer = $this->getServerRepository()->findOneById($id);
 
         try {
-
             $server = $this->getServerManager()->put(
                 $requestedServer,
                 $request->request->all()
             );
             $routeOptions = [
-                'serverId'  => $server->getId()
+                'id' => $server->getId(),
             ];
 
             return $this->routeRedirectView('get_servers', $routeOptions, Response::HTTP_NO_CONTENT);
-
         } catch (InvalidFormException $e) {
             return $e->getForm();
         }
     }
 
-    /**
-    * Deletes a specific Server by ID
+   /**
+    * Deletes a specific Server by ID.
     *
     * @ApiDoc(
     *  description="Deletes an existing Server",
@@ -156,12 +148,12 @@ class ServerController extends FOSRestController implements ClassResourceInterfa
     * )
     *
     * @param int         $id       the server id
+    *
     * @return View
     */
    public function deleteAction($id)
    {
        $requestedServer = $this->getServerRepository()->findOneById($id);
-       //return $requestedServer;
        $this->getServerManager()->delete($requestedServer);
 
        return new View(null, Response::HTTP_NO_CONTENT);
@@ -184,5 +176,5 @@ class ServerController extends FOSRestController implements ClassResourceInterfa
     {
         return $this->get('fl.doctrine_entity_repository.server');
     }
-
+    
 }

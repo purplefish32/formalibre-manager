@@ -9,8 +9,7 @@ use FormaLibre\RestBundle\Repository\RepositoryInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Class DoctrineServerRepository
- * @package FormaLibre\RestBundle\Repository\Doctrine
+ * Class DoctrineServerRepository.
  */
 class DoctrineServerRepository implements ServerRepositoryInterface, RepositoryInterface
 {
@@ -25,8 +24,9 @@ class DoctrineServerRepository implements ServerRepositoryInterface, RepositoryI
 
     /**
      * DoctrineUserRepository constructor.
-     * @param   CommonDoctrineRepository    $commonRepository
-     * @param   ServerEntityRepository     $serverEntityRepository
+     *
+     * @param CommonDoctrineRepository $commonRepository
+     * @param ServerEntityRepository   $serverEntityRepository
      */
     public function __construct(CommonDoctrineRepository $commonRepository, ServerEntityRepository $serverEntityRepository)
     {
@@ -43,26 +43,27 @@ class DoctrineServerRepository implements ServerRepositoryInterface, RepositoryI
     }
 
     /**
-     * @param   ServerInterface    $server
-     * @param   array               $arguments
+     * @param ServerInterface $server
+     * @param array           $arguments
      */
-    public function save(ServerInterface $server, array $arguments = ['flush'=>true])
+    public function save(ServerInterface $server, array $arguments = ['flush' => true])
     {
         $this->commonRepository->save($server, $arguments);
     }
 
     /**
-     * @param   ServerInterface    $server
-     * @param   array               $arguments
+     * @param ServerInterface $server
+     * @param array           $arguments
      */
-    public function delete(ServerInterface $server, array $arguments = ['flush'=>true])
+    public function delete(ServerInterface $server, array $arguments = ['flush' => true])
     {
         $this->commonRepository->delete($server, $arguments);
     }
 
     /**
      * @param   $id
-     * @return  mixed
+     *
+     * @return mixed
      */
     public function findOneById($id)
     {
@@ -71,11 +72,13 @@ class DoctrineServerRepository implements ServerRepositoryInterface, RepositoryI
 
     /**
      * @param   $id
-     * @return  mixed
+     *
+     * @return mixed
      */
     public function findAll()
     {
         $servers = $this->serverEntityRepository->findAll();
+
         return new ArrayCollection($servers);
     }
 }

@@ -2,7 +2,6 @@
 
 namespace FormaLibre\RestBundle\DTO;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class ServerDTO implements SymfonyFormDTO
@@ -41,7 +40,7 @@ class ServerDTO implements SymfonyFormDTO
     {
         return self::class;
     }
-    
+
     /**
      * @return string
      */
@@ -52,7 +51,7 @@ class ServerDTO implements SymfonyFormDTO
             'ip' => $this->ip,
             'description' => $this->description,
             'provider' => $this->provider,
-            'type' => $this->type
+            'type' => $this->type,
         ];
     }
 
@@ -66,11 +65,13 @@ class ServerDTO implements SymfonyFormDTO
 
     /**
      * @param mixed $name
+     *
      * @return $this
      */
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -84,11 +85,13 @@ class ServerDTO implements SymfonyFormDTO
 
     /**
      * @param mixed $ip
+     *
      * @return $this
      */
     public function setIp($ip)
     {
         $this->ip = $ip;
+
         return $this;
     }
 
@@ -102,11 +105,13 @@ class ServerDTO implements SymfonyFormDTO
 
     /**
      * @param mixed $description
+     *
      * @return $this
      */
     public function setDescription($description)
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -120,11 +125,13 @@ class ServerDTO implements SymfonyFormDTO
 
     /**
      * @param mixed $provider
+     *
      * @return $this
      */
     public function setProvider($provider)
     {
         $this->provider = $provider;
+
         return $this;
     }
 
@@ -138,11 +145,13 @@ class ServerDTO implements SymfonyFormDTO
 
     /**
      * @param mixed $type
+     *
      * @return $this
      */
     public function setType($type)
     {
         $this->type = $type;
+
         return $this;
     }
 }

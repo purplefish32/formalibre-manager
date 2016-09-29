@@ -8,16 +8,18 @@ use FormaLibre\RestBundle\Entity\Platform;
 class PlatformFactory //implements PlatformFactoryInterface
 {
     /**
-     * @param  string       $plan
+     * @param string $plan
+     *
      * @return Platform
      */
-    public function create($name = null, $subdomain = null, $description = null, $plan = null, $endDate = null , $maxUsers = null, $maxDiskSpace = null, $contactName = null, $contactEmail = null, $contactPhone = null)
+    public function create($name = null, $subdomain = null, $description = null, $plan = null, $endDate = null, $maxUsers = null, $maxDiskSpace = null, $contactName = null, $contactEmail = null, $contactPhone = null)
     {
-        return new Platform( $name, $subdomain, $description, $plan, $endDate , $maxUsers, $maxDiskSpace, $contactName, $contactEmail, $contactPhone);
+        return new Platform($name, $subdomain, $description, $plan, $endDate, $maxUsers, $maxDiskSpace, $contactName, $contactEmail, $contactPhone);
     }
 
     /**
-     * @param  PlatformDTO   $platformDTO
+     * @param PlatformDTO $platformDTO
+     *
      * @return Platform
      */
     public function createFromDTO(PlatformDTO $platformDTO)
@@ -32,7 +34,7 @@ class PlatformFactory //implements PlatformFactoryInterface
             $platformDTO->getMaxDiskSpace(),
             $platformDTO->getContactName(),
             $platformDTO->getContactEmail(),
-            $platformDTO->getContactPhone()          
+            $platformDTO->getContactPhone()
         );
 
         return $platform;

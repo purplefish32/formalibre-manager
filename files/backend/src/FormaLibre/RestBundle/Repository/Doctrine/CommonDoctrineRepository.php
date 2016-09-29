@@ -5,8 +5,7 @@ namespace FormaLibre\RestBundle\Repository\Doctrine;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
- * Class CommonDoctrineRepository
- * @package FormaLibre\RestBundle\Repository\Doctrine
+ * Class CommonDoctrineRepository.
  */
 class CommonDoctrineRepository
 {
@@ -17,6 +16,7 @@ class CommonDoctrineRepository
 
     /**
      * DoctrineUserRepository constructor.
+     *
      * @param EntityManagerInterface $em
      */
     public function __construct(EntityManagerInterface $em)
@@ -41,10 +41,10 @@ class CommonDoctrineRepository
     }
 
     /**
-     * @param   mixed               $object
-     * @param   array               $arguments
+     * @param mixed $object
+     * @param array $arguments
      */
-    public function save($object, array $arguments = ['flush'=>true])
+    public function save($object, array $arguments = ['flush' => true])
     {
         $this->em->persist($object);
 
@@ -54,10 +54,10 @@ class CommonDoctrineRepository
     }
 
     /**
-     * @param   mixed               $object
-     * @param   array               $arguments
+     * @param mixed $object
+     * @param array $arguments
      */
-    public function delete($object, array $arguments = ['flush'=>true])
+    public function delete($object, array $arguments = ['flush' => true])
     {
         $this->em->remove($object);
 

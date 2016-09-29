@@ -8,7 +8,8 @@ use FormaLibre\RestBundle\Entity\Server;
 class ServerFactory //implements ServerFactoryInterface
 {
     /**
-     * @param  string       $ip
+     * @param string $ip
+     *
      * @return Server
      */
     public function create($ip = null, $name = null, $type = null, $provider = null, $description = null)
@@ -17,7 +18,8 @@ class ServerFactory //implements ServerFactoryInterface
     }
 
     /**
-     * @param  ServerDTO   $serverDTO
+     * @param ServerDTO $serverDTO
+     *
      * @return Server
      */
     public function createFromDTO(ServerDTO $serverDTO)

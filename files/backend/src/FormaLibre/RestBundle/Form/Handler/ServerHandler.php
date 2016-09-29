@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormTypeInterface;
 use FormaLibre\RestBundle\Form\Type\ServerType;
 
-class FormHandler implements FormHandlerInterface
+class ServerHandler implements FormHandlerInterface
 {
     /**
      * @var FormFactoryInterface
@@ -52,12 +52,11 @@ class FormHandler implements FormHandlerInterface
 
         $form = $this->formFactory->create(get_class($this->formType), $object, $options);
         $form->submit($parameters, 'PATCH' !== $method);
-echo $form->isValid() ? 'yep' : 'nope';die;
-                //$form = $this->formFactory->create(new ServerType(), $object, $options);
-        $form->submit($parameters, 'PATCH' !== $method);
+    
         if (!$form->isValid()) {
             throw new InvalidFormException($form);
         }
+
         return $form->getData();
     }
 }

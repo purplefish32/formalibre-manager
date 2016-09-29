@@ -2,7 +2,6 @@
 
 namespace PlatformBundle\Manager;
 
-use PlatformBundle\Manager\BaseManager;
 use PlatformBundle\Entity\Platform;
 use Doctrine\ORM\EntityManager;
 
@@ -12,13 +11,12 @@ class PlatformManager extends BaseManager
 
     public function __construct(
             EntityManager $em
-    )
-    {
+    ) {
         $this->em = $em;
     }
 
     /**
-     * Returns an empty platform instance
+     * Returns an empty platform instance.
      *
      * @return PlatformInterface
      */
@@ -27,26 +25,27 @@ class PlatformManager extends BaseManager
         return new Platform();
     }
 
-    public function loadPlatform($platformId) {
+    public function loadPlatform($platformId)
+    {
         return $this->getRepository()
                     ->findOneBy(array('id' => $platformId));
     }
 
     /**
-    * Save Platform entity
-    *
-    * @param Platform $platform
-    */
+     * Save Platform entity.
+     *
+     * @param Platform $platform
+     */
     public function savePlatform(Platform $platform)
     {
         $this->persistAndFlush($platform);
     }
 
     /**
-    * Remove Platform entity
-    *
-    * @param Platform $platform
-    */
+     * Remove Platform entity.
+     *
+     * @param Platform $platform
+     */
     public function removePlatform(Platform $platform)
     {
         $this->removeAndFlush($platform);
@@ -56,5 +55,4 @@ class PlatformManager extends BaseManager
     {
         return $this->em->getRepository('PlatformBundle:Platform');
     }
-
 }

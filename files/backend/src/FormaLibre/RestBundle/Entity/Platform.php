@@ -4,11 +4,11 @@ namespace FormaLibre\RestBundle\Entity;
 
 use FormaLibre\RestBundle\Model\PlatformInterface;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 use JMS\Serializer\Annotation as JMSSerializer;
 
 /**
- * Platform
+ * Platform.
+ *
  * @ORM\Entity(repositoryClass="FormaLibre\RestBundle\Entity\Repository\PlatformEntityRepository")
  * @ORM\Table(name="platform")
  * @JMSSerializer\ExclusionPolicy("all")
@@ -116,9 +116,8 @@ class Platform implements PlatformInterface, \JsonSerializable
      */
     private $contactPhone;
 
-
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -128,7 +127,7 @@ class Platform implements PlatformInterface, \JsonSerializable
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -142,7 +141,7 @@ class Platform implements PlatformInterface, \JsonSerializable
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -152,7 +151,7 @@ class Platform implements PlatformInterface, \JsonSerializable
     }
 
     /**
-     * Set subdomain
+     * Set subdomain.
      *
      * @param string $subdomain
      *
@@ -166,7 +165,7 @@ class Platform implements PlatformInterface, \JsonSerializable
     }
 
     /**
-     * Get subdomain
+     * Get subdomain.
      *
      * @return string
      */
@@ -176,7 +175,7 @@ class Platform implements PlatformInterface, \JsonSerializable
     }
 
     /**
-     * Set description
+     * Set description.
      *
      * @param string $description
      *
@@ -190,7 +189,7 @@ class Platform implements PlatformInterface, \JsonSerializable
     }
 
     /**
-     * Get description
+     * Get description.
      *
      * @return string
      */
@@ -200,7 +199,7 @@ class Platform implements PlatformInterface, \JsonSerializable
     }
 
     /**
-     * Set plan
+     * Set plan.
      *
      * @param string $plan
      *
@@ -214,7 +213,7 @@ class Platform implements PlatformInterface, \JsonSerializable
     }
 
     /**
-     * Get plan
+     * Get plan.
      *
      * @return string
      */
@@ -224,7 +223,7 @@ class Platform implements PlatformInterface, \JsonSerializable
     }
 
     /**
-     * Set endDate
+     * Set endDate.
      *
      * @param string $endDate
      *
@@ -238,7 +237,7 @@ class Platform implements PlatformInterface, \JsonSerializable
     }
 
     /**
-     * Get endDate
+     * Get endDate.
      *
      * @return string
      */
@@ -248,7 +247,7 @@ class Platform implements PlatformInterface, \JsonSerializable
     }
 
     /**
-     * Set maxUsers
+     * Set maxUsers.
      *
      * @param string $maxUsers
      *
@@ -262,7 +261,7 @@ class Platform implements PlatformInterface, \JsonSerializable
     }
 
     /**
-     * Get maxUsers
+     * Get maxUsers.
      *
      * @return string
      */
@@ -272,7 +271,7 @@ class Platform implements PlatformInterface, \JsonSerializable
     }
 
     /**
-     * Set maxDiskSpace
+     * Set maxDiskSpace.
      *
      * @param string $maxDiskSpace
      *
@@ -286,7 +285,7 @@ class Platform implements PlatformInterface, \JsonSerializable
     }
 
     /**
-     * Get maxDiskSpace
+     * Get maxDiskSpace.
      *
      * @return string
      */
@@ -296,7 +295,7 @@ class Platform implements PlatformInterface, \JsonSerializable
     }
 
     /**
-     * Set contactName
+     * Set contactName.
      *
      * @param string $contactName
      *
@@ -310,7 +309,7 @@ class Platform implements PlatformInterface, \JsonSerializable
     }
 
     /**
-     * Get contactName
+     * Get contactName.
      *
      * @return string
      */
@@ -320,7 +319,7 @@ class Platform implements PlatformInterface, \JsonSerializable
     }
 
     /**
-     * Set contactEmail
+     * Set contactEmail.
      *
      * @param string $contactEmail
      *
@@ -334,7 +333,7 @@ class Platform implements PlatformInterface, \JsonSerializable
     }
 
     /**
-     * Get contactEmail
+     * Get contactEmail.
      *
      * @return string
      */
@@ -344,7 +343,7 @@ class Platform implements PlatformInterface, \JsonSerializable
     }
 
     /**
-     * Set contactPhone
+     * Set contactPhone.
      *
      * @param string $contactPhone
      *
@@ -358,7 +357,7 @@ class Platform implements PlatformInterface, \JsonSerializable
     }
 
     /**
-     * Get contactPhone
+     * Get contactPhone.
      *
      * @return string
      */
@@ -370,18 +369,18 @@ class Platform implements PlatformInterface, \JsonSerializable
     /**
      * @return mixed
      */
-    function jsonSerialize()
+    public function jsonSerialize()
     {
         return [
-            'id'           => $this->id,
-            'name'         => $this->name,
-            'subdomain'    => $this->subdomain,
-            'description'  => $this->description,
-            'plan'         => $this->plan,
-            'endDate'      => $this->endDate,
-            'maxUsers'     => $this->maxUsers,
+            'id' => $this->id,
+            'name' => $this->name,
+            'subdomain' => $this->subdomain,
+            'description' => $this->description,
+            'plan' => $this->plan,
+            'endDate' => $this->endDate,
+            'maxUsers' => $this->maxUsers,
             'maxDiskSpace' => $this->maxDiskSpace,
-            'contactName'  => $this->contactName,
+            'contactName' => $this->contactName,
             'contactEmail' => $this->contactEmail,
             'contactPhone' => $this->contactPhone,
         ];
