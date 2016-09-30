@@ -11,6 +11,7 @@ services:
       - frontend
       - api
       - adminer
+      - shinken
 
   adminer:
     restart: always
@@ -60,6 +61,24 @@ services:
       - db
     ports:
       - 88:80
+
+  shinken:
+    restart: always
+    environment:
+      TZ: "UTC"  # UTC can be replaced by any valid timezone.
+      VIRTUAL_HOST: http://shinken.manager.loc
+    build: docker/shinken
+
+    volumes:
+       - ./docker/shinken/custom_configs:/etc/shinken/custom_configs
+       - ./docker/shinken/extra_plugins:/usr/local/custom_plugins
+
+  influxdb:
+    image: influxdb
+    restart: always
+    ports:
+      - 8086:8086
+      - 8083:8083
 
 volumes:
   mysql:

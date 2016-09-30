@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+  shinken:
+    build:
+      context: .
+    environment:
+    - "TZ=UTC"  # UTC can be replaced by any valid timezone.
+    ports:
+      - "80:80"
+    volumes:
+       - ./custom_configs:/etc/shinken/custom_configs
+       - ./extra_plugins:/usr/local/custom_plugins
