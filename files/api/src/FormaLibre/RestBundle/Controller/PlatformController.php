@@ -9,95 +9,187 @@ use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use GuzzleHttp\Exception\RequestException;
+use Symfony\Component\Form\FormTypeInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class PlatformController extends FOSRestController
 {
     /**
-   * List all platforms.
-   *
-   * @ApiDoc(
-   *   resource = true,
-   *   statusCodes = {
-   *     200 = "Returned when successful"
-   *   }
-   * )
-   *
-   * @Annotations\QueryParam(name="offset", requirements="\d+", nullable=true, description="Offset from which to start listing platforms.")
-   * @Annotations\QueryParam(name="limit", requirements="\d+", default="50", description="How many platforms to return.")
-   *
-   * @Annotations\View()
-   *
-   * @param ParamFetcherInterface $paramFetcher param fetcher service
-   *
-   * @return array
-   */
-  public function getPlatformsAction(ParamFetcherInterface $paramFetcher)
-  {
-      $offset = $paramFetcher->get('offset');
-      $start = null == $offset ? 0 : $offset + 1;
-      $limit = $paramFetcher->get('limit');
-      $client = $this->get('guzzle.client.api');
-      $response = $client->get('/platforms?limit='.$limit.'&offset='.$offset);
+     * List all platforms.
+     *
+     * @ApiDoc(
+     *   resource = true,
+     *   statusCodes = {
+     *     200 = "Returned when successful"
+     *   }
+     * )
+     *
+     * @Annotations\QueryParam(name="offset", requirements="\d+", nullable=true, description="Offset from which to start listing platforms.")
+     * @Annotations\QueryParam(name="limit", requirements="\d+", default="50", description="How many platforms to return.")
+     *
+     * @Annotations\View()
+     *
+     * @param ParamFetcherInterface $paramFetcher param fetcher service
+     *
+     * @return array
+     */
+    public function getPlatformsAction(ParamFetcherInterface $paramFetcher)
+    {
+        $offset = $paramFetcher->get('offset');
+        $start = null == $offset ? 0 : $offset + 1;
+        $limit = $paramFetcher->get('limit');
+        $client = $this->get('guzzle.client.api');
+        $response = $client->get('/platforms?limit='.$limit.'&offset='.$offset);
 
-      return json_decode($response->getBody(), true);
-  }
+        return json_decode($response->getBody(), true);
+    }
 
-  // /**
-  //  * Creates a new platform from the submitted data.
-  //  */
-  // public function postPlatformsAction(Request $request)
-  // {
-  //     $platform = json_decode($request->getContent());
-  //     $client = $this->get('guzzle.client.api');
-  //     try {
+    /**
+     * Get a single server.
+     *
+     * @ApiDoc(
+     *   output = "PlatformBundle\Entity\Platform",
+     *   statusCodes = {
+     *     200 = "Returned when successful",
+     *     404 = "Returned when the note is not found"
+     *   }
+     * )
+     *
+     * @Annotations\View()
+     *
+     * @param Request $request the request object
+     * @param int     $id      the server id
+     *
+     * @return array
+     *
+     * @throws NotFoundHttpException when note not exist
+     */
+    public function getPlatformAction(Request $request, $id)
+    {
+        $client = $this->get('guzzle.client.api');
+        $response = $client->get('/platforms/'.$id);
 
-  //         $response = $client->request(
-  //             'POST',
-  //             '/platforms',
-  //             [
-  //                 'json' => $platform
-  //             ]
+        return json_decode($response->getBody(), true);
+    }
 
-  //         );
+    /**
+     * Creates a new server from the submitted data.
+     *
+     * @ApiDoc(
+     *   resource = true,
+     *   input = "PlatformBundle\Form\PlatformType",
+     *   statusCodes = {
+     *     200 = "Returned when successful",
+     *     400 = "Returned when the form has errors"
+     *   }
+     * )
+     *
+     * @param Request $request the request object
+     *
+     * @return FormTypeInterface[]|View
+     */
+    public function postPlatformsAction(Request $request)
+    {
+        $server = json_decode($request->getContent());
 
-  //     } catch (RequestException $e) {
-  //         if ($e->getResponse()->getStatusCode() == Response::HTTP_BAD_REQUEST) {
-  //             $data = json_decode($e->getResponse()->getBody(), true);
-  //             $view = $this->view($data, Response::HTTP_BAD_REQUEST);
+        $client = $this->get('guzzle.client.api');
+        $responseBackend = $client->request(
+        'POST',
+        '/platforms',
+        [
+          'json' => [
+              'name' => $server->name,
+              'subdomain' => $server->subdomain,
+              'description' => $server->description,
+              'contactName' => $server->contactName,
+              'contactEmail' => $server->contactEmail,
+              'contactPhone' => $server->contactPhone,
+              'provider' => $server->provider,
+              'type' => $server->type,
+          ],
+        ]
 
-  //             return $this->handleView($view);
-  //         }
-  //     }
+      );
 
-  //     return json_decode($response->getBody(), true);
+        $server = json_decode($responseBackend->getBody());
 
-  // }
+        $response = new Response($responseBackend->getBody());
+        $response->setStatusCode($responseBackend->getStatusCode());
 
-  // /**
-  //  * Removes a platform.
-  //  *
-  //  * @ApiDoc(
-  //  *   resource = true,
-  //  *   statusCodes={
-  //  *     204="Returned when successful"
-  //  *   }
-  //  * )
-  //  *
-  //  * @param Request $request the request object
-  //  * @param int     $id      the platform id
-  //  *
-  //  */
-  // public function deletePlatformsAction(Request $request, $id)
-  // {
-  //   $client = $this->get('guzzle.client.api');
-  //   try {
-  //       $response = $client->request('DELETE', '/platforms/' . $id);
-  //   } catch (RequestException $e) {
-  //       if ($e->getResponse()->getStatusCode() == Response::HTTP_NOT_FOUND) {
-  //           throw $this->createNotFoundException("Server does not exist.");
-  //       }
-  //   }
-  //   return json_decode($response->getBody(), true);
-  // }
+        if ($responseBackend->getHeader('Location')) {
+            $location = $this->generateUrl('get_platforms', array(), UrlGeneratorInterface::ABSOLUTE_URL).'/'.$server->id;
+            $response->headers->set('Location', $location);
+        }
+
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+    }
+
+    /**
+     * Update existing server from the submitted data or create a new server at a specific location.
+     *
+     * @ApiDoc(
+     *   resource = true,
+     *   input = "PlatformBundle\Form\PlatformType",
+     *   statusCodes = {
+     *     201 = "Returned when a new resource is created",
+     *     204 = "Returned when successful",
+     *     400 = "Returned when the form has errors"
+     *   }
+     * )
+     *
+     * @param Request $request the request object
+     * @param int     $id      the note id
+     *
+     * @return FormTypeInterface|RouteRedirectView
+     *
+     * @throws NotFoundHttpException when server not exist
+     */
+    public function putPlatformsAction(Request $request, $id)
+    {
+        $server = json_decode($request->getContent());
+        $client = $this->get('guzzle.client.api');
+        $response = $client->request(
+        'PUT',
+        '/platforms/'.$id,
+        [
+          'json' => [
+              'name' => $server->name,
+              'subdomain' => $server->subdomain,
+              'description' => $server->description,
+              'contactName' => $server->contactName,
+              'contactEmail' => $server->contactEmail,
+              'contactPhone' => $server->contactPhone,
+              'provider' => $server->provider,
+              'type' => $server->type,
+          ],
+        ]
+
+      );
+
+        return json_decode($response->getBody(), true);
+    }
+
+    /**
+     * Removes a server.
+     *
+     * @ApiDoc(
+     *   resource = true,
+     *   statusCodes={
+     *     204="Returned when successful"
+     *   }
+     * )
+     *
+     * @param Request $request the request object
+     * @param int     $id      the server id
+     */
+    public function deletePlatformsAction(Request $request, $id)
+    {
+        $client = $this->get('guzzle.client.api');
+        $response = $client->request('DELETE', '/platforms/'.$id, ['json' => []]);
+
+        return json_decode($response->getBody(), true);
+    }
 }
