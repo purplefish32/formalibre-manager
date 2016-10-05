@@ -116,6 +116,31 @@ class Platform implements PlatformInterface, \JsonSerializable
      */
     private $contactPhone;
 
+    public function __construct(
+      $name = null,
+      $subdomain = null,
+      $description = null,
+      $plan = null,
+      $endDate = null,
+      $maxUsers = null,
+      $maxDiskSpace = null,
+      $contactName = null,
+      $contactEmail = null,
+      $contactPhone = null
+      )
+    {
+      $this->name = $name;
+      $this->subdomain = $subdomain;
+      $this->description = $description;
+      $this->plan = $plan;
+      $this->endDate = $endDate;
+      $this->maxUsers = $maxUsers;
+      $this->maxDiskSpace = $maxDiskSpace;
+      $this->contactName = $contactName;
+      $this->contactEmail = $contactEmail;
+      $this->contactPhone = $contactPhone;
+    }
+
     /**
      * Get id.
      *

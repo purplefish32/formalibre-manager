@@ -91,7 +91,7 @@ class PlatformController extends FOSRestController
      */
     public function postPlatformsAction(Request $request)
     {
-        $server = json_decode($request->getContent());
+        $platforms = json_decode($request->getContent());
 
         $client = $this->get('guzzle.client.api');
         $responseBackend = $client->request(
@@ -99,26 +99,30 @@ class PlatformController extends FOSRestController
         '/platforms',
         [
           'json' => [
-              'name' => $server->name,
-              'subdomain' => $server->subdomain,
-              'description' => $server->description,
-              'contactName' => $server->contactName,
-              'contactEmail' => $server->contactEmail,
-              'contactPhone' => $server->contactPhone,
-              'provider' => $server->provider,
-              'type' => $server->type,
+              /*$ platforms/model@generate_ctrl(platforms) */
+              'name' => $platforms->name,
+              'subdomain' => $platforms->subdomain,
+              'description' => $platforms->description,
+              'plan' => $platforms->plan,
+              'end_date' => $platforms->endDate,
+              'max_users' => $platforms->maxUsers,
+              'max_disk_space' => $platforms->maxDiskSpace,
+              'contact_name' => $platforms->contactName,
+              'contact_email' => $platforms->contactEmail,
+              'contact_phone' => $platforms->contactPhone
+              /*$  */
           ],
         ]
 
       );
 
-        $server = json_decode($responseBackend->getBody());
+        $platforms = json_decode($responseBackend->getBody());
 
         $response = new Response($responseBackend->getBody());
         $response->setStatusCode($responseBackend->getStatusCode());
 
         if ($responseBackend->getHeader('Location')) {
-            $location = $this->generateUrl('get_platforms', array(), UrlGeneratorInterface::ABSOLUTE_URL).'/'.$server->id;
+            $location = $this->generateUrl('get_platforms', array(), UrlGeneratorInterface::ABSOLUTE_URL).'/'.$platforms->id;
             $response->headers->set('Location', $location);
         }
 
@@ -149,21 +153,25 @@ class PlatformController extends FOSRestController
      */
     public function putPlatformsAction(Request $request, $id)
     {
-        $server = json_decode($request->getContent());
+        $platforms = json_decode($request->getContent());
         $client = $this->get('guzzle.client.api');
         $response = $client->request(
         'PUT',
         '/platforms/'.$id,
         [
           'json' => [
-              'name' => $server->name,
-              'subdomain' => $server->subdomain,
-              'description' => $server->description,
-              'contactName' => $server->contactName,
-              'contactEmail' => $server->contactEmail,
-              'contactPhone' => $server->contactPhone,
-              'provider' => $server->provider,
-              'type' => $server->type,
+              /*$ platforms/model@generate_ctrl(platforms) */
+              'name' => $platforms->name,
+              'subdomain' => $platforms->subdomain,
+              'description' => $platforms->description,
+              'plan' => $platforms->plan,
+              'end_date' => $platforms->endDate,
+              'max_users' => $platforms->maxUsers,
+              'max_disk_space' => $platforms->maxDiskSpace,
+              'contact_name' => $platforms->contactName,
+              'contact_email' => $platforms->contactEmail,
+              'contact_phone' => $platforms->contactPhone
+              /*$  */
           ],
         ]
 

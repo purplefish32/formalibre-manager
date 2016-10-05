@@ -131,7 +131,9 @@ class PlatformManager implements ManagerInterface
     */
     public function delete($resource)
     {
-        return $this->formHandler->delete($resource);
+        $this->guardPlatformImplementsInterface($resource);
+
+        return $this->repository->delete($resource);
     }
 
    /**
