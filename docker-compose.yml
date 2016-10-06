@@ -70,6 +70,8 @@ services:
     image: formalibre/manager-api
     volumes:
       - ./files/api/:/var/www/html/:rw
+      - api_logs:/var/www/html/var/logs/:rw
+      - api_cache:/var/www/html/var/cache/:rw
     links:
       - backend
     environment:
@@ -81,6 +83,8 @@ services:
     image: formalibre/manager-backend
     volumes:
       - ./files/backend/:/var/www/html/:rw
+      - backend_logs:/var/www/html/var/logs/:rw
+      - backend_cache:/var/www/html/var/cache/:rw
     links:
       - db
     ports:
@@ -103,3 +107,7 @@ services:
 
 volumes:
   mysql:
+  api_logs:
+  api_cache:
+  backend_logs:
+  backend_cache:
