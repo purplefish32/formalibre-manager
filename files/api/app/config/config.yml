@@ -99,7 +99,7 @@ fos_rest:
 guzzle:
     clients:
         api:
-            base_url: "http://backend/app_dev.php/"
+            base_url: "backend/"
             headers:
                 Accept: "application/json"
 
