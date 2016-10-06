@@ -72,7 +72,7 @@ services:
       - ./files/api/:/var/www/html/:rw
       - api_logs:/var/www/html/var/logs/:rw
       - api_cache:/var/www/html/var/cache/:rw
-      - api_session:/var/www/html/var/session/:rw
+      - api_sessions:/var/www/html/var/sessions/:rw
     links:
       - backend
     environment:
@@ -86,7 +86,7 @@ services:
       - ./files/backend/:/var/www/html/:rw
       - backend_logs:/var/www/html/var/logs/:rw
       - backend_cache:/var/www/html/var/cache/:rw
-      - backend_session:/var/www/html/var/session/:rw
+      - backend_sessions:/var/www/html/var/sessions/:rw
     links:
       - db
     ports:
@@ -111,7 +111,7 @@ volumes:
   mysql:
   api_logs:
   api_cache:
-  api_session:
+  api_sessions:
   backend_logs:
   backend_cache:
-  backend_session:
+  backend_sessions:
