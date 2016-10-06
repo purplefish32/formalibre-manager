@@ -41,8 +41,8 @@ twig:
 doctrine:
     dbal:
         driver:   pdo_mysql
-        host:     "%database_host%"
-        port:     "%database_port%"
+        host:     db
+        port:     null
         dbname:   "%database_name%"
         user:     "%database_user%"
         password: "%database_password%"
