@@ -92,9 +92,9 @@ services:
     ports:
       - 88:80 # This should not be exposed in production
     environment:
-        SYMFONY__DATABASE__NAME: db
-        SYMFONY__DATABASE__USER: user
-        SYMFONY__DATABASE__PASSWORD: pass
+        SYMFONY__DATABASE_NAME: db
+        SYMFONY__DATABASE_USER: user
+        SYMFONY__DATABASE_PASSWORD: pass
 
   # Node backend
   # backend:
