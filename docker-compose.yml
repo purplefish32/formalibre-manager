@@ -93,6 +93,7 @@ services:
         SYMFONY__DATABASE__NAME: db
         SYMFONY__DATABASE__USER: user
         SYMFONY__DATABASE__PASSWORD: pass
+        SYMFONY__SECRET: 123lookatme
 
   # Node backend
   # backend:
