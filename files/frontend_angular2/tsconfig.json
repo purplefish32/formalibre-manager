@@ -11,5 +11,9 @@
     "rootDir": "app",
     "outDir": "webroot/app/",
     "watch": true
-  }
+  },
+  "exclude": [
+    "node_modules",
+    "typings"
+  ]
 }
