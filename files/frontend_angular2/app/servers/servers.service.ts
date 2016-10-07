@@ -13,7 +13,7 @@ export class ServersService {
   servers = [];
 
   private headers = new Headers({'Content-Type': 'application/json'});
-  private serversUrl = 'http://api.manager.loc/servers';  // URL to web servers api
+  private serversUrl = base_url+'/servers';  // URL to web servers api
 
   constructor(private http: Http) {
     this.getServers()
