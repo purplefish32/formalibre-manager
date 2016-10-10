@@ -40,7 +40,7 @@ class PlatformController extends FOSRestController
         $start = null == $offset ? 0 : $offset + 1;
         $limit = $paramFetcher->get('limit');
         $client = $this->get('guzzle.client.api');
-        $response = $client->get('/platforms?limit='.$limit.'&offset='.$offset);
+        $response = $client->get('platforms?limit='.$limit.'&offset='.$offset);
 
         return json_decode($response->getBody(), true);
     }
@@ -68,7 +68,7 @@ class PlatformController extends FOSRestController
     public function getPlatformAction(Request $request, $id)
     {
         $client = $this->get('guzzle.client.api');
-        $response = $client->get('/platforms/'.$id);
+        $response = $client->get('platforms/'.$id);
 
         return json_decode($response->getBody(), true);
     }
@@ -196,7 +196,7 @@ class PlatformController extends FOSRestController
     public function deletePlatformsAction(Request $request, $id)
     {
         $client = $this->get('guzzle.client.api');
-        $response = $client->request('DELETE', '/platforms/'.$id, ['json' => []]);
+        $response = $client->request('DELETE', 'platforms/'.$id, ['json' => []]);
 
         return json_decode($response->getBody(), true);
     }

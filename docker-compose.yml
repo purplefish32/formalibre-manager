@@ -44,14 +44,15 @@ services:
   #FRONTEND ANGULAR START
   frontend:
     restart: always
-    image: httpd:latest
+    image: php:7-apache
     volumes:
-      - ./files/frontend_angular2/webroot:/usr/local/apache2/htdocs/
-      - ./files/frontend_angular2/node_modules:/usr/local/apache2/htdocs/node_modules
+      - ./files/frontend_angular2/webroot:/var/www/html/
+      - ./files/frontend_angular2/node_modules:/var/www/html/node_modules
     links:
       - api
     environment:
       VIRTUAL_HOST: http://manager.loc
+      API_URL: http://api.manager.loc
 
   npm:
     image: treyjones/npm:latest
@@ -70,6 +71,9 @@ services:
     image: formalibre/manager-api
     volumes:
       - ./files/api/:/var/www/html/:rw
+      - api_logs:/var/www/html/var/logs/:rw
+      - api_cache:/var/www/html/var/cache/:rw
+      - api_sessions:/var/www/html/var/sessions/:rw
     links:
       - backend
     environment:
@@ -81,10 +85,17 @@ services:
     image: formalibre/manager-backend
     volumes:
       - ./files/backend/:/var/www/html/:rw
+      - backend_logs:/var/www/html/var/logs/:rw
+      - backend_cache:/var/www/html/var/cache/:rw
+      - backend_sessions:/var/www/html/var/sessions/:rw
     links:
       - db
     ports:
-      - 88:80
+      - 88:80 # This should not be exposed in production
+    environment:
+        SYMFONY__DATABASE_NAME: db
+        SYMFONY__DATABASE_USER: user
+        SYMFONY__DATABASE_PASSWORD: pass
 
   # Node backend
   # backend:
@@ -99,3 +110,9 @@ services:
 
 volumes:
   mysql:
+  api_logs:
+  api_cache:
+  api_sessions:
+  backend_logs:
+  backend_cache:
+  backend_sessions:

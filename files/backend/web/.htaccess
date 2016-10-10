@@ -1,3 +1,11 @@
+PassEnv SYMFONY__DATABASE_NAME
+PassEnv SYMFONY__DATABASE_USER
+PassEnv SYMFONY__DATABASE_PASSWORD
+
+SetEnv ${SYMFONY__DATABASE_NAME}
+SetEnv %{SYMFONY__DATABASE_USER}
+SetEnv %{SYMFONY__DATABASE_PASSWORD}
+
 # Use the front controller as index file. It serves as a fallback solution when
 # every other rewrite/redirect fails (e.g. in an aliased environment without
 # mod_rewrite). Additionally, this reduces the matching process for the

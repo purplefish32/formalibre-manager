@@ -19,8 +19,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.5/css/skins/skin-blue.css">
 
     <!-- Polyfill(s) for older browsers -->
+    <script>var base_url = "<?php print_r($_ENV["API_URL"]); ?>"</script>
     <script src="node_modules/core-js/client/shim.min.js"></script>
-
     <script src="node_modules/zone.js/dist/zone.js"></script>
     <script src="node_modules/reflect-metadata/Reflect.js"></script>
     <script src="node_modules/systemjs/dist/system.src.js"></script>
@@ -30,7 +30,6 @@
       System.import('app').catch(function(err){ console.error(err); });
     </script>
   </head>
-
   <body class="hold-transition skin-blue sidebar-mini">
     <my-app>Loading...</my-app>
     <!-- jQuery 2.2.4 -->
