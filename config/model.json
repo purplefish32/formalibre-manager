@@ -1,0 +1,43 @@
+{
+  "servers": {
+    "model": [{
+      "index": true,
+      "field": "id"
+    }, {
+      "field": "name",
+      "required": "true",
+      "description": "(Usually the server's reverse DNS)"
+    }, {
+      "field": "ip",
+      "name": "IP",
+      "required": "true"
+    }, {
+      "field": "provider",
+      "type": "option",
+      "options": [{
+        "value": "OVH",
+        "selected": "true"
+      }, {
+        "value": "SoYouStart"
+      }, {
+        "value": "Other"
+      }],
+      "required": "true"
+    }, {
+      "field": "type",
+      "type": "option",
+      "options": [{
+        "value": "Bare Metal",
+        "selected": "true"
+      }, {
+        "value": "VPS"
+      }, {
+        "value": "Other"
+      }],
+      "required": "true"
+    }, {
+      "field": "description",
+      "required": "true"
+    }]
+  }
+}
