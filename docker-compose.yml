@@ -44,10 +44,10 @@ services:
   #FRONTEND ANGULAR START
   frontend:
     restart: always
-    image: httpd:latest
+    image: php:7-apache
     volumes:
-      - ./files/frontend_angular2/webroot:/usr/local/apache2/htdocs/
-      - ./files/frontend_angular2/node_modules:/usr/local/apache2/htdocs/node_modules
+      - ./files/frontend_angular2/webroot:/var/www/html/
+      - ./files/frontend_angular2/node_modules:/var/www/html/node_modules
     links:
       - api
     environment:
