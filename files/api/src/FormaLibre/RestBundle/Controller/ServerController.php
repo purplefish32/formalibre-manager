@@ -98,13 +98,7 @@ class ServerController extends FOSRestController
         'POST',
         'servers',
         [
-          'json' => [
-              'ip' => $server->ip,
-              'name' => $server->name,
-              'provider' => $server->provider,
-              'type' => $server->type,
-              'description' => $server->description,
-          ],
+          'json' => $server,
         ]
 
       );
@@ -152,13 +146,7 @@ class ServerController extends FOSRestController
         'PUT',
         'servers/'.$id,
         [
-          'json' => [
-              'ip' => $server->ip,
-              'name' => $server->name,
-              'provider' => $server->provider,
-              'type' => $server->type,
-              'description' => $server->description,
-          ],
+          'json' => $server,
         ]
 
       );

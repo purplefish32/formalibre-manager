@@ -96,22 +96,9 @@ class PlatformController extends FOSRestController
         $client = $this->get('guzzle.client.api');
         $responseBackend = $client->request(
         'POST',
-        '/platforms',
+        'platforms',
         [
-          'json' => [
-              /*$ platforms/model@generate_ctrl(platforms) */
-              'name' => $platforms->name,
-              'subdomain' => $platforms->subdomain,
-              'description' => $platforms->description,
-              'plan' => $platforms->plan,
-              'end_date' => $platforms->endDate,
-              'max_users' => $platforms->maxUsers,
-              'max_disk_space' => $platforms->maxDiskSpace,
-              'contact_name' => $platforms->contactName,
-              'contact_email' => $platforms->contactEmail,
-              'contact_phone' => $platforms->contactPhone
-              /*$  */
-          ],
+          'json' => $platforms,
         ]
 
       );
@@ -157,22 +144,9 @@ class PlatformController extends FOSRestController
         $client = $this->get('guzzle.client.api');
         $response = $client->request(
         'PUT',
-        '/platforms/'.$id,
+        'platforms/'.$id,
         [
-          'json' => [
-              /*$ platforms/model@generate_ctrl(platforms) */
-              'name' => $platforms->name,
-              'subdomain' => $platforms->subdomain,
-              'description' => $platforms->description,
-              'plan' => $platforms->plan,
-              'end_date' => $platforms->endDate,
-              'max_users' => $platforms->maxUsers,
-              'max_disk_space' => $platforms->maxDiskSpace,
-              'contact_name' => $platforms->contactName,
-              'contact_email' => $platforms->contactEmail,
-              'contact_phone' => $platforms->contactPhone
-              /*$  */
-          ],
+          'json' => $platforms,
         ]
 
       );
