@@ -52,7 +52,7 @@ services:
       - api
     environment:
       VIRTUAL_HOST: http://manager.loc
-      API_URL: http://api.manager.loc
+      API_URL: http://api.manager.loc/app_dev.php
 
   npm:
     image: treyjones/npm:latest
