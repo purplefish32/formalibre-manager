@@ -31,16 +31,6 @@ services:
         MYSQL_USER: user
         MYSQL_PASSWORD: pass
 
-  # frontend:
-  #   restart: always
-  #   image: httpd
-  #   volumes:
-  #     - ./files/frontend/:/usr/local/apache2/htdocs/
-  #   links:
-  #     - api
-  #   environment:
-  #     VIRTUAL_HOST: http://manager.loc
-
   #FRONTEND ANGULAR START
   frontend:
     restart: always
@@ -96,17 +86,6 @@ services:
         SYMFONY__DATABASE_NAME: db
         SYMFONY__DATABASE_USER: user
         SYMFONY__DATABASE_PASSWORD: pass
-
-  # Node backend
-  # backend:
-  #   restart: always
-  #   image: node:onbuild
-  #   volumes:
-  #     - ./files/backend_node/:/usr/src/app/:rw
-  #   links:
-  #     - db
-  #   ports:
-  #     - 88:80
 
 volumes:
   mysql:
