@@ -17,6 +17,7 @@ let f_webroot = path.join(frontend, 'webroot')
 let f_templates = path.join(f_webroot, 'templates')
 let servers_component_html = path.join(f_templates, 'servers.component.html')
 let server_detail_html = path.join(f_templates, 'server-detail.component.html')
+let server_edit_html = path.join(f_templates, 'server-edit.component.html')
 
 interface String {
   repeat(count: number): string
@@ -35,6 +36,11 @@ let jobs = [
     file:server_detail_html,
     html:new fl_servers.ServerDetail(config).tohtml(renderer),
     desc:'server detail'
+  },
+  {
+    file:server_edit_html,
+    html:new fl_servers.ServerEditPage(config).tohtml(renderer),
+    desc:'server edit'
   }
 ]
 

@@ -74,12 +74,11 @@ export class Legend extends fl_element {
 }
 
 export class FormGroup extends fl_element {
-  constructor() { super('div','form-group') }
+  constructor() { super('div', 'form-group') }
 }
 
 export class Label extends fl_element {
-  constructor(classes="", attr:string[]=[], data="") { super('label', classes, attr, data)
-console.dir(this)}
+  constructor(classes = "", attr: string[] = [], data = "") { super('label', classes, attr, data) }
 }
 
 export class Input extends fl_element {

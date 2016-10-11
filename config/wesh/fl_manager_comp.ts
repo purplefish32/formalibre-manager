@@ -52,6 +52,18 @@ export function editButton(type) {
   return link
 }
 
+export function deleteButton(linkAttr) {
+  let link = new fl_m.Button(linkAttr, "Delete",null,"btn-danger")
+
+  return link
+}
+
+export function submitButton(linkAttr) {
+  let link = new fl_m.Button(linkAttr, "Submit")
+
+  return link
+}
+
 export class ListDetail extends fl_container {
   constructor(private type:string, private details:string[]){
     super()
@@ -62,9 +74,25 @@ export class ListDetail extends fl_container {
   }
 }
 
+export class ModelInput extends fl_c.ModelInput {
+  constructor(model,name,attr){
+    super(model,name,"",attr)
+  }
+}
+
+export class Label extends fl_c.Label {
+  constructor(data,attrs = []) {super('',attrs,data)}
+}
+
 export class Link extends fl_c.Link {
   constructor(data = null, attr = [], classes = "") {
     super(classes,attr,data)
+  }
+}
+
+export class Ol extends fl_c.Ol {
+  constructor(classes = "", attr = [], data = null) {
+    super(classes, attr, data)
   }
 }
 
