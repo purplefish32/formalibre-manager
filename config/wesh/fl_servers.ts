@@ -1,6 +1,21 @@
 import {fl_container, fl_element, fl_jadeRenderer, fl_text} from './fl_comp'
 import * as fl_c from './fl_common'
 import * as fl_m from './fl_manager_comp'
+import * as fl_j from './fl_jobs'
+import * as folder from './fl_folders'
+import * as path from "path"
+
+let g_element_table = 'servers'
+let g_local_object = 'server'
+let g_angular_detail_comp = 'Server'
+let g_title = "Servers"
+let g_title_singular = "Server"
+let g_small_title = "servers"
+let g_small_title_singular = "server"
+let g_list_route = '#/servers'
+let g_edit_route = '/server/new'
+
+let g_new_button_title = `Add new ${g_title_singular}`
 
 export class ServersList extends fl_m.ListFromModel {
   constructor(config) {
@@ -139,4 +154,33 @@ export class ServerEditPage extends fl_c.MainCol {
   tohtml(renderer): string {
     return this.render(renderer)
   }
+}
+
+let servers_component_html = path.join(folder.f_templates, 'servers.component.html')
+let server_detail_html = path.join(folder.f_templates, 'server-detail.component.html')
+let server_edit_html = path.join(folder.f_templates, 'server-edit.component.html')
+
+export function doJob(config,renderer) {
+  let jobs:fl_j.IHtmlJob[] = [
+    {
+      file: servers_component_html,
+      html: new ServersListPage(config,'servers').tohtml(renderer),
+      desc: 'server template'
+    },
+    {
+      file: server_detail_html,
+      html: new ServerDetail(config,'servers').tohtml(renderer),
+      desc: 'server detail'
+    },
+    {
+      file: server_edit_html,
+      html: new ServerEditPage(config,'servers').tohtml(renderer),
+      desc: 'server edit'
+    }
+  ]
+
+  let j =new fl_j.HtmlJobs()
+  j.jobs = jobs
+  j.run()
+
 }
