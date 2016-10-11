@@ -17,7 +17,15 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.5/css/AdminLTE.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.5/css/skins/skin-blue.css">
-
+    <style type="text/css">
+    body .loader{
+        color: #fff;
+        background-color: #357ca5;
+        font-size: 32px;
+        height: 50px;
+        text-align: center;
+    }
+    </style>
     <!-- Polyfill(s) for older browsers -->
     <script>var base_url = "<?php print_r($_ENV["API_URL"]); ?>"</script>
     <script src="node_modules/core-js/client/shim.min.js"></script>
@@ -31,7 +39,7 @@
     </script>
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
-    <my-app>Loading...</my-app>
+    <my-app><div class="loader">Loading...</div></my-app>
     <!-- jQuery 2.2.4 -->
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
     <!-- Bootstrap 3.3.6 -->
