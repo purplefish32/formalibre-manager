@@ -1,0 +1,11 @@
+{
+  "config": {
+    "special_char": "$",
+    "placeholder_short": "//",
+    "placeholder_long1": "/*",
+    "placeholder_long2": " */",
+    "tagfile": "tag_php.coffee",
+    "connector": "db.coffee",
+    "data_file": "model.json"
+  }
+}
