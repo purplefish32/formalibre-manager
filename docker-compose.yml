@@ -20,6 +20,33 @@ services:
     environment:
       VIRTUAL_HOST: http://adminer.manager.loc
 
+  grafana:
+    image: grafana/grafana
+    ports:
+      - 3000:3000
+    links:
+      - graphite
+
+  carbon:
+    restart: always
+    build: docker/carbon
+    ports:
+      - 2003:2003
+      - 2004:2004
+      - 7002:7002
+    volumes:
+      - whisper:/opt/graphite/storage/whisper/:rw
+
+  graphite:
+    restart: always
+    build: docker/graphite
+    ports:
+      - 999:80
+    volumes:
+      - whisper:/opt/graphite/storage/whisper/:rw
+    links:
+      - carbon
+
   db:
     image: mysql:5.7
     restart: always
@@ -95,3 +122,4 @@ volumes:
   backend_logs:
   backend_cache:
   backend_sessions:
+  whisper:
