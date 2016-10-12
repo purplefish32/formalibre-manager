@@ -13,6 +13,7 @@ import { routing } from './app.routing'
 
 import { DashboardComponent }      from './dashboard/dashboard.component';
 import { ServersModule }      from './servers/servers.module';
+import { PlatformsModule }      from './platforms/platforms.module';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { ServersModule }      from './servers/servers.module';
     HttpModule,
     routing,
     ServersModule,
+    PlatformsModule
   ],
   declarations: [
     AppComponent,

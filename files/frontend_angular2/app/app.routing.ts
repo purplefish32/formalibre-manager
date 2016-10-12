@@ -18,6 +18,11 @@ const appRoutes: Routes = [
     redirectTo: 'servers',
     pathMatch: 'prefix'
   },
+  {
+    path: 'platforms',
+    redirectTo: 'platforms',
+    pathMatch: 'prefix'
+  }
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);
