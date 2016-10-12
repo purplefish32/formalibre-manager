@@ -1,7 +1,7 @@
 import fs = require('fs')
 import path = require('path')
 
-export let rootDir = path.join(path.dirname(process.cwd()), '../..')
+export let rootDir = path.join(path.dirname(process.argv[1]), '../../..')
 export let configDir = path.join(rootDir, 'config')
 export let configFile = path.join(configDir, 'model.json')
 export let files = path.join(rootDir, 'files')
