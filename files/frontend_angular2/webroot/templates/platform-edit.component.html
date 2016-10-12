@@ -1,72 +1,68 @@
+
 <div class="row">
   <div class="col-md-12">
-    <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>Edit Platform</h1>
       <ol class="breadcrumb">
-        <li><a href="#/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li><a href="#/platforms"> Platforms</a></li>
+        <li><a href="#/"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+        <li><a href="#/platforms">Platforms</a></li>
         <li class="active">Edit Platform</li>
       </ol>
     </section>
-    <!-- Main content -->
     <section class="content">
-      <form class="form" #platformForm="ngForm">
+      <form class="form" #elementForm="ngForm">
         <div class="box">
           <div class="box-body">
             <fieldset>
               <legend>Platform details</legend>
-              <!--$ platforms/model@generate_form(platform)-->
               <div class="form-group">
-                <label for='name'>Name</label>
-                <input type='text' name='name' required  [(ngModel)]='platform.name' class='form-control'>
+                <label>Name</label>
+                <input class="form-control" required="required" name="name" [(ngModel)]="platform.name" type="text"/>
               </div>
               <div class="form-group">
-                <label for='subdomain'>Subdomain</label>
-                <input type='text' name='subdomain' required  [(ngModel)]='platform.subdomain' class='form-control'>
+                <label>Subdomain</label>
+                <input class="form-control" required="required" name="subdomain" [(ngModel)]="platform.subdomain" type="text"/>
               </div>
               <div class="form-group">
-                <label for='description'>Description</label>
-                <input type='text' name='description' required  [(ngModel)]='platform.description' class='form-control'>
+                <label>Description</label>
+                <input class="form-control" required="required" name="description" [(ngModel)]="platform.description" type="text"/>
               </div>
               <div class="form-group">
-                <label for='plan'>Plan</label>
-                <input type='text' name='plan' required  [(ngModel)]='platform.plan' class='form-control'>
+                <label>Plan</label>
+                <input class="form-control" required="required" name="plan" [(ngModel)]="platform.plan" type="text"/>
               </div>
               <div class="form-group">
-                <label for='end_date'>End date</label>
-                <input type='text' name='end_date' required  [(ngModel)]='platform.end_date' class='form-control'>
+                <label>End date</label>
+                <input class="form-control" required="required" name="end_date" [(ngModel)]="platform.end_date" type="text"/>
               </div>
               <div class="form-group">
-                <label for='max_users'>Max users</label>
-                <input type='text' name='max_users' required  [(ngModel)]='platform.max_users' class='form-control'>
+                <label>Max users</label>
+                <input class="form-control" required="required" name="max_users" [(ngModel)]="platform.max_users" type="text"/>
               </div>
               <div class="form-group">
-                <label for='max_disk_space'>Max disk space</label>
-                <input type='text' name='max_disk_space' required  [(ngModel)]='platform.max_disk_space' class='form-control'>
+                <label>Max disk space</label>
+                <input class="form-control" required="required" name="max_disk_space" [(ngModel)]="platform.max_disk_space" type="text"/>
               </div>
               <div class="form-group">
-                <label for='contact_name'>Contact</label>
-                <input type='text' name='contact_name' required  [(ngModel)]='platform.contact_name' class='form-control'>
+                <label>Contact</label>
+                <input class="form-control" required="required" name="contact_name" [(ngModel)]="platform.contact_name" type="text"/>
               </div>
               <div class="form-group">
-                <label for='contact_email'>Email</label>
-                <input type='text' name='contact_email' required  [(ngModel)]='platform.contact_email' class='form-control'>
+                <label>Email</label>
+                <input class="form-control" required="required" name="contact_email" [(ngModel)]="platform.contact_email" type="text"/>
               </div>
               <div class="form-group">
-                <label for='contact_phone'>Phone</label>
-                <input type='text' name='contact_phone' required  [(ngModel)]='platform.contact_phone' class='form-control'>
+                <label>Phone</label>
+                <input class="form-control" required="required" name="contact_phone" [(ngModel)]="platform.contact_phone" type="text"/>
               </div>
-              <!--$ -->
             </fieldset>
           </div>
         </div>
       </form>
       <div class="box-footer">
-        <button (click)="onSubmit()" class="btn btn-primary" [disabled]="!platformForm.form.valid">Submit</button>
-        <span [hidden]="!platform || !platform.id"><button (click)="onDelete()" class="btn btn-danger">Delete</button></span>
+        <button class="btn btn-primary" (click)="onSubmit()" [disabled]="!elementForm.form.valid">Submit</button><span [hidden]="!platform || !platform.id">
+          <button class="btn btn-danger" (click)="onDelete()">Delete</button></span>
       </div>
     </section>
-    <!-- /.content -->
   </div>
 </div>

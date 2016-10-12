@@ -1,0 +1,13 @@
+<td>{{platform.name}}</td>
+<td>{{platform.subdomain}}</td>
+<td>{{platform.description}}</td>
+<td>{{platform.plan}}</td>
+<td>{{platform.end_date}}</td>
+<td>{{platform.max_users}}</td>
+<td>{{platform.max_disk_space}}</td>
+<td>{{platform.contact_name}}</td>
+<td>{{platform.contact_email}}</td>
+<td>{{platform.contact_phone}}</td>
+<td>
+<button class="btn btn-default btn-xs" routerLink="/platform/edit/{{platform.id}}" *ngIf="platform.hasOwnProperty('id')"><i class="fa fa-edit"></i></button>
+</td>

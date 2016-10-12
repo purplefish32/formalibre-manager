@@ -1,23 +1,21 @@
+
 <div class="row">
   <div class="col-md-12">
-    <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>Platforms</h1>
       <ol class="breadcrumb">
-        <li><a href="#/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li><a href="#/"><i class="fa fa-dashboard"></i>Dashboard</a></li>
         <li class="active">Platforms</li>
       </ol>
     </section>
-    <!-- Main content -->
     <section class="content">
       <div class="box-footer">
-        <a routerLink="/platform/new" class="btn btn-primary">Add new Platform</a>
+        <button class="btn btn-primary" routerLink="/platform/new">Add new Platform</button>
       </div>
       <div class="box">
         <div class="box-body">
           <table class="table" *ngIf="platforms?.length">
             <tr>
-              <!--$ platforms/model@removeIdx.forEach(getName).list(<th>#</th>)-->
               <th>Name</th>
               <th>Subdomain</th>
               <th>Description</th>
@@ -28,19 +26,21 @@
               <th>Contact</th>
               <th>Email</th>
               <th>Phone</th>
-              <!--$ -->
+              <th>Edit</th>
             </tr>
-            <tr PlatformDetail *ngFor="let i of platforms" [platform]="i"></tr>
+            <tr PlatformDetail="PlatformDetail" *ngFor="let i of platforms" [platform]="i"></tr>
           </table>
           <div class="callout callout-info" *ngIf="platforms && !platforms?.length">
-            <p>There are no platforms yet. Feel free to add your first platform using the "New Platform" button.</p>
+            <p>There are no platforms yet. Feel free to add your first platform using the "Add new Platform" button.</p>
           </div>
           <div class="callout callout-info" *ngIf="!platforms">
             <p>Loading...</p>
           </div>
         </div>
       </div>
+      <div class="box-footer">
+        <button class="btn btn-primary" routerLink="/platform/new">Add new Platform</button>
+      </div>
     </section>
-    <!-- /.content -->
   </div>
 </div>
