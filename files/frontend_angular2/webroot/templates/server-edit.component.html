@@ -1,58 +1,56 @@
+
 <div class="row">
   <div class="col-md-12">
-    <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>Edit Server</h1>
       <ol class="breadcrumb">
-        <li><a href="#/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li><a href="#/servers"> Servers</a></li>
+        <li><a href="#/">Dashboard<i class="fa fa-dashboard"></i></a></li>
+        <li><a href="#/servers">Servers</a></li>
         <li class="active">Edit Server</li>
       </ol>
     </section>
-    <!-- Main content -->
     <section class="content">
       <form class="form" #serverForm="ngForm">
         <div class="box">
           <div class="box-body">
-                <fieldset>
-                    <legend>Server details</legend>
-                    <div class="form-group">
-                        <label for="name">Name</label> (Usually the server's reverse DNS)
-                        <input type="text" name="name" required  [(ngModel)]="server.name" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="ip">IP</label>
-                        <input type="text" name="ip" required [(ngModel)]="server.ip" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="provider">Provider</label>
-                        <select name="provider" required [(ngModel)]="server.provider" class="form-control">
-                            <option value="OVH" selected>OVH</option>
-                            <option value="SoYouStart">SoYouStart</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="type">Type</label>
-                        <select name="type" required  [(ngModel)]="server.type" class="form-control">
-                            <option value="Bare Metal" selected>Bare Metal</option>
-                            <option value="VPS">VPS</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="description">Description</label>
-                        <input type="text" name="description" required [(ngModel)]="server.description" class="form-control">
-                    </div>
-                </fieldset>
+            <fieldset>
+              <legend>Server details</legend>
+              <div class="form-group">
+                <label>Name</label> (Usually the server's reverse DNS)
+                <input class="form-control" required="required" name="name" [(ngModel)]="server.name" type="text"/>
+              </div>
+              <div class="form-group">
+                <label>IP</label> undefined
+                <input class="form-control" required="required" name="ip" [(ngModel)]="server.ip" type="text"/>
+              </div>
+              <div class="form-group">
+                <label>Provider</label> undefined
+                <select class="form-control" required="required" name="provider" [(ngModel)]="server.provider">
+                  <option value="OVH" selected="selected">OVH</option>
+                  <option value="SoYouStart">SoYouStart</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Type</label> undefined
+                <select class="form-control" required="required" name="type" [(ngModel)]="server.type">
+                  <option value="Bare Metal" selected="selected">Bare Metal</option>
+                  <option value="VPS">VPS</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Description</label> undefined
+                <input class="form-control" required="required" name="description" [(ngModel)]="server.description" type="text"/>
+              </div>
+            </fieldset>
           </div>
         </div>
       </form>
       <div class="box-footer">
-        <button (click)="onSubmit()" class="btn btn-primary" [disabled]="!serverForm.form.valid">Submit</button>
-        <span  [hidden]="!server || !server.id"><button (click)="onDelete()" class="btn btn-danger">Delete</button></span>
+        <button class="btn btn-primary" (click)="onSubmit()" [disabled]="!serverForm.form.valid">Submit</button><span [hidden]="!server || !server.id">
+          <button class="btn btn-danger" (click)="onDelete()">Delete</button></span>
       </div>
     </section>
-    <!-- /.content -->
   </div>
 </div>

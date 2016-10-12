@@ -1,4 +1,4 @@
-import {fl_element, fl_container, fl_jadeRenderer} from './fl_comp'
+import {fl_element, fl_container, fl_jadeRenderer, fl_text} from './fl_comp'
 import * as fl_c from './fl_common'
 import * as fl_m from './fl_manager_comp'
 
@@ -38,15 +38,15 @@ export class BreadCrumbs extends fl_element {
 
     if (link) {
       setName = name
-      o.add(new fl_m.Link(setName,[`href="${link}"`])).setForOrigin()
+      o.add(new fl_m.Link("",[`href="${link}"`])).setForOrigin()
     }
 
     if (logo) {
       o.add('i', `fa fa-${logo} `, [], "")
     }
 
-    let renderer = new fl_jadeRenderer(true,true)
-    console.log(o.render(renderer))
+    if(link)
+      o.add(new fl_text(setName))
 
     return o;
   }
