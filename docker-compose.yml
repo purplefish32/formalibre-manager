@@ -5,12 +5,18 @@ services:
     image: 'dockercloud/haproxy:latest'
     ports:
       - '80:80'
+      - '2003:2003'
+      - '2004:2004'
+      - '7002:7002'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     links:
       - frontend
       - api
       - adminer
+      - carbon
+      - graphite
+      - grafana
 
   adminer:
     restart: always
@@ -19,6 +25,33 @@ services:
       - db
     environment:
       VIRTUAL_HOST: http://adminer.manager.loc
+
+  grafana:
+    image: grafana/grafana
+    links:
+      - graphite
+    environment:
+      VIRTUAL_HOST: http://grafana.manager.loc
+
+  carbon:
+    restart: always
+    restart: always
+    build: docker/carbon
+    volumes:
+      - whisper:/opt/graphite/storage/whisper/:rw
+    environment:
+      TCP_PORTS: "2003, 2004, 7002"
+      VIRTUAL_HOST: http://carbon.manager.loc
+
+  graphite:
+    restart: always
+    build: docker/graphite
+    volumes:
+      - whisper:/opt/graphite/storage/whisper/:rw
+    links:
+      - carbon
+    environment:
+      VIRTUAL_HOST: http://graphite.manager.loc
 
   db:
     image: mysql:5.7
@@ -95,3 +128,4 @@ volumes:
   backend_logs:
   backend_cache:
   backend_sessions:
+  whisper:
