@@ -4,7 +4,7 @@
     <section class="content-header">
       <h1>Servers</h1>
       <ol class="breadcrumb">
-        <li><a href="#/">Dashboard<i class="fa fa-dashboard"></i></a></li>
+        <li><a href="#/"><i class="fa fa-dashboard"></i>Dashboard</a></li>
         <li class="active">Servers</li>
       </ol>
     </section>
@@ -26,7 +26,7 @@
             <tr ServerDetail="ServerDetail" *ngFor="let i of servers" [server]="i"></tr>
           </table>
           <div class="callout callout-info" *ngIf="servers && !servers?.length">
-            <p>There are no servers yet. Feel free to add your first server using the "New Server" button.</p>
+            <p>There are no servers yet. Feel free to add your first server using the "Add new Server" button.</p>
           </div>
           <div class="callout callout-info" *ngIf="!servers">
             <p>Loading...</p>

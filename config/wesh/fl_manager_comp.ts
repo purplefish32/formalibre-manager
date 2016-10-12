@@ -3,10 +3,10 @@ import * as fl_bc from './fl_breadcrumb'
 import * as fl_m from './fl_manager_comp'
 import {fl_container, fl_element, fl_jadeRenderer} from './fl_comp'
 
-export function getFields(data) {
+export function getFields(type,data) {
   return data.model
     .filter(column => !column.index)
-    .map(column => `{{server.${column.field}}}`)
+    .map(column => `{{${type}.${column.field}}}`)
 }
 
 export class PageHeaders extends fl_c.Section {
@@ -29,12 +29,12 @@ export class ListFromModel extends fl_c.SectionContent {
 
   getHeaders() {
     let list = this.model
-      .filter(server => !server.index)
-      .map(function(server) {
-        if (server.name)
-          return server.name
+      .filter(element => !element.index)
+      .map(function(element) {
+        if (element.name)
+          return element.name
         else
-          return server.field.toLowerCase().replace(/\b./g, a => a.toUpperCase())
+          return element.field.toLowerCase().replace(/\b./g, a => a.toUpperCase())
       })
     return list;
   }
@@ -43,8 +43,8 @@ export class ListFromModel extends fl_c.SectionContent {
 
 export function editButton(type) {
   let linkAttr = [
-    `routerLink="/server/edit/{{${type}.id}}"`,
-    `*ngIf="server.hasOwnProperty('id')"`
+    `routerLink="/${type}/edit/{{${type}.id}}"`,
+    `*ngIf="${type}.hasOwnProperty('id')"`
   ]
 
   let link = new fl_m.Button(linkAttr, "","edit","btn-default btn-xs")
