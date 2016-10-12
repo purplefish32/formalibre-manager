@@ -48,8 +48,11 @@ export class ServersService {
 
   update(server: Server): Observable<Response> {
     const url = `${this.serversUrl}/${server.id}`;
+    let dataToSend = server
+    delete dataToSend.id
+    console.dir(dataToSend)
     return this.http
-      .put(url, JSON.stringify(server), {headers: this.headers});
+      .put(url, JSON.stringify(dataToSend), { headers: this.headers });
   }
 
 }

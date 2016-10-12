@@ -12,28 +12,25 @@ import { AppComponent }  from './app.component';
 import { routing } from './app.routing'
 
 import { DashboardComponent }      from './dashboard/dashboard.component';
-import { ServersService }      from './servers/servers.service';
-import { ServersComponent }      from './servers/servers.component';
-import { ServerDetailComponent } from './servers/server-detail.component';
-import { ServerEditComponent } from './servers/server-edit.component';
+import { ServersModule }      from './servers/servers.module';
+import { PlatformsModule }      from './platforms/platforms.module';
+
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    routing
+    routing,
+    ServersModule,
+    PlatformsModule
   ],
   declarations: [
     AppComponent,
     DashboardComponent,
-    ServersComponent,
-    ServerDetailComponent,
-    ServerEditComponent
   ],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy},
-    ServersService,
   ],
   bootstrap: [ AppComponent ]
 })

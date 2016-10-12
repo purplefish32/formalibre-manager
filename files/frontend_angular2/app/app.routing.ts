@@ -1,8 +1,6 @@
 import { ModuleWithProviders }  from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { ServersComponent }     from './servers/servers.component';
-import { ServerEditComponent }  from './servers/server-edit.component';
 import { DashboardComponent }   from './dashboard/dashboard.component';
 
 const appRoutes: Routes = [
@@ -12,19 +10,18 @@ const appRoutes: Routes = [
   },
   {
     path: 'dashboard',
-    component: DashboardComponent
+    redirectTo: '',
+    pathMatch: 'full'
   },
   {
     path: 'servers',
-    component: ServersComponent
+    redirectTo: 'servers',
+    pathMatch: 'prefix'
   },
   {
-    path: 'server/edit/:id',
-    component: ServerEditComponent
-  },
-  {
-    path: 'server/new',
-    component: ServerEditComponent
+    path: 'platforms',
+    redirectTo: 'platforms',
+    pathMatch: 'prefix'
   }
 ];
 

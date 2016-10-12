@@ -1,0 +1,85 @@
+{
+  "servers": {
+    "model": [{
+      "index": true,
+      "field": "id"
+    }, {
+      "field": "name",
+      "required": "true",
+      "description": "(Usually the server's reverse DNS)"
+    }, {
+      "field": "ip",
+      "name": "IP",
+      "required": "true"
+    }, {
+      "field": "provider",
+      "type": "option",
+      "options": [{
+        "value": "OVH",
+        "selected": "true"
+      }, {
+        "value": "SoYouStart"
+      }, {
+        "value": "Other"
+      }],
+      "required": "true"
+    }, {
+      "field": "type",
+      "type": "option",
+      "options": [{
+        "value": "Bare Metal",
+        "selected": "true"
+      }, {
+        "value": "VPS"
+      }, {
+        "value": "Other"
+      }],
+      "required": "true"
+    }, {
+      "field": "description",
+      "required": "true"
+    }]
+  },
+  "platforms": {
+    "model": [{
+      "index": true,
+      "field": "id"
+    }, {
+      "field": "name",
+      "required": "true"
+    }, {
+      "field": "subdomain",
+      "required": "true"
+    }, {
+      "field": "description",
+      "required": "true"
+    }, {
+      "field": "plan",
+      "required": "true"
+    }, {
+      "field": "end_date",
+      "name": "End date",
+      "required": "true"
+    }, {
+      "field": "max_users",
+      "name": "Max users",
+      "required": "true"
+    }, {
+      "field": "max_disk_space",
+      "name": "Max disk space",
+      "required": "true"
+    }, {
+      "field": "contact_name",
+      "name": "Contact",
+      "required": "true"
+    }, {
+      "field": "contact_email",
+      "name": "Email",
+      "required": "true"
+    }, {
+      "field": "contact_phone",
+      "name": "Phone",
+      "required": "true"
+    }]
+  }
+}

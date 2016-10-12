@@ -1,0 +1,68 @@
+
+<div class="row">
+  <div class="col-md-12">
+    <section class="content-header">
+      <h1>Edit Platform</h1>
+      <ol class="breadcrumb">
+        <li><a href="#/"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+        <li><a href="#/platforms">Platforms</a></li>
+        <li class="active">Edit Platform</li>
+      </ol>
+    </section>
+    <section class="content">
+      <form class="form" #elementForm="ngForm">
+        <div class="box">
+          <div class="box-body">
+            <fieldset>
+              <legend>Platform details</legend>
+              <div class="form-group">
+                <label>Name</label>
+                <input class="form-control" required="required" name="name" [(ngModel)]="platform.name" type="text"/>
+              </div>
+              <div class="form-group">
+                <label>Subdomain</label>
+                <input class="form-control" required="required" name="subdomain" [(ngModel)]="platform.subdomain" type="text"/>
+              </div>
+              <div class="form-group">
+                <label>Description</label>
+                <input class="form-control" required="required" name="description" [(ngModel)]="platform.description" type="text"/>
+              </div>
+              <div class="form-group">
+                <label>Plan</label>
+                <input class="form-control" required="required" name="plan" [(ngModel)]="platform.plan" type="text"/>
+              </div>
+              <div class="form-group">
+                <label>End date</label>
+                <input class="form-control" required="required" name="end_date" [(ngModel)]="platform.end_date" type="text"/>
+              </div>
+              <div class="form-group">
+                <label>Max users</label>
+                <input class="form-control" required="required" name="max_users" [(ngModel)]="platform.max_users" type="text"/>
+              </div>
+              <div class="form-group">
+                <label>Max disk space</label>
+                <input class="form-control" required="required" name="max_disk_space" [(ngModel)]="platform.max_disk_space" type="text"/>
+              </div>
+              <div class="form-group">
+                <label>Contact</label>
+                <input class="form-control" required="required" name="contact_name" [(ngModel)]="platform.contact_name" type="text"/>
+              </div>
+              <div class="form-group">
+                <label>Email</label>
+                <input class="form-control" required="required" name="contact_email" [(ngModel)]="platform.contact_email" type="text"/>
+              </div>
+              <div class="form-group">
+                <label>Phone</label>
+                <input class="form-control" required="required" name="contact_phone" [(ngModel)]="platform.contact_phone" type="text"/>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+      </form>
+      <div class="box-footer">
+        <button class="btn btn-primary" (click)="onSubmit()" [disabled]="!elementForm.form.valid">Submit</button><span [hidden]="!platform || !platform.id">
+          <button class="btn btn-danger" (click)="onDelete()">Delete</button></span>
+      </div>
+    </section>
+  </div>
+</div>

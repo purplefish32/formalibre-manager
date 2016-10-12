@@ -8,9 +8,8 @@
     "experimentalDecorators": true,
     "removeComments": false,
     "noImplicitAny": false,
-    "rootDir": "app",
-    "outDir": "webroot/app/",
-    "watch": true
+    "watch": true,
+    "outDir": "app"
   },
   "exclude": [
     "node_modules",

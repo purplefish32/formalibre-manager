@@ -1,0 +1,8 @@
+<td>{{server.name}}</td>
+<td>{{server.ip}}</td>
+<td>{{server.provider}}</td>
+<td>{{server.type}}</td>
+<td>{{server.description}}</td>
+<td>
+<button class="btn btn-default btn-xs" routerLink="/server/edit/{{server.id}}" *ngIf="server.hasOwnProperty('id')"><i class="fa fa-edit"></i></button>
+</td>
