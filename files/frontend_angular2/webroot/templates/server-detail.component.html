@@ -3,4 +3,6 @@
 <td>{{server.provider}}</td>
 <td>{{server.type}}</td>
 <td>{{server.description}}</td>
-<td><a class="btn btn-default btn-xs" routerLink="/server/edit/{{server.id}}" *ngIf="server.hasOwnProperty('id')"><i class="fa fa-edit"></i></a></td>
+<td>
+<button class="btn btn-default btn-xs" routerLink="/server/edit/{{server.id}}" *ngIf="server.hasOwnProperty('id')"><i class="fa fa-edit"></i></button>
+</td>

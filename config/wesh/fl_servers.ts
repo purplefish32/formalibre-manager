@@ -42,3 +42,13 @@ export class ServersListPage extends fl_c.MainCol {
     return this.render(renderer)
   }
 }
+
+export class ServerDetail extends fl_m.ListDetail {
+  constructor(config) {
+    super('server', fl_m.getFields(config.servers))
+  }
+
+  tohtml(renderer): string {
+    return this.render(renderer)
+  }
+}

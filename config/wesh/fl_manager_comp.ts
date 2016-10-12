@@ -1,5 +1,13 @@
 import * as fl_c from './fl_common'
 import * as fl_bc from './fl_breadcrumb'
+import * as fl_m from './fl_manager_comp'
+import {fl_container, fl_element, fl_jadeRenderer} from './fl_comp'
+
+export function getFields(data) {
+  return data.model
+    .filter(column => !column.index)
+    .map(column => `{{server.${column.field}}}`)
+}
 
 export class PageHeaders extends fl_c.Section {
   constructor(
@@ -42,6 +50,16 @@ export function editButton(type) {
   let link = new fl_m.Button(linkAttr, "","edit","btn-default btn-xs")
 
   return link
+}
+
+export class ListDetail extends fl_container {
+  constructor(private type:string, private details:string[]){
+    super()
+
+    this.details.forEach(field => this.add(new fl_c.TableCol('', [], field)))
+
+    this.add(new fl_c.TableCol().add(fl_m.editButton(type)))
+  }
 }
 
 export class Link extends fl_c.Link {
