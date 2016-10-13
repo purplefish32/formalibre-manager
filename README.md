@@ -23,9 +23,11 @@ docker exec -i -t nlkofmdev_api_1 rm var/cache -R
 
 * on console 1
 cd config/wesh
+typings install --global node core-js --source dt --save
 npm install
 tsc
 
 * on console2
 cd config/wesh/app
 nodemon main.js
+
