@@ -14,6 +14,7 @@ import { routing } from './app.routing'
 import { DashboardComponent }      from './dashboard/dashboard.component';
 import { ServersModule }      from './servers/servers.module';
 import { PlatformsModule }      from './platforms/platforms.module';
+import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { PlatformsModule }      from './platforms/platforms.module';
     HttpModule,
     routing,
     ServersModule,
-    PlatformsModule
+    PlatformsModule,
+    SlimLoadingBarModule.forRoot()
   ],
   declarations: [
     AppComponent,

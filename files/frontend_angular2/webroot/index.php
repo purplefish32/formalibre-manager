@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="node_modules/admin-lte/dist/css/AdminLTE.min.css">
     <!--link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.5/css/skins/skin-blue.css"-->
     <link rel="stylesheet" href="node_modules/admin-lte/dist/css/skins/skin-blue.css">
+    <link rel="stylesheet" type="text/css" href="node_modules/ng2-slim-loading-bar/style.css">
     <style type="text/css">
     body .loader{
         color: #fff;
@@ -44,7 +45,7 @@
     </script>
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
-    <my-app><div class="loader">Loading...</div></my-app>
+    <my-app><div class="loader">Loading...</div></my-app>    
     <!-- jQuery 2.2.4 -->
     <!--script src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script-->
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
