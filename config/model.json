@@ -81,5 +81,30 @@
       "name": "Phone",
       "required": "true"
     }]
+  },
+  "clients": {
+    "model": [{
+      "index": true,
+      "field": "id"
+    },{
+      "field": "firstname",
+      "required": "true",
+      "description": "(Client name)"
+    }, {
+      "field": "lastname",
+      "required": "true"
+    }, {
+      "field": "organisation",
+      "required": "true"
+    }, {
+      "field": "email",
+      "required": "true"
+    }, {
+      "field": "phone",
+      "required": "true"
+    }, {
+      "field": "address",
+      "required": "true"
+    }]
   }
 }
