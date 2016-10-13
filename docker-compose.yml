@@ -144,7 +144,7 @@ services:
       - .:/app
     links:
       - config_tsc
-    command: nodemon ./config/wesh/app/main.js
+    command: nodemon ./config/wesh/app/main.js -w ./config
 
 volumes:
   mysql:
