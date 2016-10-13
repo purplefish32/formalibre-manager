@@ -18,8 +18,7 @@
  import { ServersComponent }      from './servers.component';
  import { ServerDetailComponent } from './server-detail.component';
  import { ServerEditComponent } from './server-edit.component';
-//
-
+ import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
 
 @NgModule({
   imports: [
@@ -28,6 +27,7 @@
     HttpModule,
     RouterModule,
     ServerRouting,
+    SlimLoadingBarModule.forRoot()
   ],
   declarations: [
     ServersComponent,
