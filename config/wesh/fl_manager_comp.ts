@@ -101,3 +101,16 @@ export class Button extends fl_c.Button {
     super(classes, attrs, data,logo)
   }
 }
+
+export class MainCol extends fl_c.MainCol {
+  constructor() {
+    super()
+    this.addSelf(new ProgressLoader)
+  }
+}
+
+export class ProgressLoader extends fl_element {
+  constructor() {
+    super("ng2-slim-loading-bar", "", `'[color]'="'blue'"`)
+  }
+}

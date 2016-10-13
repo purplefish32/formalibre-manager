@@ -11,6 +11,8 @@ abstract class fl_renderer {
   abstract render_elem(elem: string, classes: string, attrs: any): string
 
   local_render_elem(elem: string, classes: string, attrs: any): string {
+    if(typeof attrs === 'string')
+      attrs = [attrs]
     return this.render_elem(elem, classes, attrs)
   }
 
@@ -105,16 +107,11 @@ export class fl_container extends fl_renderable {
     return this
   }
 
-  add(
+  addSelf(
     elem: fl_renderable | string,
     classes: string = "",
     attrs: string[] = [],
     data: string = null): fl_container {
-
-    if (this != this.origin) {
-      this.origin.add(elem, classes, attrs, data)
-      return this
-    }
 
     let debug = function() {
       console.dir(this)
@@ -139,6 +136,23 @@ export class fl_container extends fl_renderable {
       elem = new fl_element(elem, classes, attrs, data)
 
     this.addRaw(elem)
+
+    return this
+  }
+
+
+  add(
+    elem: fl_renderable | string,
+    classes: string = "",
+    attrs: string[] = [],
+    data: string = null): fl_container {
+
+    if (this != this.origin) {
+      this.origin.addSelf(elem, classes, attrs, data)
+      return this
+    }
+
+    this.addSelf(elem, classes, attrs, data)
 
     return this
   }
