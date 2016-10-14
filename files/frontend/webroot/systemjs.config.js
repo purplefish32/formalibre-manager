@@ -2,7 +2,7 @@
  * System configuration for Angular samples
  * Adjust as necessary for your application needs.
  */
-(function (global) {
+(function(global) {
   System.config({
     paths: {
       // paths serve as alias
@@ -22,7 +22,7 @@
       '@angular/router': 'npm:@angular/router/bundles/router.umd.js',
       '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
       // other libraries
-      'rxjs':                       'npm:rxjs',
+      'rxjs': 'npm:rxjs',
       'angular2-in-memory-web-api': 'npm:angular2-in-memory-web-api',
       'ng2-slim-loading-bar': 'npm:ng2-slim-loading-bar',
     },
@@ -39,7 +39,10 @@
         main: './index.js',
         defaultExtension: 'js'
       },
-      'ng2-slim-loading-bar':  { main: 'index.js',  defaultExtension: 'js' },
+      'ng2-slim-loading-bar': {
+        main: 'index.js',
+        defaultExtension: 'js'
+      },
     }
   });
 })(this);

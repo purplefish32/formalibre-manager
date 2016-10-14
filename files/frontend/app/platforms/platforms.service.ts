@@ -17,7 +17,7 @@ export class PlatformsService {
   private headers = new Headers({ 'Content-Type': 'application/json' });
   private platformsUrl = base_url + '/platforms';  // URL to web platforms api
 
-  constructor(private http: Http,private progressLoader: SlimLoadingBarService) {
+  constructor(private http: Http, private progressLoader: SlimLoadingBarService) {
     this.getPlatforms()
   }
 

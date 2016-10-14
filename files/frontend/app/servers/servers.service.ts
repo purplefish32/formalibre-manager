@@ -14,8 +14,8 @@ export class ServersService {
 
   servers = [];
 
-  private headers = new Headers({'Content-Type': 'application/json'});
-  private serversUrl = base_url+'/servers';  // URL to web servers api
+  private headers = new Headers({ 'Content-Type': 'application/json' });
+  private serversUrl = base_url + '/servers';  // URL to web servers api
 
   constructor(private http: Http, private progressLoader: SlimLoadingBarService) {
     this.getServers()
@@ -43,10 +43,10 @@ export class ServersService {
     )
   }
 
-  getServer(id:string): Observable<Server> {
+  getServer(id: string): Observable<Server> {
     var promise = this.getServers().toPromise()
-               .then(servers => servers.find(server => server.id === id))
-               .catch(this.handleError);
+      .then(servers => servers.find(server => server.id === id))
+      .catch(this.handleError);
     return Observable.fromPromise(promise);
   }
 

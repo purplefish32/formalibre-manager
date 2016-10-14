@@ -34,8 +34,8 @@ import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
     DashboardComponent,
   ],
   providers: [
-    {provide: LocationStrategy, useClass: HashLocationStrategy},
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
   ],
-  bootstrap: [ AppComponent ]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

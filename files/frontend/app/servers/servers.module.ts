@@ -1,8 +1,8 @@
- import { NgModule }      from '@angular/core';
- import { CommonModule } from '@angular/common';
- import { RouterModule } from '@angular/router';
- import { FormsModule }   from '@angular/forms';
- import { HttpModule }    from '@angular/http';
+import { NgModule }      from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { FormsModule }   from '@angular/forms';
+import { HttpModule }    from '@angular/http';
 //
 // import {
 //   LocationStrategy,
@@ -13,12 +13,12 @@
 // import { routing } from './app.routing'
 //
 // import { DashboardComponent }      from './dashboard/dashboard.component';
- import { ServerRouting }      from './servers.routing';
- import { ServersService }      from './servers.service';
- import { ServersComponent }      from './servers.component';
- import { ServerDetailComponent } from './server-detail.component';
- import { ServerEditComponent } from './server-edit.component';
- import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
+import { ServerRouting }      from './servers.routing';
+import { ServersService }      from './servers.service';
+import { ServersComponent }      from './servers.component';
+import { ServerDetailComponent } from './server-detail.component';
+import { ServerEditComponent } from './server-edit.component';
+import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
 
 @NgModule({
   imports: [
@@ -35,7 +35,7 @@
     ServerEditComponent
   ],
   providers: [
-//    {provide: LocationStrategy, useClass: HashLocationStrategy},
+    //    {provide: LocationStrategy, useClass: HashLocationStrategy},
     ServersService,
   ],
   //bootstrap: [ AppComponent ]
