@@ -11,7 +11,7 @@ abstract class fl_renderer {
   abstract render_elem(elem: string, classes: string, attrs: any): string
 
   local_render_elem(elem: string, classes: string, attrs: any): string {
-    if(typeof attrs === 'string')
+    if (typeof attrs === 'string')
       attrs = [attrs]
     return this.render_elem(elem, classes, attrs)
   }

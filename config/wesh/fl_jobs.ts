@@ -6,13 +6,13 @@ export abstract class fl_jobs {
 }
 
 export interface IHtmlJob {
-  file:string
-  html:string
-  desc:string
+  file: string
+  html: string
+  desc: string
 }
 
 export class HtmlJobs extends fl_jobs {
-  jobs:IHtmlJob[]=[]
+  jobs: IHtmlJob[] = []
   constructor() { super() }
   run() {
     this.jobs.forEach(job => fs.writeFile(
@@ -22,7 +22,7 @@ export class HtmlJobs extends fl_jobs {
         if (err)
           console.error("FAIL " + job.desc, err)
         else
-          console.info("Ok "+ job.desc)
+          console.info("Ok " + job.desc)
       })
     )
   }

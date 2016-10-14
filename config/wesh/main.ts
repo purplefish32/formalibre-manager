@@ -13,6 +13,6 @@ interface String {
 
 let renderer = new fl_jadeRenderer(pretty, false)
 
-fl_servers.doJob(config,renderer)
-fl_platforms.doJob(config,renderer)
-fl_clients.doJob(config,renderer)
+fl_servers.doJob(config, renderer)
+fl_platforms.doJob(config, renderer)
+fl_clients.doJob(config, renderer)

@@ -3,7 +3,7 @@ import * as fl_bc from './fl_breadcrumb'
 import * as fl_m from './fl_manager_comp'
 import {fl_container, fl_element, fl_jadeRenderer} from './fl_comp'
 
-export function getFields(type,data) {
+export function getFields(type, data) {
   return data.model
     .filter(column => !column.index)
     .map(column => `{{${type}.${column.field}}}`)
@@ -47,13 +47,13 @@ export function editButton(type) {
     `*ngIf="${type}.hasOwnProperty('id')"`
   ]
 
-  let link = new fl_m.Button(linkAttr, "","edit","btn-default btn-xs")
+  let link = new fl_m.Button(linkAttr, "", "edit", "btn-default btn-xs")
 
   return link
 }
 
 export function deleteButton(linkAttr) {
-  let link = new fl_m.Button(linkAttr, "Delete",null,"btn-danger")
+  let link = new fl_m.Button(linkAttr, "Delete", null, "btn-danger")
 
   return link
 }
@@ -65,7 +65,7 @@ export function submitButton(linkAttr) {
 }
 
 export class ListDetail extends fl_container {
-  constructor(private type:string, private details:string[]){
+  constructor(private type: string, private details: string[]) {
     super()
 
     this.details.forEach(field => this.add(new fl_c.TableCol('', [], field)))
@@ -75,18 +75,18 @@ export class ListDetail extends fl_container {
 }
 
 export class ModelInput extends fl_c.ModelInput {
-  constructor(model,name,attr){
-    super(model,name,"",attr)
+  constructor(model, name, attr) {
+    super(model, name, "", attr)
   }
 }
 
 export class Label extends fl_c.Label {
-  constructor(data,attrs = []) {super('',attrs,data)}
+  constructor(data, attrs = []) { super('', attrs, data) }
 }
 
 export class Link extends fl_c.Link {
   constructor(data = null, attr = [], classes = "") {
-    super(classes,attr,data)
+    super(classes, attr, data)
   }
 }
 
@@ -98,7 +98,7 @@ export class Ol extends fl_c.Ol {
 
 export class Button extends fl_c.Button {
   constructor(attrs: string[] = [], data = "", logo = null, classes = "btn-primary") {
-    super(classes, attrs, data,logo)
+    super(classes, attrs, data, logo)
   }
 }
 
