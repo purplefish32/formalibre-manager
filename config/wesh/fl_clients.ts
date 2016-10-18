@@ -3,8 +3,8 @@ import * as path from "path"
 import * as fl_j from './fl_jobs'
 import {ElementsListPage, ElementDetail, ElementEditPage} from './fl_table_list'
 
-let base = 'platform'
-let Base = 'Platform'
+let base = 'client'
+let Base = 'Client'
 
 let env = {
   g_conf_element: `${base}s`,

@@ -11,7 +11,7 @@ export interface IBreadCrumbElement {
 
 export class BreadCrumbs extends fl_element {
   constructor(elements: IBreadCrumbElement[]) {
-    super("ol","breadcrumb")
+    super("ol", "breadcrumb")
     let o = this.createElem({
       name: 'Dashboard',
       isactive: false,
@@ -38,14 +38,14 @@ export class BreadCrumbs extends fl_element {
 
     if (link) {
       setName = name
-      o.add(new fl_m.Link("",[`href="${link}"`])).setForOrigin()
+      o.add(new fl_m.Link("", [`href="${link}"`])).setForOrigin()
     }
 
     if (logo) {
       o.add('i', `fa fa-${logo} `, [], "")
     }
 
-    if(link)
+    if (link)
       o.add(new fl_text(setName))
 
     return o;

@@ -10,23 +10,23 @@ import 'rxjs/add/operator/toPromise';
   providers: [ServerDetailComponent, ServersService]
 })
 export class ServersComponent implements OnInit {
-  servers:Server[];
+  servers: Server[];
 
   ngOnInit(): void {
     this.getServers();
   }
 
   constructor(
-      private serversService: ServersService
-    ) { }
+    private serversService: ServersService
+  ) { }
 
   getServers(): void {
     console.log('fetching servers');
     this.serversService.getServers().toPromise().then(
       servers => {
-          this.servers = servers;
-          console.dir(this.servers);
-        }
-      );
+        this.servers = servers;
+        console.dir(this.servers);
+      }
+    );
   }
 }

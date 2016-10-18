@@ -14,6 +14,7 @@ import { routing } from './app.routing'
 import { DashboardComponent }      from './dashboard/dashboard.component';
 import { ServersModule }      from './servers/servers.module';
 import { PlatformsModule }      from './platforms/platforms.module';
+import { ClientsModule }      from './clients/clients.module';
 import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
 
 
@@ -25,6 +26,7 @@ import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
     routing,
     ServersModule,
     PlatformsModule,
+    ClientsModule,
     SlimLoadingBarModule.forRoot()
   ],
   declarations: [
@@ -32,8 +34,8 @@ import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
     DashboardComponent,
   ],
   providers: [
-    {provide: LocationStrategy, useClass: HashLocationStrategy},
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
   ],
-  bootstrap: [ AppComponent ]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

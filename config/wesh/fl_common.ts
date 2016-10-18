@@ -8,8 +8,8 @@ export class Section extends fl_element {
 
 export class MainCol extends fl_element {
   constructor(screen = 'md', len = 12) {
-    super('', 'row')
-    this.add("", `col-${screen}-${len}`).setForOrigin()
+    super('div', 'row')
+    this.add("div", `col-${screen}-${len}`).setForOrigin()
   }
 }
 
@@ -19,7 +19,7 @@ export class SectionContent extends Section {
 
 export class BoxFooter extends fl_element {
   constructor() {
-    super("", 'box-footer')
+    super("div", 'box-footer')
   }
 }
 
@@ -43,8 +43,8 @@ export class Logo extends fl_element {
 
 export class Box extends fl_element {
   constructor() {
-    super('', 'box', [])
-    this.add(new fl_element('', "box-body")).setForOrigin()
+    super('div', 'box', [])
+    this.add(new fl_element('div', "box-body")).setForOrigin()
   }
 }
 

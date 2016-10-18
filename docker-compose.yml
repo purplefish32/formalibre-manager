@@ -69,8 +69,8 @@ services:
     restart: always
     image: php:7-apache
     volumes:
-      - ./files/frontend_angular2/webroot:/var/www/html/
-      - ./files/frontend_angular2/node_modules:/var/www/html/node_modules
+      - ./files/frontend/webroot:/var/www/html/
+      - ./files/frontend/node_modules:/var/www/html/node_modules
     links:
       - api
       - frontend_tsc
@@ -81,12 +81,12 @@ services:
   frontend_npm:
     image: treyjones/npm:latest
     volumes:
-      - ./files/frontend_angular2:/npm
+      - ./files/frontend:/npm
 
   frontend_tsc:
     image: milanaleksic/typescript
     volumes:
-      - ./files/frontend_angular2/:/home/developer/workspace
+      - ./files/frontend/:/home/developer/workspace
     command: tsc -p tsconfig.json
     links:
       - frontend_npm

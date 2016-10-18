@@ -22,6 +22,11 @@ const appRoutes: Routes = [
     path: 'platforms',
     redirectTo: 'platforms',
     pathMatch: 'prefix'
+  },
+  {
+    path: 'client',
+    redirectTo: 'clients',
+    pathMatch: 'prefix'
   }
 ];
 

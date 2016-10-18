@@ -13,11 +13,11 @@
 // import { routing } from './app.routing'
 //
 // import { DashboardComponent }      from './dashboard/dashboard.component';
- import { ServerRouting }      from './servers.routing';
- import { ServersService }      from './servers.service';
- import { ServersComponent }      from './servers.component';
- import { ServerDetailComponent } from './server-detail.component';
- import { ServerEditComponent } from './server-edit.component';
+ import { ClientRouting }      from './clients.routing';
+ import { ClientsService }      from './clients.service';
+ import { ClientsComponent }      from './clients.component';
+ import { ClientDetailComponent } from './client-detail.component';
+ import { ClientEditComponent } from './client-edit.component';
  import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
 
 @NgModule({
@@ -26,18 +26,18 @@
     FormsModule,
     HttpModule,
     RouterModule,
-    ServerRouting,
+    ClientRouting,
     SlimLoadingBarModule.forRoot()
   ],
   declarations: [
-    ServersComponent,
-    ServerDetailComponent,
-    ServerEditComponent
+    ClientsComponent,
+    ClientDetailComponent,
+    ClientEditComponent
   ],
   providers: [
 //    {provide: LocationStrategy, useClass: HashLocationStrategy},
-    ServersService,
+    ClientsService,
   ],
   //bootstrap: [ AppComponent ]
 })
-export class ServersModule { }
+export class ClientsModule { }

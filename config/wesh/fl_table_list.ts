@@ -4,7 +4,7 @@ import * as fl_m from './fl_manager_comp'
 
 
 export class ElementsList extends fl_m.ListFromModel {
-  constructor(config,env) {
+  constructor(config, env) {
     super(config[env.g_conf_element].model)
 
     let headers = this.getHeaders();
@@ -29,14 +29,14 @@ export class ElementsList extends fl_m.ListFromModel {
 }
 
 export class ElementsListPage extends fl_m.MainCol {
-  constructor(config,env) {
+  constructor(config, env) {
     super();
     this.add(new fl_m.PageHeaders(
       env.g_title, [{
         name: env.g_title,
         isactive: true
       }])
-    ).add(new ElementsList(config,env))
+    ).add(new ElementsList(config, env))
   }
 
   tohtml(renderer): string {
@@ -45,8 +45,8 @@ export class ElementsListPage extends fl_m.MainCol {
 }
 
 export class ElementDetail extends fl_m.ListDetail {
-  constructor(config,env) {
-    super(env.g_local_object, fl_m.getFields(env.g_local_object,config[env.g_conf_element]))
+  constructor(config, env) {
+    super(env.g_local_object, fl_m.getFields(env.g_local_object, config[env.g_conf_element]))
   }
 
   tohtml(renderer): string {
@@ -55,7 +55,7 @@ export class ElementDetail extends fl_m.ListDetail {
 }
 
 export class ElementsEdit extends fl_m.ListFromModel {
-  constructor(config,env) {
+  constructor(config, env) {
     super(config[env.g_conf_element].model)
 
     let fieldSet = new fl_element('fieldset')
@@ -83,7 +83,7 @@ export class ElementsEdit extends fl_m.ListFromModel {
         let formGroup = new fl_c.FormGroup()
           .add(new fl_m.Label(element.name, []))
 
-        if(element.description)
+        if (element.description)
           formGroup.add(new fl_text(" " + element.description))
 
         let attr = []
@@ -123,18 +123,18 @@ export class ElementsEdit extends fl_m.ListFromModel {
 }
 
 export class ElementEditPage extends fl_m.MainCol {
-  constructor(config,env) {
+  constructor(config, env) {
     super();
     this.add(new fl_m.PageHeaders(
-      'Edit '+env.g_title_singular, [{
+      'Edit ' + env.g_title_singular, [{
         name: env.g_title,
         isactive: false,
         link: env.g_list_route
       }, {
-          name: 'Edit '+env.g_title_singular,
+          name: 'Edit ' + env.g_title_singular,
           isactive: true
         }])
-    ).add(new ElementsEdit(config,env))
+    ).add(new ElementsEdit(config, env))
   }
 
   tohtml(renderer): string {

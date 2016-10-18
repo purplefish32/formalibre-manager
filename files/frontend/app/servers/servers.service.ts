@@ -6,19 +6,19 @@ import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/operator/share';
-import { Platform } from './platform';
+import { Server } from './server';
 import {SlimLoadingBarComponent, SlimLoadingBarService} from 'ng2-slim-loading-bar';
 
 @Injectable()
-export class PlatformsService {
+export class ServersService {
 
-  platforms = [];
+  servers = [];
 
   private headers = new Headers({ 'Content-Type': 'application/json' });
-  private platformsUrl = base_url + '/platforms';  // URL to web platforms api
+  private serversUrl = base_url + '/servers';  // URL to web servers api
 
-  constructor(private http: Http,private progressLoader: SlimLoadingBarService) {
-    this.getPlatforms()
+  constructor(private http: Http, private progressLoader: SlimLoadingBarService) {
+    this.getServers()
   }
 
   private handleError(error: any): Promise<any> {
@@ -35,41 +35,41 @@ export class PlatformsService {
     return published
   }
 
-  getPlatforms(): Observable<Platform[]> {
+  getServers(): Observable<Server[]> {
     this.onRequestStart()
     return this.onRequestEnd(
-      this.http.get(this.platformsUrl)
+      this.http.get(this.serversUrl)
         .map(response => response.json())
     )
   }
 
-  getPlatform(id: string): Observable<Platform> {
-    var promise = this.getPlatforms().toPromise()
-      .then(platforms => platforms.find(platform => platform.id === id))
+  getServer(id: string): Observable<Server> {
+    var promise = this.getServers().toPromise()
+      .then(servers => servers.find(server => server.id === id))
       .catch(this.handleError);
     return Observable.fromPromise(promise);
   }
 
   delete(id: string): Observable<Response> {
-    let url = `${this.platformsUrl}/${id}`;
+    let url = `${this.serversUrl}/${id}`;
     this.onRequestStart()
     return this.onRequestEnd(
       this.http.delete(url, { headers: this.headers })
     )
   }
 
-  create(platform: Platform): Observable<Platform[]> {
+  create(server: Server): Observable<Server[]> {
     this.onRequestStart()
     return this.onRequestEnd(
       this.http
-        .post(this.platformsUrl, JSON.stringify(platform), { headers: this.headers })
+        .post(this.serversUrl, JSON.stringify(server), { headers: this.headers })
         .map(response => response.json())
     )
   }
 
-  update(platform: Platform): Observable<Response> {
-    const url = `${this.platformsUrl}/${platform.id}`;
-    let dataToSend = platform
+  update(server: Server): Observable<Response> {
+    const url = `${this.serversUrl}/${server.id}`;
+    let dataToSend = server
     delete dataToSend.id
     this.onRequestStart()
     return this.onRequestEnd(

@@ -1,0 +1,9 @@
+<td>{{client.firstname}}</td>
+<td>{{client.lastname}}</td>
+<td>{{client.organisation}}</td>
+<td>{{client.email}}</td>
+<td>{{client.phone}}</td>
+<td>{{client.address}}</td>
+<td>
+<button class="btn btn-default btn-xs" routerLink="/client/edit/{{client.id}}" *ngIf="client.hasOwnProperty('id')"><i class="fa fa-edit"></i></button>
+</td>
