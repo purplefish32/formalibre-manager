@@ -1,3 +1,0 @@
-servers:
-  resource: FormaLibre\RestBundle\Controller\ServerController
-  type: rest

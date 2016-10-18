@@ -5,9 +5,9 @@ namespace FormaLibre\RestBundle\Form\Handler;
 use FormaLibre\RestBundle\Exception\InvalidFormException;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormTypeInterface;
-use FormaLibre\RestBundle\Form\Type\ServerType;
+use FormaLibre\RestBundle\Form\Type\ClientType;
 
-class ServerHandler implements FormHandlerInterface
+class ClientHandler implements FormHandlerInterface
 {
     /**
      * @var FormFactoryInterface
@@ -52,7 +52,7 @@ class ServerHandler implements FormHandlerInterface
 
         $form = $this->formFactory->create(get_class($this->formType), $object, $options);
         $form->submit($parameters, 'PATCH' !== $method);
-    
+
         if (!$form->isValid()) {
             throw new InvalidFormException($form);
         }

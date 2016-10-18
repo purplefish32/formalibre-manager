@@ -12,6 +12,9 @@ services:
     fl.data_transformer.platform_data_transformer:
         class: FormaLibre\RestBundle\DataTransformer\PlatformDataTransformer
 
+    fl.data_transformer.client_data_transformer:
+        class: FormaLibre\RestBundle\DataTransformer\ClientDataTransformer
+
     # -- DOCTRINE ENTITY REPOSITORY --
     fl.doctrine_entity_repository.server:
         class: FormaLibre\RestBundle\Entity\Repository\ServerEntityRepository
@@ -24,6 +27,12 @@ services:
         factory: ["@doctrine", getRepository]
         arguments:
             - FormaLibre\RestBundle\Entity\Platform
+
+    fl.doctrine_entity_repository.client:
+        class: FormaLibre\RestBundle\Entity\Repository\ClientEntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - FormaLibre\RestBundle\Entity\Client
 
     # -- EVENTS --
     fl.event.listener.content_type_listener:
@@ -48,12 +57,23 @@ services:
             - "@fl.factory.platform"
             - "@fl.repository.doctrine.platform"
 
+    fl.client.manager:
+        class: FormaLibre\RestBundle\Manager\ClientManager
+        arguments:
+            - "@fl.form.handler.client.interface"
+            - "@fl.data_transformer.client_data_transformer"
+            - "@fl.factory.client"
+            - "@fl.repository.doctrine.client"
+
     # -- FACTORY --
     fl.factory.server:
         class: FormaLibre\RestBundle\Factory\ServerFactory
 
     fl.factory.platform:
         class: FormaLibre\RestBundle\Factory\PlatformFactory
+
+    fl.factory.client:
+        class: FormaLibre\RestBundle\Factory\ClientFactory
 
     # -- FORM TYPE --
     fl.form.type.server:
@@ -65,6 +85,11 @@ services:
       class: FormaLibre\RestBundle\Form\Type\PlatformType
       tags:
         - { name: form.type, alias: platform }
+
+    fl.form.type.client:
+      class: FormaLibre\RestBundle\Form\Type\ClientType
+      tags:
+        - { name: form.type, alias: client }
 
     # -- FORM HANDLER --
     fl.form.handler.server.interface:
@@ -78,6 +103,12 @@ services:
         arguments:
             - "@form.factory"
             - "@fl.form.type.platform"
+
+    fl.form.handler.client.interface:
+        class: FormaLibre\RestBundle\Form\Handler\FormHandler
+        arguments:
+            - "@form.factory"
+            - "@fl.form.type.client"
 
     # -- REPOSITORY --
     fl.repository.doctrine.common:
@@ -96,3 +127,9 @@ services:
         arguments:
             - "@fl.repository.doctrine.common"
             - "@fl.doctrine_entity_repository.platform"
+
+    fl.repository.doctrine.client:
+        class: FormaLibre\RestBundle\Repository\Doctrine\DoctrineClientRepository
+        arguments:
+            - "@fl.repository.doctrine.common"
+            - "@fl.doctrine_entity_repository.client"
