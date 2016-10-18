@@ -28,7 +28,7 @@ export class ElementsList extends fl_m.ListFromModel {
   }
 }
 
-export class ElementsListPage extends fl_c.MainCol {
+export class ElementsListPage extends fl_m.MainCol {
   constructor(config,env) {
     super();
     this.add(new fl_m.PageHeaders(
@@ -122,7 +122,7 @@ export class ElementsEdit extends fl_m.ListFromModel {
   }
 }
 
-export class ElementEditPage extends fl_c.MainCol {
+export class ElementEditPage extends fl_m.MainCol {
   constructor(config,env) {
     super();
     this.add(new fl_m.PageHeaders(

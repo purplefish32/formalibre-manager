@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel='shortcut icon' type='image/x-icon' href='favicon.ico' />
     <!-- Bootstrap 3.3.6 -->
     <!--link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"-->
     <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -21,6 +22,7 @@
     <link rel="stylesheet" href="node_modules/admin-lte/dist/css/AdminLTE.min.css">
     <!--link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.5/css/skins/skin-blue.css"-->
     <link rel="stylesheet" href="node_modules/admin-lte/dist/css/skins/skin-blue.css">
+    <link rel="stylesheet" type="text/css" href="node_modules/ng2-slim-loading-bar/style.css">
     <style type="text/css">
     body .loader{
         color: #fff;
@@ -43,7 +45,7 @@
     </script>
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
-    <my-app><div class="loader">Loading...</div></my-app>
+    <my-app><div class="loader">Loading...</div></my-app>    
     <!-- jQuery 2.2.4 -->
     <!--script src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script-->
     <script src="node_modules/jquery/dist/jquery.min.js"></script>

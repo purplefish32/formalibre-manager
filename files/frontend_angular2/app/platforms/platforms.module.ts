@@ -8,7 +8,7 @@ import { PlatformsService }      from './platforms.service';
 import { PlatformsComponent }      from './platforms.component';
 import { PlatformDetailComponent } from './platform-detail.component';
 import { PlatformEditComponent } from './platform-edit.component';
-
+import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
 
 @NgModule({
   imports: [
@@ -17,6 +17,7 @@ import { PlatformEditComponent } from './platform-edit.component';
     HttpModule,
     RouterModule,
     PlatformsRouting,
+    SlimLoadingBarModule.forRoot(),
   ],
   declarations: [
     PlatformsComponent,
