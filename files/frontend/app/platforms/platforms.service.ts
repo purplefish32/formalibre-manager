@@ -11,9 +11,6 @@ import {SlimLoadingBarComponent, SlimLoadingBarService} from 'ng2-slim-loading-b
 
 @Injectable()
 export class PlatformsService {
-
-  platforms = [];
-
   private headers = new Headers({ 'Content-Type': 'application/json' });
   private platformsUrl = base_url + '/platforms';  // URL to web platforms api
 
