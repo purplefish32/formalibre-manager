@@ -1,0 +1,12 @@
+{
+  "name": "manager_frontend_angular_config",
+  "description": "configurator",
+  "version": "0.0.1",
+  "scripts": {
+   },
+   "devDependencies": {
+     "underscore": "latest"
+   },
+   "dependencies": {
+  }
+}
