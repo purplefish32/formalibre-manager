@@ -4,7 +4,7 @@ namespace FormaLibre\RestBundle\DTO;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-class ServerDTO implements SymfonyFormDTO
+class ClientDTO implements SymfonyFormDTO
 {
     /**
      * @var string
