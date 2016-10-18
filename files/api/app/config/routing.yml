@@ -16,3 +16,7 @@ servers_api:
 platforms_api:
     resource: FormaLibre\RestBundle\Controller\PlatformController
     type:     rest
+
+clients_api:
+    resource: FormaLibre\RestBundle\Controller\ClientController
+    type:     rest
