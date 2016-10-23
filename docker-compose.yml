@@ -4,10 +4,17 @@ services:
     restart: always
     image: 'dockercloud/haproxy:latest'
     ports:
+      # Web UIs
       - '80:80'
+
+      # Carbon
       - '2003:2003'
       - '2004:2004'
       - '7002:7002'
+
+      # Logstash
+      - '5000:5000'
+
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     links:
@@ -17,6 +24,7 @@ services:
       - carbon
       - graphite
       - grafana
+      - kibana
 
   adminer:
     restart: always
@@ -146,6 +154,37 @@ services:
       - config_tsc
     command: nodemon ./config/wesh/app/main.js -w ./config
 
+#ELK Stack
+  # Elasticsearch
+  es:
+    image: elasticsearch
+    restart: always
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+
+  # Kibana
+  kibana:
+    build: ./docker/kibana
+    restart: always
+    links:
+      - es
+    environment:
+      # TCP_PORTS: "5601"
+      VIRTUAL_HOST: http://kibana.manager.loc
+      ELASTICSEARCH_URL: http://es:9200
+
+  logstash:
+    image: logstash
+    command: logstash -f /etc/logstash/conf.d/logstash.conf
+    volumes:
+      - ./logstash/config:/etc/logstash/conf.d
+    links:
+      - es
+    expose:
+      - "5000"
+    environment:
+      TCP_PORTS: "5000"
+
 volumes:
   mysql:
   api_logs:
@@ -155,3 +194,4 @@ volumes:
   backend_cache:
   backend_sessions:
   whisper:
+  es_data:
