@@ -177,7 +177,7 @@ services:
     image: logstash
     command: logstash -f /etc/logstash/conf.d/logstash.conf
     volumes:
-      - ./logstash/config:/etc/logstash/conf.d
+      - ./docker/logstash/config:/etc/logstash/conf.d
     links:
       - es
     expose:
