@@ -15,6 +15,10 @@ services:
       # Logstash
       - '5000:5000'
 
+      # Elasticsearch
+      - '9200:9200'
+      - '9300:9300'
+
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     links:
@@ -158,8 +162,14 @@ services:
   es:
     restart: always
     image: elasticsearch
+    command: elasticsearch -Des.network.host=0.0.0.0
     volumes:
       - es_data:/usr/share/elasticsearch/data
+    expose:
+      - "9200"
+      - "9300"
+    environment:
+      TCP_PORTS: "9200, 9300"
 
   # Kibana
   kibana:
