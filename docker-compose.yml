@@ -13,7 +13,7 @@ services:
       - '7002:7002'
 
       # Logstash
-      - '5000:5000'
+      - '5044:5044'
 
       # Elasticsearch
       - '9200:9200'
@@ -191,9 +191,9 @@ services:
     links:
       - es
     expose:
-      - "5000"
+      - "5044"
     environment:
-      TCP_PORTS: "5000"
+      TCP_PORTS: "5044"
 
 volumes:
   mysql:
