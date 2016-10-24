@@ -162,7 +162,7 @@ services:
   es:
     restart: always
     image: elasticsearch
-    command: elasticsearch -Des.network.host=0.0.0.0
+    #command: elasticsearch -Des.network.host=0.0.0.0
     volumes:
       - es_data:/usr/share/elasticsearch/data
     expose:
