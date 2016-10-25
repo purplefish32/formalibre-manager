@@ -184,7 +184,7 @@ services:
 
   logstash:
     restart: always
-    image: logstash
+    build: ./docker/logstash
     command: logstash -f /etc/logstash/conf.d/logstash.conf
     volumes:
       - ./docker/logstash/config:/etc/logstash/conf.d
