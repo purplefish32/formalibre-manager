@@ -177,6 +177,8 @@ services:
     build: ./docker/kibana
     links:
       - es
+    volumes:
+      - grafana:/var/lib/grafana
     environment:
       # TCP_PORTS: "5601"
       VIRTUAL_HOST: http://kibana.manager.loc
@@ -205,3 +207,4 @@ volumes:
   backend_sessions:
   whisper:
   es_data:
+  grafana:
