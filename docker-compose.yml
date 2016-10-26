@@ -45,6 +45,8 @@ services:
       - graphite
     environment:
       VIRTUAL_HOST: http://grafana.manager.loc
+    volumes:
+      - grafana:/var/lib/grafana
 
   carbon:
     restart: always
@@ -177,8 +179,6 @@ services:
     build: ./docker/kibana
     links:
       - es
-    volumes:
-      - grafana:/var/lib/grafana
     environment:
       # TCP_PORTS: "5601"
       VIRTUAL_HOST: http://kibana.manager.loc
