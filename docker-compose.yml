@@ -29,6 +29,8 @@ services:
       - graphite
       - grafana
       - kibana
+      - shinken
+      - logstash
 
   adminer:
     restart: always
@@ -196,6 +198,17 @@ services:
       - "5044"
     environment:
       TCP_PORTS: "5044"
+
+  shinken:
+    restart: always
+    build:
+      context: ./docker/shinken
+    environment:
+      VIRTUAL_HOST: http://shinken.manager.loc
+      TZ: Europe/Paris
+    #volumes:
+    #   - ./custom_configs:/etc/shinken/custom_configs
+    #   - ./extra_plugins:/usr/local/custom_plugins
 
 volumes:
   mysql:
