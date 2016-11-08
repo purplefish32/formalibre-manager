@@ -20,3 +20,7 @@ platforms_api:
 clients_api:
     resource: FormaLibre\RestBundle\Controller\ClientController
     type:     rest
+
+events_api:
+    resource: FormaLibre\RestBundle\Controller\EventController
+    type:     rest
