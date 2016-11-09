@@ -33,7 +33,7 @@ module.exports =
       else
         err="template doesn't exist. (#{path_list.join config.path_separator})"
 
-    if (_.isObject val) and (_.isArray val)
+    if (_.isObject val) || (_.isArray val)
       cb err, val
     else
       cb err, (stringify val,context.spaces)

@@ -12,6 +12,7 @@ pholder -c config/config_html.json files/frontend/app/platforms/platform-detail.
 pholder -c config/config_ts.json files/frontend/app/servers/server.ts
 pholder -c config/config_ts.json files/frontend/app/platforms/platform.ts
 pholder -c config/config_ts.json files/frontend/app/events/event.ts
-
+pholder -c config/config_ts.json files/frontend/app/events/events.module.ts
+pholder -c config/config_ts.json files/frontend/app/clients/clients.module.ts
 
 pholder -c config/config_php.json files/api/src/FormaLibre/RestBundle/Controller/PlatformController.php

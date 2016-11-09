@@ -37,3 +37,53 @@ module.exports =
         str+='unsuported'
       str += ";"
     str
+
+  capitalize:(word)->word.charAt(0).toUpperCase() + word.slice 1
+
+  import_modules:(str,obj,meta)->
+    plural = meta.path[0]
+    singular = plural.slice 0,-1
+    Plural = @capitalize plural
+    Singular = @capitalize singular
+
+    import_cmd=(obj,file)->
+      "import { #{obj}Component } from './#{file}.component'"
+
+    import_cmd_action=(action)=>
+      import_cmd Singular+@capitalize(action),singular+"-#{action}"
+
+    str += import_cmd Plural,plural
+
+    action_list = ["detail","edit"]
+
+    action_list.push("view") if obj.crud?.view
+
+    actions = action_list.map(import_cmd_action).join(@rc)
+    if(actions.length)
+      str += @rc + actions
+    str
+
+  list_modules:(str,obj,meta)->
+    @debug str,obj,meta
+    plural = meta.path[0]
+    singular = plural.slice 0,-1
+    Plural = @capitalize plural
+    Singular = @capitalize singular
+
+    import_cmd=(obj)->
+      "#{obj}Component,"
+
+    import_cmd_action=(action)=>
+      import_cmd Singular+@capitalize(action)
+
+    str += import_cmd Plural
+
+    action_list = ["detail","edit"]
+
+
+    action_list.push("view") if obj.crud?.view
+
+    actions = action_list.map(import_cmd_action).join(@rc)
+    if(actions.length)
+      str += @rc + actions
+    str
