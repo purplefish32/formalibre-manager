@@ -124,8 +124,8 @@ export class ElementsEdit extends fl_m.ListFromModel {
         .add(fl_m.deleteButton([`'(click)'="onDelete()"`]))
       )
 
-
-    config[env.g_conf_element].model.filter(element => !element.index)
+    config[env.g_conf_element].model
+      .filter(element => !element.index && !__chain(element, "crud", "edit"))
       .forEach(function(element) {
         if (!element.name)
           element.name = capitalize(element.field)

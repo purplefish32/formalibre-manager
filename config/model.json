@@ -130,7 +130,9 @@
       "required": "true"
     }, {
       "field": "date",
-      "required": "true"
+      "crud":{
+        "edit": "false"
+      }
     }, {
       "field": "post",
       "required": "true"
