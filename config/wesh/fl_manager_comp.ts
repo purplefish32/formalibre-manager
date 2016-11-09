@@ -1,6 +1,5 @@
 import * as fl_c from './fl_common'
 import * as fl_bc from './fl_breadcrumb'
-import * as fl_m from './fl_manager_comp'
 import {fl_container, fl_element, fl_jadeRenderer} from './fl_comp'
 
 export function getFields(type, data) {
@@ -39,6 +38,17 @@ export class ListFromModel extends fl_c.SectionContent {
     return list;
   }
 
+  getPrimeHeaders() {
+    let list = this.model
+      .filter(element => !element.index)
+      .map(function(element) {
+        if (!element.name)
+          element.name = element.field.toLowerCase().replace(/\b./g, a => a.toUpperCase())
+        return element
+      })
+    return list;
+  }
+
 }
 
 export function editButton(type) {
@@ -47,19 +57,19 @@ export function editButton(type) {
     `*ngIf="${type}.hasOwnProperty('id')"`
   ]
 
-  let link = new fl_m.Button(linkAttr, "", "edit", "btn-default btn-xs")
+  let link = new Button(linkAttr, "", "edit", "btn-default btn-xs")
 
   return link
 }
 
 export function deleteButton(linkAttr) {
-  let link = new fl_m.Button(linkAttr, "Delete", null, "btn-danger")
+  let link = new Button(linkAttr, "Delete", null, "btn-danger")
 
   return link
 }
 
 export function submitButton(linkAttr) {
-  let link = new fl_m.Button(linkAttr, "Submit")
+  let link = new Button(linkAttr, "Submit")
 
   return link
 }
@@ -70,7 +80,7 @@ export class ListDetail extends fl_container {
 
     this.details.forEach(field => this.add(new fl_c.TableCol('', [], field)))
 
-    this.add(new fl_c.TableCol().add(fl_m.editButton(type)))
+    this.add(new fl_c.TableCol().add(editButton(type)))
   }
 }
 

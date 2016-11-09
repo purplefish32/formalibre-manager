@@ -9,6 +9,8 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel='shortcut icon' type='image/x-icon' href='favicon.ico' />
+    <link rel="stylesheet" type="text/css" href="node_modules/primeng/resources/themes/omega/theme.css" />
+    <link rel="stylesheet" type="text/css" href="node_modules/primeng/resources/primeng.min.css" />
     <!-- Bootstrap 3.3.6 -->
     <!--link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"-->
     <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -23,15 +25,6 @@
     <!--link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.5/css/skins/skin-blue.css"-->
     <link rel="stylesheet" href="node_modules/admin-lte/dist/css/skins/skin-blue.css">
     <link rel="stylesheet" type="text/css" href="node_modules/ng2-slim-loading-bar/style.css">
-    <style type="text/css">
-    body .loader{
-        color: #fff;
-        background-color: #357ca5;
-        font-size: 32px;
-        height: 50px;
-        text-align: center;
-    }
-    </style>
     <!-- Polyfill(s) for older browsers -->
     <script>var base_url = "<?php print_r($_ENV["API_URL"]); ?>"</script>
     <script src="node_modules/core-js/client/shim.min.js"></script>
@@ -45,7 +38,7 @@
     </script>
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
-    <my-app><div class="loader">Loading...</div></my-app>    
+    <my-app><div class="loader">Loading...</div></my-app>
     <!-- jQuery 2.2.4 -->
     <!--script src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script-->
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
@@ -62,5 +55,7 @@
     <!--script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.1/inputmask/jquery.inputmask.min.js"></script-->
     <!--script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.1/inputmask/inputmask.date.extensions.min.js"></script-->
     <!--script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.1/inputmask/inputmask.extensions.min.js"></script-->
+    <link rel="stylesheet" type="text/css" href="flm.css">
+
   </body>
 </html>

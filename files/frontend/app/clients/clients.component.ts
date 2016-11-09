@@ -3,11 +3,12 @@ import { ClientDetailComponent } from './client-detail.component'
 import { Client } from './client'
 import { ClientsService } from './clients.service'
 import 'rxjs/add/operator/toPromise';
+import {DataTableModule,SharedModule} from 'primeng/primeng';
 
 @Component({
   selector: 'clients',
   templateUrl: 'templates/clients.component.html',
-  providers: [ClientDetailComponent, ClientsService]
+  providers: [ClientDetailComponent, ClientsService, DataTableModule]
 })
 export class ClientsComponent implements OnInit {
   clients:Client[];

@@ -18,15 +18,6 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.5/css/AdminLTE.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.5/css/skins/skin-blue.css">
-    <style type="text/css">
-    body .loader{
-        color: #fff;
-        background-color: #357ca5;
-        font-size: 32px;
-        height: 50px;
-        text-align: center;
-    }
-    </style>
     <!-- Polyfill(s) for older browsers -->
     <script>var base_url = "<?php print_r($_ENV["API_URL"]); ?>"</script>
     <script src="node_modules/core-js/client/shim.min.js"></script>
@@ -56,5 +47,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.1/inputmask/jquery.inputmask.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.1/inputmask/inputmask.date.extensions.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.1/inputmask/inputmask.extensions.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="flm.css">
+
   </body>
 </html>

@@ -14,22 +14,23 @@
       </div>
       <div class="box">
         <div class="box-body">
-          <table class="table" *ngIf="platforms?.length">
-            <tr>
-              <th>Name</th>
-              <th>Subdomain</th>
-              <th>Description</th>
-              <th>Plan</th>
-              <th>End date</th>
-              <th>Max users</th>
-              <th>Max disk space</th>
-              <th>Contact</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Edit</th>
-            </tr>
-            <tr PlatformDetail="PlatformDetail" *ngFor="let i of platforms" [platform]="i"></tr>
-          </table>
+          <p-dataTable [value]="platforms">
+            <p-column field="name" header="Name"></p-column>
+            <p-column field="subdomain" header="Subdomain"></p-column>
+            <p-column field="description" header="Description"></p-column>
+            <p-column field="plan" header="Plan"></p-column>
+            <p-column field="end_date" header="End date"></p-column>
+            <p-column field="max_users" header="Max users"></p-column>
+            <p-column field="max_disk_space" header="Max disk space"></p-column>
+            <p-column field="contact_name" header="Contact"></p-column>
+            <p-column field="contact_email" header="Email"></p-column>
+            <p-column field="contact_phone" header="Phone"></p-column>
+            <p-column header="Edit" [style]="{'width':'0px'}">
+              <template let-platform="rowData" pTemplate="pTemplate" type="body">
+                <button class="btn btn-default btn-xs" routerLink="/platform/edit/{{platform.id}}" *ngIf="platform.hasOwnProperty('id')"><i class="fa fa-edit"></i></button>
+              </template>
+            </p-column>
+          </p-dataTable>
           <div class="callout callout-info" *ngIf="platforms && !platforms?.length">
             <p>There are no platforms yet. Feel free to add your first platform using the "Add new Platform" button.</p>
           </div>

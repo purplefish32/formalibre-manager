@@ -3,6 +3,7 @@
  import { RouterModule } from '@angular/router';
  import { FormsModule }   from '@angular/forms';
  import { HttpModule }    from '@angular/http';
+ import {DataTableModule,SharedModule} from 'primeng/primeng';
 //
 // import {
 //   LocationStrategy,
@@ -27,6 +28,7 @@
     HttpModule,
     RouterModule,
     ClientRouting,
+    DataTableModule,
     SlimLoadingBarModule.forRoot()
   ],
   declarations: [

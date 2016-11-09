@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule }   from '@angular/forms';
 import { HttpModule }    from '@angular/http';
+import {DataTableModule,SharedModule} from 'primeng/primeng';
 //
 // import {
 //   LocationStrategy,
@@ -27,7 +28,8 @@ import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
     HttpModule,
     RouterModule,
     ServerRouting,
-    SlimLoadingBarModule.forRoot()
+    SlimLoadingBarModule.forRoot(),
+    DataTableModule,
   ],
   declarations: [
     ServersComponent,

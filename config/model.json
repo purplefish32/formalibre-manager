@@ -1,5 +1,11 @@
 {
+  "config" : {
+    "usePrimeNg":true
+  },
   "servers": {
+    "crud":{
+      "edit": "true"
+    },
     "model": [{
       "index": true,
       "field": "id"
@@ -41,6 +47,9 @@
     }]
   },
   "platforms": {
+    "crud":{
+      "edit": "true"
+    },
     "model": [{
       "index": true,
       "field": "id"
@@ -83,6 +92,9 @@
     }]
   },
   "clients": {
+    "crud":{
+      "edit": "true"
+    },
     "model": [{
       "index": true,
       "field": "id"

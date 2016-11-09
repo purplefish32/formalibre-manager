@@ -118,11 +118,11 @@ export class TableRow extends fl_element {
     super(`tr`, classes, attr)
   }
 
-  addHeader(attr: string[] = [], data: fl_element | string = null) {
+  addHeader(classes = "", attr: string[] = [], data: fl_element | string = null) {
     let isDataAString = typeof data === 'string'
     let header =
       this.add(new TableHeader(
-        "",
+        classes,
         attr,
         isDataAString ? <string>data : null
       ))
@@ -166,12 +166,12 @@ export class Table extends fl_element {
     if (typeof headers[0] == 'string') {
       let h: string[] = <string[]>headers;
       h.forEach(
-        header => row.addHeader([], header))
+        header => row.addHeader("sorting",['tabindex="0"','aria-controls="example2"','rowspan="1"','colspan="1"','aria-label="Rendering engine: activate to sort column ascending"'], header))
     }
     else {
       let h: fl_element[] = <fl_element[]>headers;
       h.forEach(
-        header => row.addHeader([], header))
+        header => row.addHeader("sorting",['tabindex="0"','aria-controls="example2"','rowspan="1"','colspan="1"','aria-label="Rendering engine: activate to sort column ascending"'], header))
     }
 
     return this

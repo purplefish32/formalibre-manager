@@ -25,6 +25,7 @@
       'rxjs': 'npm:rxjs',
       'angular2-in-memory-web-api': 'npm:angular2-in-memory-web-api',
       'ng2-slim-loading-bar': 'npm:ng2-slim-loading-bar',
+      'primeng': 'node_modules/primeng'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -43,6 +44,7 @@
         main: 'index.js',
         defaultExtension: 'js'
       },
+      'primeng': { defaultExtension: 'js' }
     }
   });
 })(this);

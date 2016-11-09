@@ -3,11 +3,12 @@ import { PlatformDetailComponent } from './platform-detail.component'
 import { Platform } from './platform'
 import { PlatformsService } from './platforms.service'
 import 'rxjs/add/operator/toPromise';
+import {DataTableModule,SharedModule} from 'primeng/primeng';
 
 @Component({
   selector: 'platforms',
   templateUrl: 'templates/platforms.component.html',
-  providers: [PlatformDetailComponent, PlatformsService]
+  providers: [PlatformDetailComponent, PlatformsService, DataTableModule]
 })
 export class PlatformsComponent implements OnInit {
   platforms: Platform[];

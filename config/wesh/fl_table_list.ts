@@ -1,18 +1,58 @@
 import {fl_container, fl_element, fl_jadeRenderer, fl_text} from './fl_comp'
 import * as fl_c from './fl_common'
 import * as fl_m from './fl_manager_comp'
+import * as fl_p from './fl_ng_prime'
 
+function __chain(obj,field: string, ...restOfFields: string[]) {
+  if(obj.hasOwnProperty(field)) {
+    if(restOfFields.length) {
+      restOfFields.unshift(obj[field])
+      return __chain.apply(null,restOfFields)
+    } else {
+      return obj[field]
+    }
+  }
+  return undefined
+}
 
 export class ElementsList extends fl_m.ListFromModel {
   constructor(config, env) {
     super(config[env.g_conf_element].model)
 
-    let headers = this.getHeaders();
-    headers.push('Edit')
+    let table = null;
 
-    let table = new fl_c.Table('table', [`*ngIf="${env.g_element_table}?.length"`]).
-      setHeaders(headers).
-      addRow([`${env.g_angular_detail_comp}Detail`, `*ngFor="let i of ${env.g_element_table}"`, `'[${env.g_local_object}]'='i'`])
+    let headers = this.getPrimeHeaders();
+
+    let editButtonVisible = !!__chain(config[env.g_conf_element],"crud","edit")
+
+    if(config.config.usePrimeNg) {
+      // create a table from headers
+      table = new fl_p.PrimeTable(`${env.g_element_table}`,'',[],headers)
+
+      // add edit button if necessary
+      if(editButtonVisible) {
+        // create a row
+        let tabRow = new fl_element(
+          "p-column","",[`"header"="Edit"`,`'[style]'="{'width':'0px'}"`]
+        ).add(
+          // with a template inside binding to the current element
+          new fl_element("template","",[`let-${env.g_local_object}="rowData"`, `pTemplate`,`type="body"`]).
+            // that contains a button linking to the edit page
+            add(new fl_m.editButton(env.g_local_object))
+        )
+
+        table.add(tabRow)
+      }
+    }
+    else {
+      if(editButtonVisible) {
+        headers.push({name:'Edit',field:'edit'})
+      }
+
+      table = new fl_c.Table('table', [`*ngIf="${env.g_element_table}?.length"`]).
+        setHeaders(headers.map(header=>header.name)).
+        addRow([`${env.g_angular_detail_comp}Detail`, `*ngFor="let i of ${env.g_element_table}"`, `'[${env.g_local_object}]'='i'`])
+    }
 
     let menuBar = new fl_c.BoxFooter().add(
       new fl_m.Button([`routerLink="${env.g_edit_route}"`], env.g_new_button_title))
