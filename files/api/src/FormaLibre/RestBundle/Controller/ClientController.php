@@ -40,7 +40,7 @@ class ClientController extends FOSRestController
         $start = null == $offset ? 0 : $offset + 1;
         $limit = $paramFetcher->get('limit');
         $client = $this->get('guzzle.client.api');
-        $response = $client->get('clients?limit='.$limit.'&offset='.$offset);
+        $response = $client->get('/clients?limit='.$limit.'&offset='.$offset);
 
         return json_decode($response->getBody(), true);
     }
@@ -68,7 +68,7 @@ class ClientController extends FOSRestController
     public function getClientAction(Request $request, $id)
     {
         $client = $this->get('guzzle.client.api');
-        $response = $client->get('clients/'.$id);
+        $response = $client->get('/clients/'.$id);
 
         return json_decode($response->getBody(), true);
     }
@@ -96,7 +96,7 @@ class ClientController extends FOSRestController
         $client = $this->get('guzzle.client.api');
         $responseBackend = $client->request(
         'POST',
-        'clients',
+        '/clients',
         [
           'json' => $clients,
         ]
@@ -144,7 +144,7 @@ class ClientController extends FOSRestController
         $client = $this->get('guzzle.client.api');
         $response = $client->request(
         'PUT',
-        'clients/'.$id,
+        '/clients/'.$id,
         [
           'json' => $clients,
         ]
@@ -170,7 +170,7 @@ class ClientController extends FOSRestController
     public function deleteClientsAction(Request $request, $id)
     {
         $client = $this->get('guzzle.client.api');
-        $response = $client->request('DELETE', 'clients/'.$id, ['json' => []]);
+        $response = $client->request('DELETE', '/clients/'.$id, ['json' => []]);
 
         return json_decode($response->getBody(), true);
     }
