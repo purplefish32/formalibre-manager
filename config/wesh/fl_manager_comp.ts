@@ -1,6 +1,6 @@
 import * as fl_c from './fl_common'
 import * as fl_bc from './fl_breadcrumb'
-import {fl_container, fl_element} from './fl_comp'
+import {fl_container, fl_element, fl_renderable, ElementData} from './fl_comp'
 
 export function getFields(type, data) {
   return data.model
@@ -21,8 +21,8 @@ export class PageHeaders extends fl_c.Section {
 
 export class ListFromModel extends fl_c.SectionContent {
   protected model: any;
-  constructor(model) {
-    super();
+  constructor(model, data: ElementData = []) {
+    super(data);
     this.model = model;
   }
 
@@ -96,13 +96,13 @@ export class ListDetail extends fl_container {
 }
 
 export class ModelInput extends fl_c.ModelInput {
-  constructor(model, name, attr) {
-    super(model, name, "", attr)
+  constructor(model, attr = []) {
+    super(model, "", attr)
   }
 }
 
 export class ModelText extends fl_c.ModelText {
-  constructor(model, name, attr) {
+  constructor(model, name, attr = []) {
     super(model, name, "", attr)
   }
 }
@@ -129,10 +129,53 @@ export class Button extends fl_c.Button {
   }
 }
 
+export class EditButton extends Button {
+  constructor(classes = "", type: string) {
+    let linkAttr = [
+      `routerLink="/${type}/edit/{{${type}.id}}"`,
+      `*ngIf="${type}.hasOwnProperty('id')"`
+    ]
+    super(linkAttr, "", "pencil", `btn-primary ${classes}`)
+  }
+}
+
+export class DeleteButton extends Button {
+  constructor(classes = "") {
+    let linkAttr = [
+      `'(click)'="onDelete()"`
+    ]
+
+    super(linkAttr, "", "trash-o", `btn-danger ${classes}`)
+  }
+}
+
 export class MainCol extends fl_c.MainCol {
   constructor() {
     super()
     this.addSelf(new ProgressLoader)
+  }
+}
+
+export class ListGroup extends fl_c.Ul {
+  constructor(classes = "", attrs = [], data: ElementData = null) {
+    super(`list-group ${classes}`, attrs, data)
+  }
+}
+
+export class ListGroupUnbordered extends ListGroup {
+  constructor(classes: string | fl_element | fl_element[] = "",
+    attrs = [], data: ElementData = null) {
+    if (typeof classes != 'string') {
+      data = classes
+      classes = ""
+    }
+    super(`list-group-unbordered ${classes}`, attrs, data)
+  }
+}
+
+export class ListGroupItem extends fl_c.Li {
+  constructor(classes = "", attrs = [], data: ElementData = null) {
+    super(`list-group-item ${classes}`, attrs, data)
   }
 }
 
