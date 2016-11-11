@@ -115,9 +115,14 @@ export class Text extends fl_element {
 }
 
 export class ModelInput extends TextInput {
-  constructor(model, name, classes, attr) {
+  constructor(model: string | string[], classes, attr) {
+    let name = model
+    if (Array.isArray(model)) {
+      name = model[model.length - 1]
+      model = model.join('.')
+    }
     attr.push(`name ='${name}'`)
-    attr.push(`'[(ngModel)]'='${model}.${name}'`)
+    attr.push(`'[(ngModel)]'='${model}'`)
     classes += " form-control"
     super(classes, attr)
   }

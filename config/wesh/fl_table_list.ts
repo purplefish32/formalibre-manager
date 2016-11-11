@@ -159,7 +159,7 @@ export class ElementsEdit extends fl_m.ListFromModel {
 
         }
         else
-          formGroup.add(new fl_m.ModelInput(env.g_local_object, element.field, attr))
+          formGroup.add(new fl_m.ModelInput([env.g_local_object, element.field], attr))
 
         fieldSet.add(formGroup)
 
