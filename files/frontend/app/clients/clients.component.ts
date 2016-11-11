@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ClientDetailComponent } from './client-detail.component'
-import { Client } from './client'
+import { ClientProfile } from './clientProfile'
 import { ClientsService } from './clients.service'
 import 'rxjs/add/operator/toPromise';
 import {DataTableModule,SharedModule} from 'primeng/primeng';
@@ -11,7 +11,7 @@ import {DataTableModule,SharedModule} from 'primeng/primeng';
   providers: [ClientDetailComponent, ClientsService, DataTableModule]
 })
 export class ClientsComponent implements OnInit {
-  clients:Client[];
+  clients:ClientProfile[];
 
   ngOnInit(): void {
     this.getClients();

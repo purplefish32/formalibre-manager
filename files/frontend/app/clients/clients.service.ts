@@ -7,7 +7,19 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/operator/share';
 import { Client } from './client';
+import { ClientProfile } from './clientProfile';
 import {SlimLoadingBarComponent, SlimLoadingBarService} from 'ng2-slim-loading-bar';
+
+function clone(obj){
+    if(obj == null || typeof(obj) != 'object')
+        return obj;
+
+    var temp = new obj.constructor();
+    for(var key in obj)
+        temp[key] = clone(obj[key]);
+
+    return temp;
+}
 
 @Injectable()
 export class ClientsService {
@@ -35,19 +47,24 @@ export class ClientsService {
     return published
   }
 
-  getClients(): Observable<Client[]> {
+  get(url:string):Observable<any> {
     this.onRequestStart()
     return this.onRequestEnd(
-      this.http.get(this.clientsUrl)
+      this.http.get(url)
         .map(response => response.json())
     )
   }
 
-  getClient(id: string): Observable<Client> {
-    var promise = this.getClients().toPromise()
-      .then(clients => clients.find(client => client.id === id))
-      .catch(this.handleError);
-    return Observable.fromPromise(promise);
+  getClients(): Observable<ClientProfile[]> {
+    return this.get(this.clientsUrl)
+  }
+
+  getClient(id: string): Observable<ClientProfile> {
+    return this.get(`${this.clientsUrl}/${id}`)
+  }
+
+  getClientProfile(id: string): Observable<ClientProfile> {
+    return this.get(`${this.clientsUrl}/${id}/history`)
   }
 
   delete(id: string): Observable<Response> {
@@ -69,7 +86,7 @@ export class ClientsService {
 
   update(client: Client): Observable<Response> {
     const url = `${this.clientsUrl}/${client.id}`;
-    let dataToSend = client
+    let dataToSend = clone( client )
     delete dataToSend.id
     this.onRequestStart()
     return this.onRequestEnd(

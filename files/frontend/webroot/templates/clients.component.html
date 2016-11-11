@@ -13,26 +13,25 @@
         <button class="btn btn-primary" routerLink="/client/new">Add new Client</button>
       </div>
       <div class="box">
-        <div class="box-body">
-          <p-dataTable [value]="clients">
-            <p-column field="firstname" header="Firstname"></p-column>
-            <p-column field="lastname" header="Lastname"></p-column>
-            <p-column field="organisation" header="Organisation"></p-column>
-            <p-column field="email" header="Email"></p-column>
-            <p-column field="phone" header="Phone"></p-column>
-            <p-column field="address" header="Address"></p-column>
-            <p-column header="Edit" [style]="{'width':'0px'}">
-              <template let-client="rowData" pTemplate="pTemplate" type="body">
-                <button class="btn btn-default btn-xs" routerLink="/client/edit/{{client.id}}" *ngIf="client.hasOwnProperty('id')"><i class="fa fa-edit"></i></button>
-              </template>
-            </p-column>
-          </p-dataTable>
-          <div class="callout callout-info" *ngIf="clients && !clients?.length">
-            <p>There are no clients yet. Feel free to add your first client using the "Add new Client" button.</p>
-          </div>
-          <div class="callout callout-info" *ngIf="!clients">
-            <p>Loading...</p>
-          </div>
+        <p-dataTable [value]="clients">
+          <p-column field="firstname" header="Firstname"></p-column>
+          <p-column field="lastname" header="Lastname"></p-column>
+          <p-column field="organisation" header="Organisation"></p-column>
+          <p-column field="email" header="Email"></p-column>
+          <p-column field="phone" header="Phone"></p-column>
+          <p-column field="address" header="Address"></p-column>
+          <p-column header="" [style]="{'width':'0px'}">
+            <template let-client="rowData" pTemplate="pTemplate" type="body">
+              <button class="btn btn-default btn-xs" routerLink="/client/edit/{{client.id}}" *ngIf="client.hasOwnProperty('id')"><i class="fa fa-edit"></i></button>
+              <button class="btn btn-default btn-xs" routerLink="/client/{{client.id}}" *ngIf="client.hasOwnProperty('id')"><i class="fa fa-eye"></i></button>
+            </template>
+          </p-column>
+        </p-dataTable>
+        <div class="callout callout-info" *ngIf="clients && !clients?.length">
+          <p>There are no clients yet. Feel free to add your first client using the "Add new Client" button.</p>
+        </div>
+        <div class="callout callout-info" *ngIf="!clients">
+          <p>Loading...</p>
         </div>
       </div>
       <div class="box-footer">

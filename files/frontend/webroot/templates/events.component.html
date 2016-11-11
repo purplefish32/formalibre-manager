@@ -13,18 +13,18 @@
         <button class="btn btn-primary" routerLink="/event/new">Add new Event</button>
       </div>
       <div class="box">
-        <div class="box-body">
-          <p-dataTable [value]="events">
-            <p-column field="ressource_id" header="Ressource_id"></p-column>
-            <p-column field="date" header="Date"></p-column>
-            <p-column field="post" header="Post"></p-column>
-          </p-dataTable>
-          <div class="callout callout-info" *ngIf="events && !events?.length">
-            <p>There are no events yet. Feel free to add your first event using the "Add new Event" button.</p>
-          </div>
-          <div class="callout callout-info" *ngIf="!events">
-            <p>Loading...</p>
-          </div>
+        <p-dataTable [value]="events">
+          <p-column field="ressource_id" header="Ressource ID"></p-column>
+          <p-column field="date" header="Date">
+            <template let-col="" let-row="rowData" pTemplate="pTemplate" type="body">{{date(row[col.field])}}</template>
+          </p-column>
+          <p-column field="post" header="Post"></p-column>
+        </p-dataTable>
+        <div class="callout callout-info" *ngIf="events && !events?.length">
+          <p>There are no events yet. Feel free to add your first event using the "Add new Event" button.</p>
+        </div>
+        <div class="callout callout-info" *ngIf="!events">
+          <p>Loading...</p>
         </div>
       </div>
       <div class="box-footer">

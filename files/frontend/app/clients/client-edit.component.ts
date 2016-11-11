@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Router }            from '@angular/router';
 import { ClientsService } from './clients.service';
 import { Client } from './client'
+import { ClientProfile } from './clientProfile'
 import 'rxjs/add/operator/toPromise';
 
 @Component({
@@ -25,16 +26,24 @@ export class ClientEditComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       let id = params['id'];
-      if(id)
-        this.clients.getClient(id).toPromise().then(client => this.client = client);
+      if (id)
+        this.clients.getClient(id).toPromise().then(clientProfile => this.client = new Client(clientProfile));
     });
   }
 
   onSubmit() {
     if(this.client.id) {
       this.clients.update(this.client).toPromise().then(client=>this.router.navigate(['clients']),()=>this.router.navigate(['clients']));
+        (response) => {
+          this.router.navigate(['client', this.client.id])
+        }
+      );
     } else {
       this.clients.create(this.client).toPromise().then(client=>this.router.navigate(['clients']),()=>this.router.navigate(['clients']));
+        response => {
+          this.router.navigate(['client', response.id])
+        }
+      );
     }
   }
 

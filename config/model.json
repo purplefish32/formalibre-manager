@@ -131,6 +131,8 @@
       "required": "true"
     }, {
       "field": "date",
+      "type": "date",
+      "required": "true",
       "crud":{
         "edit": "false"
       }
