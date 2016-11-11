@@ -17,12 +17,6 @@ export class SectionContent extends Section {
   constructor() { super('content') }
 }
 
-export class BoxFooter extends fl_element {
-  constructor() {
-    super("div", 'box-footer')
-  }
-}
-
 export class Link extends fl_element {
   constructor(classes = "", attr = [], data = null) {
     super('a', classes, attr, data)
@@ -41,10 +35,32 @@ export class Logo extends fl_element {
   }
 }
 
-export class Box extends fl_element {
-  constructor() {
-    super('div', 'box', [])
-    this.add(new fl_element('div', "box-body")).setForOrigin()
+export class BoxGeneric extends fl_element {
+  constructor(classes = "",type='box',...args=[]) {
+    if(typeof classes != 'string') {
+      args.unshift(classes)
+      classes=""
+    }
+    super('div', `box ${classes}`, [])
+    this.add(args)
+  }
+}
+
+export class Box extends BoxGeneric {
+  constructor(classes = "",...args=[]) {
+    super(classes,'box',args)
+  }
+}
+
+export class BoxBody extends BoxGeneric {
+  constructor(classes = "",...args=[]) {
+    super(classes,'box-body',args)
+  }
+}
+
+export class BoxFooter extends BoxGeneric {
+  constructor(classes = "",...args=[]) {
+    super(classes, 'box-footer',args)
   }
 }
 

@@ -142,17 +142,18 @@ export class fl_container extends fl_renderable {
 
 
   add(
-    elem: fl_renderable | string,
+    elem: fl_renderable | string | fl_renderable[],
     classes: string = "",
     attrs: string[] = [],
     data: string = null): fl_container {
 
-    if (this != this.origin) {
+    if(elem instanceof Array) {
+      elem.forEach(e=>this.add(e))
+    } else if (this != this.origin) {
       this.origin.addSelf(elem, classes, attrs, data)
-      return this
+    }  else {
+      this.addSelf(elem, classes, attrs, data)
     }
-
-    this.addSelf(elem, classes, attrs, data)
 
     return this
   }
@@ -213,8 +214,12 @@ export class fl_element extends fl_container {
     private elem: string = "",
     private classes = "",
     private attrs: string[] = [],
-    private data: string = null) {
+    private data: string|fl_container = null) {
     super()
+    if( this.data && typeof this.data === 'object' ) {
+      this.add(data)
+      delete this.data
+    }
   }
 
   render(renderer: fl_renderer, level: number = 0): string {

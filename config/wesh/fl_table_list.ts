@@ -112,9 +112,8 @@ export class ElementsEdit extends fl_m.ListFromModel {
     let fieldSet = new fl_element('fieldset')
       .add(new fl_c.Legend(`${env.g_title_singular} details`))
 
-    let formContainer = new fl_c.Box()
-      .add(fieldSet)
-
+    let formBody = new fl_c.BoxBody("", fieldSet)
+    let formContainer = new fl_c.Box("", formBody)
 
     let capitalize = s =>
       s.toLowerCase().replace(/\b./g, a => a.toUpperCase())
@@ -197,7 +196,7 @@ export class ElementsView extends fl_m.ListFromModel {
   constructor(config, env) {
     super(config[env.g_conf_element].model)
 
-    let boxDetail = new fl_c.Box(
+    let boxDetail = new fl_c.Box("",
       new fl_c.Legend(`${env.g_title_singular} Details`)
     )
 
