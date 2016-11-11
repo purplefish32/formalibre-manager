@@ -2,6 +2,7 @@ import {fl_container, fl_element, fl_text} from './fl_comp'
 import * as fl_c from './fl_common'
 import * as fl_m from './fl_manager_comp'
 import * as fl_p from './fl_ng_prime'
+import * as fl_tl from './fl_timeline'
 
 function __chain(obj,field: string, ...restOfFields: string[]) {
   if(obj.hasOwnProperty(field)) {
@@ -231,3 +232,94 @@ export class ElementsView extends fl_m.ListFromModel {
   }
 }
 
+
+export class ProfileDesc extends fl_c.Box {
+  constructor(config, env) {
+    super("box-primary")
+
+    let capitalize = s =>
+      s.toLowerCase().replace(/\b./g, a => a.toUpperCase())
+
+    this.add(new fl_c.BoxBody("box-profile")
+      .add(new fl_c.Img(
+        "profile-user-img img-responsive img-circle",
+        ["src='https://avatars1.githubusercontent.com/u/5183366?v=3&s=120'"]))
+      .add("h1", "profile-username text-center", [], env.f('firstname') + " " + env.f('lastname'))
+      .add(new fl_m.ListGroupUnbordered("", [], config[env.g_conf_element].model
+        .filter(element => !element.index)
+        .map(function(element) {
+          if (!element.name)
+            element.name = capitalize(element.field)
+
+          let item = new fl_m.ListGroupItem("", [], [
+            new fl_c.B("", [], `${element.name} : `),
+            new fl_text(env.f(element.field))
+          ])
+
+          return item
+        })))
+      .add(new fl_c.BoxFooter("", [
+        new fl_m.EditButton("", env.g_local_object),
+        new fl_m.DeleteButton()
+      ])
+      )
+    )
+  }
+}
+
+
+export class TimelineView extends fl_c.Box {
+  constructor(config, env) {
+    super()
+    let timeline = new fl_tl.Timeline()
+
+    timeline.AddLabel('green',[`{{currentDate()}}`])
+
+    let input = timeline.AddItem('envelope', "blue").addContent()
+
+    input.addHeader("", 'Add a note')
+    .addBody([
+      new fl_m.ModelInput('note'),
+      fl_m.submitButton([`'(click)'="onSubmitNote()"`])
+    ])
+
+    timeline.AddItem('envelope', "blue", "", [`*ngFor="let event of ${env.g_local_object}.events"`]).addContent()
+              .addHeader("{{date(event.date)}}", 'titel')
+              .addBody("{{event.post}}")
+              .addFooter(new fl_m.DeleteButton())
+
+    timeline.AddIcon("circle","gray")
+
+    this.add(new fl_c.BoxBody("box-profile", [], timeline))
+  }
+}
+
+export class ProfileView extends fl_m.ListFromModel {
+  constructor(config, env) {
+    super(config[env.g_conf_element].model, [
+      new fl_c.Layout('md', 3, "", [], new ProfileDesc(config, env)),
+      new fl_c.Layout('md', 9, "", [], new TimelineView(config, env))
+    ])
+  }
+}
+
+export class ElementViewPage extends fl_m.MainCol {
+  constructor(config, env) {
+    super();
+
+    this.add(new fl_m.PageHeaders(
+      `${env.f('firstname')} ${env.f('lastname')}`, [{
+        name: env.g_title,
+        isactive: false,
+        link: env.g_list_route
+      }, {
+          name: 'View ' + env.g_title_singular,
+          isactive: true
+        }])
+    ).add(new ProfileView(config, env))
+  }
+
+  tohtml(renderer): string {
+    return this.render(renderer)
+  }
+}

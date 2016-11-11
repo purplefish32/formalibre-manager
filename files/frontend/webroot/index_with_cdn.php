@@ -48,6 +48,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.1/inputmask/inputmask.date.extensions.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.1/inputmask/inputmask.extensions.min.js"></script>
     <link rel="stylesheet" type="text/css" href="flm.css">
-
+    <script src="node_modules/moment/min/moment.min.js"></script>
+    
   </body>
 </html>

@@ -20,6 +20,7 @@
 import { ClientsComponent } from './clients.component'
 import { ClientDetailComponent } from './client-detail.component'
 import { ClientEditComponent } from './client-edit.component'
+import { ClientViewComponent } from './client-view.component'
  /*$  */
  import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
 
@@ -38,6 +39,7 @@ import { ClientEditComponent } from './client-edit.component'
 ClientsComponent,
 ClientDetailComponent,
 ClientEditComponent,
+ClientViewComponent,
     /*$  */
   ],
   providers: [

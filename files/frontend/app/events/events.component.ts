@@ -17,6 +17,10 @@ export class EventsComponent implements OnInit {
     this.getEvents();
   }
 
+  date(d) {
+    return moment(d).calendar()
+  }
+
   constructor(
     private eventsService: EventsService
   ) { }

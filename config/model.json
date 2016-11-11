@@ -92,8 +92,9 @@
     }]
   },
   "clients": {
-    "crud":{
-      "edit": "true"
+    "crud": {
+      "edit": "true",
+      "view": "true"
     },
     "model": [{
       "index": true,
