@@ -1,7 +1,7 @@
 import * as folder from './fl_folders'
 import * as path from "path"
 import * as fl_j from './fl_jobs'
-import {ElementsListPage, ElementDetail, ElementEditPage} from './fl_table_list'
+import {ElementsListPage, ElementDetail, ElementEditPage, ElementViewPage} from './fl_table_list'
 
 let base = 'client'
 let Base = 'Client'
@@ -12,6 +12,7 @@ let env = new Env(base)
 let component_html = path.join(folder.f_templates, `${base}s.component.html`)
 let detail_html = path.join(folder.f_templates, `${base}-detail.component.html`)
 let edit_html = path.join(folder.f_templates, `${base}-edit.component.html`)
+let view_html = path.join(folder.f_templates, `${base}-view.component.html`)
 
 export function doJob(config, renderer) {
   let jobs: fl_j.IHtmlJob[] = [
@@ -29,6 +30,11 @@ export function doJob(config, renderer) {
       file: edit_html,
       html: new ElementEditPage(config, env).tohtml(renderer),
       desc: `${base} edit`
+    },
+    {
+      file: view_html,
+      html: new ElementViewPage(config, env).tohtml(renderer),
+      desc: `${base} view`
     }
   ]
 

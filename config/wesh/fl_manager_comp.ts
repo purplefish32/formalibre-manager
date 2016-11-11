@@ -51,6 +51,17 @@ export class ListFromModel extends fl_c.SectionContent {
 
 }
 
+export function viewButton(type) {
+  let linkAttr = [
+    `routerLink="/${type}/{{${type}.id}}"`,
+    `*ngIf="${type}.hasOwnProperty('id')"`
+  ]
+
+  let link = new Button(linkAttr, "", "eye", "btn-default btn-xs")
+
+  return link
+}
+
 export function editButton(type) {
   let linkAttr = [
     `routerLink="/${type}/edit/{{${type}.id}}"`,
@@ -85,6 +96,12 @@ export class ListDetail extends fl_container {
 }
 
 export class ModelInput extends fl_c.ModelInput {
+  constructor(model, name, attr) {
+    super(model, name, "", attr)
+  }
+}
+
+export class ModelText extends fl_c.ModelText {
   constructor(model, name, attr) {
     super(model, name, "", attr)
   }

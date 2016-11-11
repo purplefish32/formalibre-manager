@@ -107,6 +107,12 @@ export class ModelInput extends TextInput {
   }
 }
 
+export class ModelText extends Text {
+  constructor(model, name, classes, attr) {
+    super(`{{${model}.${name}}}`,classes, attr)
+  }
+}
+
 export class TableHeader extends fl_element {
   constructor(classes = "", attr = [], data: string = null) {
     super(`th`, classes, attr, data)

@@ -15,6 +15,19 @@ function __chain(obj,field: string, ...restOfFields: string[]) {
   return undefined
 }
 
+function addNgRow(name: string, obj_name: string, ...args:any[]) {
+  // template inside binding to the current element
+  // that contains the provided obj
+  console.dir(args)
+  let template = new fl_element("template", "", [`let-${obj_name}="rowData"`, `pTemplate`, `type="body"`])
+
+  args.forEach(arg=>template.add(arg))
+
+  return new fl_element(
+    "p-column", "", [`"header"="${name}"`, `'[style]'="{'width':'0px'}"`]
+  ).add(template)
+}
+
 export class ElementsList extends fl_m.ListFromModel {
   constructor(config, env) {
     super(config[env.g_conf_element].model)
@@ -23,25 +36,23 @@ export class ElementsList extends fl_m.ListFromModel {
 
     let headers = this.getPrimeHeaders();
 
-    let editButtonVisible = !!__chain(config[env.g_conf_element],"crud","edit")
+    let editButtonVisible = !!__chain(config[env.g_conf_element], "crud", "edit")
+    let viewButtonVisible = !!__chain(config[env.g_conf_element], "crud", "view")
 
     if(config.config.usePrimeNg) {
       // create a table from headers
       table = new fl_p.PrimeTable(`${env.g_element_table}`,'',[],headers)
 
-      // add edit button if necessary
-      if(editButtonVisible) {
-        // create a row
-        let tabRow = new fl_element(
-          "p-column","",[`"header"="Edit"`,`'[style]'="{'width':'0px'}"`]
-        ).add(
-          // with a template inside binding to the current element
-          new fl_element("template","",[`let-${env.g_local_object}="rowData"`, `pTemplate`,`type="body"`]).
-            // that contains a button linking to the edit page
-            add(new fl_m.editButton(env.g_local_object))
-        )
+      let buttons = []
 
-        table.add(tabRow)
+      if (editButtonVisible)
+        buttons.push(fl_m.editButton(env.g_local_object))
+      if (viewButtonVisible)
+        buttons.push(fl_m.viewButton(env.g_local_object))
+
+      // add edit button if necessary
+      if (editButtonVisible || viewButtonVisible) {
+        table.add(addNgRow.call(this,'',env.g_local_object,...buttons))
       }
     }
     else {
@@ -181,3 +192,43 @@ export class ElementEditPage extends fl_m.MainCol {
     return this.render(renderer)
   }
 }
+
+export class ElementsView extends fl_m.ListFromModel {
+  constructor(config, env) {
+    super(config[env.g_conf_element].model)
+
+    let boxDetail = new fl_c.Box(
+      new fl_c.Legend(`${env.g_title_singular} Details`)
+    )
+
+    let capitalize = s =>
+      s.toLowerCase().replace(/\b./g, a => a.toUpperCase())
+
+    let menuBar = new fl_c.BoxFooter()
+      //.add(fl_m.editButton([`'(click)'="onSubmit()"`, `'[disabled]'="!elementForm.form.valid"`]))
+      .add(new fl_c.Span('', [`'[hidden]'="!${env.g_local_object} || !${env.g_local_object}.id"`])
+        .add(fl_m.deleteButton([`'(click)'="onDelete()"`]))
+      )
+
+    config[env.g_conf_element].model
+      .filter(element => !element.index)
+      .forEach(function(element) {
+        if (!element.name)
+          element.name = capitalize(element.field)
+
+        boxDetail.add(new fl_m.Label(element.name, []))
+
+        if (element.description)
+          boxDetail.add(new fl_text(" " + element.description))
+
+        boxDetail.add(new fl_m.ModelText(env.g_local_object, element.field))
+      })
+
+    let boxHistory = new fl_c.Box()
+
+    this.add([
+      boxDetail,
+      menuBar])
+  }
+}
+
