@@ -19,6 +19,7 @@ services:
       - '9200:9200'
       - '9300:9300'
 
+      - '27017:27017'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     links:
@@ -31,6 +32,7 @@ services:
       - kibana
       - shinken
       - logstash
+      - db_mongo
 
   adminer:
     restart: always
@@ -117,6 +119,7 @@ services:
       - api_sessions:/var/www/html/var/sessions/:rw
     links:
       - backend
+      - backend_node
     environment:
       VIRTUAL_HOST: http://api.manager.loc
 
@@ -137,7 +140,24 @@ services:
         SYMFONY__DATABASE_NAME: db
         SYMFONY__DATABASE_USER: user
         SYMFONY__DATABASE_PASSWORD: pass
-
+  db_mongo:
+    restart: always
+    image: mongo
+    volumes:
+      - 'mongo:/data/db/:rw'
+  backend_node:
+    image: 'node:onbuild'
+    volumes:
+      - './files/backend_node/:/usr/src/app/:rw'
+    links:
+      - db_mongo
+    ports:
+      - '89:80'
+  tsc_node:
+    image: milanaleksic/typescript
+    volumes:
+      - './files/backend_node/:/home/developer/workspace'
+    command: tsc -p tsconfig.json
 ### Configuration
   config_npm:
     image: treyjones/npm:latest
@@ -218,6 +238,7 @@ volumes:
   backend_logs:
   backend_cache:
   backend_sessions:
+  mongo:
   whisper:
   es_data:
   grafana:
