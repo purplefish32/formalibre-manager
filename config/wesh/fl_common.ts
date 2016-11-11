@@ -1,4 +1,4 @@
-import {fl_container, fl_element} from './fl_comp'
+import {fl_container, fl_element, Attributes, ElementData} from './fl_comp'
 
 export class Section extends fl_element {
   constructor(sectionName) {
@@ -202,5 +202,41 @@ export class Table extends fl_element {
     }
 
     return this
+  }
+}
+
+export class Img extends fl_element {
+  constructor(classes = "", attrs: Attributes = null) {
+    super('img', classes, attrs)
+  }
+}
+
+export class H extends fl_element {
+  constructor(num: number, classes = "", attrs: Attributes = null, data: ElementData = []) {
+    super(`h${num}`, classes, attrs, data)
+  }
+}
+
+export class B extends fl_element {
+  constructor(classes = "", attrs: Attributes = null, text: string) {
+    super(`b`, classes, [], text)
+  }
+}
+
+export class Ul extends fl_element {
+  constructor(classes = "", attrs: Attributes = null, data: ElementData = []) {
+    super('ul', classes, attrs, data)
+  }
+}
+
+export class Li extends fl_element {
+  constructor(classes = "", attrs: Attributes = null, data: ElementData = []) {
+    super('li', classes, attrs, data)
+  }
+}
+
+export class Layout extends fl_element {
+  constructor(type: string, width: number, classes = "", attrs: Attributes = null, data: ElementData = []) {
+    super(`div`, `col-${type}-${width} ${classes}`, attrs, data)
   }
 }
