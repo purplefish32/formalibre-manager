@@ -118,5 +118,22 @@
       "field": "address",
       "required": "true"
     }]
+  },
+  "events": {
+    "model": [{
+      "index": "true",
+      "field": "id"
+    }, {
+      "field": "ressource_id",
+      "required": "true",
+      "type": "string",
+      "required": "true"
+    }, {
+      "field": "date",
+      "required": "true"
+    }, {
+      "field": "post",
+      "required": "true"
+    }]
   }
 }
