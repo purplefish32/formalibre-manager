@@ -1,7 +1,7 @@
 import * as fl_c from './fl_common'
 import * as fl_bc from './fl_breadcrumb'
 import * as fl_m from './fl_manager_comp'
-import {fl_container, fl_element, fl_jadeRenderer} from './fl_comp'
+import {fl_container, fl_element} from './fl_comp'
 
 
 
@@ -41,41 +41,41 @@ export class TableCol extends fl_element {
 
 
 export class Prime extends fl_element {
-  constructor(elem,classes = '', attr = []) {
-    if(!elem.length)
+  constructor(elem, classes = '', attr = []) {
+    if (!elem.length)
       throw "Missing element name for ng-prime component"
-    super(`p-`+elem, classes, attr)
+    super(`p-` + elem, classes, attr)
   }
 }
 
 export class PrimeTableRow extends Prime {
-  constructor(classes = '', attr = [], field = "", header = "", type='string') {
-    if(!field.length || !header.length)
+  constructor(classes = '', attr = [], field = "", header = "", type = 'string') {
+    if (!field.length || !header.length)
       throw "Missing element name or field for PrimeTableRow component"
 
     attr.push(`field="${field}"`)
     attr.push(`header="${header}"`)
 
     super(`column`, classes, attr)
-    if(type == 'date') {
-      let template = new fl_element("template","",[`'let-col'=''`,`let-row="rowData"`, `pTemplate`,`type="body"`],`{{date(row[col.field])}}`)
+    if (type == 'date') {
+      let template = new fl_element("template", "", [`'let-col'=''`, `let-row="rowData"`, `pTemplate`, `type="body"`], `{{date(row[col.field])}}`)
       this.add(template)
     }
   }
 }
 
 export class PrimeTable extends Prime {
-  constructor(value='',classes = '', attr = [],headers) {
-    if(!value.length)
+  constructor(value = '', classes = '', attr = [], headers) {
+    if (!value.length)
       throw "Missing binding value for PrimeTable"
     attr.push(`'[value]'="${value}"`)
     super(`dataTable`, classes, attr)
-    if(headers)
+    if (headers)
       this.setHeaders(headers);
   }
 
   addHeaderCol(attr: string[] = [], field = "", header = "", type = "string") {
-    return this.add(new PrimeTableRow('',attr,field,header,type))
+    return this.add(new PrimeTableRow('', attr, field, header, type))
   }
 
   // addCol(attr: string[] = [], data = "") {
@@ -91,7 +91,7 @@ export class PrimeTable extends Prime {
       return
 
     headers.forEach(
-      header => this.addHeaderCol([], header.field,header.name,header.type || 'string'))
+      header => this.addHeaderCol([], header.field, header.name, header.type || 'string'))
 
     return this
   }

@@ -1,6 +1,6 @@
 import * as fl_c from './fl_common'
 import * as fl_bc from './fl_breadcrumb'
-import {fl_container, fl_element, fl_jadeRenderer} from './fl_comp'
+import {fl_container, fl_element} from './fl_comp'
 
 export function getFields(type, data) {
   return data.model

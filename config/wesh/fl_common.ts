@@ -1,4 +1,4 @@
-import {fl_container, fl_element, fl_jadeRenderer} from './fl_comp'
+import {fl_container, fl_element} from './fl_comp'
 
 export class Section extends fl_element {
   constructor(sectionName) {

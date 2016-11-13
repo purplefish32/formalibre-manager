@@ -1,7 +1,4 @@
-//TODO move jade rendering out
-import * as pug from 'pug'
-
-abstract class fl_renderer {
+export abstract class fl_renderer {
   abstract render_text(str: string): string
 
   local_render_text(str: string): string {
@@ -21,60 +18,7 @@ abstract class fl_renderer {
   }
 }
 
-export class fl_jadeRenderer extends fl_renderer {
-  constructor(private pretty = true, private jade = false) { super() }
-
-  render_finalize(text: string) {
-    if (this.jade)
-      return text
-    let html = "<p>error</p>"
-
-    try {
-      // Compile a function
-      let fn = pug.compile(text, { pretty: this.pretty });
-
-      // Render the function
-      html = fn({});
-
-    }
-    catch (e) {
-      console.log(e)
-      console.log(text)
-    }
-    return html;
-  }
-
-  private static attr(attrs: string[]): string {
-    let str = ""
-    if (attrs.length) {
-      str = '(' + attrs.join(', ') + ')';
-    }
-
-    return str
-  }
-
-  private static clas(str): string {
-    return str
-      .split(' ')
-      .filter(c => c.length)
-      .reduce(function(a, c) { return a + '.' + c; });
-  }
-
-  render_text(str: string): string {
-    return "| " + str
-  }
-
-  render_elem(elem: string, classes: string = "", attrs: string[] = []): string {
-    if (classes)
-      elem += "." + fl_jadeRenderer.clas(classes);
-    if (attrs)
-      elem += fl_jadeRenderer.attr(attrs);
-
-    return elem
-  }
-}
-
-abstract class fl_renderable {
+export abstract class fl_renderable {
   abstract render(renderer: fl_renderer, level: number);
 
   indentStr(level: number): string {

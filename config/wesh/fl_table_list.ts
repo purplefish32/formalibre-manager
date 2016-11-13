@@ -1,4 +1,4 @@
-import {fl_container, fl_element, fl_jadeRenderer, fl_text} from './fl_comp'
+import {fl_container, fl_element, fl_text} from './fl_comp'
 import * as fl_c from './fl_common'
 import * as fl_m from './fl_manager_comp'
 import * as fl_p from './fl_ng_prime'
