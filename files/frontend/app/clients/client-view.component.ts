@@ -7,6 +7,7 @@ import { Event } from '../events/event'
 import { EventsService } from '../events/events.service'
 import 'rxjs/add/operator/toPromise';
 import * as moment from 'moment'
+import { PopoverModule } from "ng2-popover"
 
 @Component({
   selector: 'ClientView',

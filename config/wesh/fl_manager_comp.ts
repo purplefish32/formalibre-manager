@@ -139,13 +139,40 @@ export class EditButton extends Button {
   }
 }
 
-export class DeleteButton extends Button {
+export class PopoverContent extends fl_element {
+  constructor(id, title, content) {
+    super('popover-content', '', [`#${id}=''`, `title= "${title}"`, `placement= "bottom"`, `'[animation]' = "true"`, `'[closeOnClickOutside]' = "true"`], content)
+  }
+}
+
+export class RawDeleteButton extends Button {
   constructor(classes = "") {
     let linkAttr = [
       `'(click)'="onDelete()"`
     ]
 
     super(linkAttr, "", "trash-o", `btn-danger ${classes}`)
+  }
+}
+
+export class DeleteButton extends fl_container {
+  private static counter = 0
+  constructor(classes = "") {
+    super()
+    DeleteButton.counter++
+
+    let Id = "DeleteButton"+DeleteButton.counter.toString(36)
+
+    let popoverContent = new PopoverContent(Id, 'Sure to delete ?', [
+      new fl_c.B('', [],
+        new fl_c.Span('', `style="color: #C21F39"`, 'Delete')
+      ),
+      new RawDeleteButton()
+    ])
+
+    let fakeDeleteButton = new Button([`'[popover]' = "${Id}"`], "", "trash-o", `btn-danger`)
+
+    this.add([popoverContent, fakeDeleteButton])
   }
 }
 

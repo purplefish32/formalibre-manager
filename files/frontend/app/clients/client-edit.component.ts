@@ -5,6 +5,7 @@ import { ClientsService } from './clients.service';
 import { Client } from './client'
 import { ClientProfile } from './clientProfile'
 import 'rxjs/add/operator/toPromise';
+import { PopoverModule } from "ng2-popover"
 
 @Component({
   selector: 'ClientEdit',

@@ -12,6 +12,7 @@ import { EventDetailComponent } from './event-detail.component'
 import { EventEditComponent } from './event-edit.component'
 /*$  */
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
+import { PopoverModule } from "ng2-popover"
 
 @NgModule({
   imports: [
@@ -20,6 +21,7 @@ import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
     HttpModule,
     RouterModule,
     EventRouting,
+    PopoverModule,
     SlimLoadingBarModule.forRoot(),
     DataTableModule,
   ],

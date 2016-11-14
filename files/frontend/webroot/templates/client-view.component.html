@@ -24,7 +24,10 @@
             </ul>
             <div class="box-footer">
               <button class="btn btn-primary" routerLink="/client/edit/{{client.id}}" *ngIf="client.hasOwnProperty('id')"><i class="fa fa-pencil"></i></button>
-              <button class="btn btn-danger" (click)="onDelete()"><i class="fa fa-trash-o"></i></button>
+              <popover-content #DeleteButton4="" title="Sure to delete ?" placement="bottom" [animation]="true" [closeOnClickOutside]="true"><b><span style="color: #C21F39">Delete</span></b>
+                <button class="btn btn-danger" (click)="onDelete()"><i class="fa fa-trash-o"></i></button>
+              </popover-content>
+              <button class="btn btn-danger" [popover]="DeleteButton4"><i class="fa fa-trash-o"></i></button>
             </div>
           </div>
         </div>
@@ -45,10 +48,10 @@
               </li>
               <li class="time-label" *ngFor="let event of client.events"><i class="fa fa-envelope bg-blue"></i>
                 <div class="timeline-item"><span class="time"><i class="fa fa-clock-o"></i>{{date(event.date)}}</span>
-                  <h3 class="timeline-header">titel</h3>
+                  <h3 class="timeline-header">TBD Title</h3>
                   <div class="timeline-body">{{event.post}}</div>
-                  <div class="timeline-footer">
-                    <button class="btn btn-danger" (click)="onDelete()"><i class="fa fa-trash-o"></i></button>
+                  <div class="timeline-footer">TBD Some Random footer content
+                    <button class="btn btn-danger">Delete</button>
                   </div>
                 </div>
               </li>

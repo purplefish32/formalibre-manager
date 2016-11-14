@@ -4,6 +4,7 @@ import { Router }            from '@angular/router';
 import { EventsService } from './events.service';
 import { Event } from './event'
 import 'rxjs/add/operator/toPromise';
+import { PopoverModule } from "ng2-popover"
 
 @Component({
   selector: 'EventEdit',

@@ -61,7 +61,10 @@
       </form>
       <div class="box-footer">
         <button class="btn btn-primary" (click)="onSubmit()" [disabled]="!elementForm.form.valid">Submit</button><span [hidden]="!platform || !platform.id">
-          <button class="btn btn-danger" (click)="onDelete()">Delete</button></span>
+          <popover-content #DeleteButton2="" title="Sure to delete ?" placement="bottom" [animation]="true" [closeOnClickOutside]="true"><b><span style="color: #C21F39">Delete</span></b>
+            <button class="btn btn-danger" (click)="onDelete()"><i class="fa fa-trash-o"></i></button>
+          </popover-content>
+          <button class="btn btn-danger" [popover]="DeleteButton2"><i class="fa fa-trash-o"></i></button></span>
       </div>
     </section>
   </div>

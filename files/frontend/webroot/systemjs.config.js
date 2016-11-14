@@ -27,7 +27,8 @@
       'ng2-slim-loading-bar': 'npm:ng2-slim-loading-bar',
       'primeng': 'node_modules/primeng',
       'moment': 'node_modules/moment',
-      'github': 'node_modules/github'
+      'github': 'node_modules/github',
+      "ng2-popover": "node_modules/ng2-popover"
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -56,6 +57,10 @@
       'github': {
         main: './index.js',
         defaultExtension: 'js'
+      },
+      "ng2-popover": {
+        "main": "index.js",
+        "defaultExtension": "js"
       }
     }
   });

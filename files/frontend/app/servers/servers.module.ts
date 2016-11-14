@@ -11,6 +11,7 @@ import { ServersComponent }      from './servers.component';
 import { ServerDetailComponent } from './server-detail.component';
 import { ServerEditComponent } from './server-edit.component';
 import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
+import { PopoverModule } from "ng2-popover"
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
     HttpModule,
     RouterModule,
     ServerRouting,
+    PopoverModule,
     SlimLoadingBarModule.forRoot(),
     DataTableModule,
   ],

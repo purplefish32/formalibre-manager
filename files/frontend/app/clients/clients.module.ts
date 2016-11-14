@@ -13,7 +13,8 @@ import { ClientDetailComponent } from './client-detail.component'
 import { ClientEditComponent } from './client-edit.component'
 import { ClientViewComponent } from './client-view.component'
 /*$  */
-import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
+import { SlimLoadingBarModule } from 'ng2-slim-loading-bar'
+import { PopoverModule } from "ng2-popover"
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
     RouterModule,
     ClientRouting,
     DataTableModule,
+    PopoverModule,
     SlimLoadingBarModule.forRoot()
   ],
   declarations: [

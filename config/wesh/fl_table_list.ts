@@ -122,7 +122,7 @@ export class ElementsEdit extends fl_m.ListFromModel {
     let menuBar = new fl_c.BoxFooter()
       .add(fl_m.submitButton([`'(click)'="onSubmit()"`, `'[disabled]'="!elementForm.form.valid"`]))
       .add(new fl_c.Span('', [`'[hidden]'="!${env.g_local_object} || !${env.g_local_object}.id"`])
-        .add(fl_m.deleteButton([`'(click)'="onDelete()"`]))
+        .add(new fl_m.DeleteButton())
       )
 
     config[env.g_conf_element].model
@@ -284,9 +284,9 @@ export class TimelineView extends fl_c.Box {
       ])
 
     timeline.AddItem('envelope', "blue", "", [`*ngFor="let event of ${env.g_local_object}.events"`]).addContent()
-      .addHeader("{{date(event.date)}}", 'titel')
+      .addHeader("{{date(event.date)}}", 'TBD Title')
       .addBody("{{event.post}}")
-      .addFooter(new fl_m.DeleteButton())
+      .addFooter(['TBD Some Random footer content',fl_m.deleteButton("")])
 
     timeline.AddIcon("circle", "gray")
 
