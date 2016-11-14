@@ -32,12 +32,12 @@ export abstract class fl_renderer {
   }
 
   // Render some text from an element
-  abstract render_elem(elem: string, classes: string, attrs: string[]): string
+  abstract render_elem(subs: string[], elem: string, classes: string, attrs: string[], indentStr: string): string
 
-  local_render_elem(elem: string, classes: string, attrs: Attributes): string {
+  local_render_elem(subs: string[], elem: string, classes: string, attrs: Attributes, indentStr: string): string {
     if (typeof attrs === 'string')
-      attrs = [attrs]
-    return this.render_elem(elem, classes, attrs)
+      attrs = [<string>attrs]
+    return this.render_elem(subs, elem, classes, <string[]>attrs, indentStr)
   }
 
   // Called at the end of the rendering process
@@ -76,7 +76,7 @@ export abstract class fl_renderable {
 
     console.trace("Here I am!")
     throw ("Sorry can't call on a renderable (must be at least a container)")
-
+    return null
   }
 }
 
@@ -142,7 +142,7 @@ export class fl_container extends fl_renderable {
       renderable = elem as RenderableParam
     }
     else // Otherwise create a full new element
-      renderable = new fl_element(elem, classes, attrs, data)
+      renderable = new fl_element(<string>elem, classes, attrs, data)
 
     // Add the element to this object
     this.addRaw(renderable)
@@ -318,30 +318,21 @@ export class fl_element extends fl_container {
   render(renderer: fl_renderer, level: number = 0): string {
     let indentStr = this.indentStr(level);
     let str = ""
-    let subs = []
-
-    let indentLevel = level
-
-    // Render the current element
-    //if (this.elem.length /*+ this.classes.length*/) {
-    str = indentStr + renderer.local_render_elem(this.elem, this.classes, this.attrs);
-    indentLevel++
-    //}
+    let subs: string[] = []
 
     // render the sub elments
     //if (this.elems.length)
-    subs = this.elems.map(elem => elem.render(renderer, indentLevel))
+    subs = this.elems.map(elem => elem.render(renderer, level + 1))
 
-
-    //if (str.length)
-    subs.unshift(str)
-
-    let renderedString = subs.join("\n")
+    // Render the current element
+    //if (this.elem.length /*+ this.classes.length*/) {
+    str = indentStr + renderer.local_render_elem(subs, this.elem, this.classes, this.attrs, indentStr);
+    //}
 
     if (!level)
-      renderedString = renderer.render_finalize(renderedString)
+      str = renderer.render_finalize(str)
 
-    return renderedString
+    return str
   }
 }
 

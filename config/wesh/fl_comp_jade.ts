@@ -39,12 +39,14 @@ export class fl_jadeRenderer extends fl_renderer {
     return "| " + str
   }
 
-  render_elem(elem: string, classes: string = "", attrs: string[] = []): string {
+  render_elem(subs: string[], elem: string, classes: string = "", attrs: string[] = [], indentSrt: string): string {
     if (classes)
       elem += "." + fl_jadeRenderer.clas(classes);
     if (attrs)
       elem += fl_jadeRenderer.attr(attrs);
 
-    return elem
+    subs.unshift(elem)
+
+    return subs.join("\n")
   }
 }
