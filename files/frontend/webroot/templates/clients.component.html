@@ -14,12 +14,12 @@
       </div>
       <div class="box">
         <p-dataTable [value]="clients">
-          <p-column field="firstname" header="Firstname"></p-column>
-          <p-column field="lastname" header="Lastname"></p-column>
-          <p-column field="organisation" header="Organisation"></p-column>
-          <p-column field="email" header="Email"></p-column>
-          <p-column field="phone" header="Phone"></p-column>
-          <p-column field="address" header="Address"></p-column>
+          <p-column field="firstname" header="Firstname" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+          <p-column field="lastname" header="Lastname" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+          <p-column field="organisation" header="Organisation" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+          <p-column field="email" header="Email" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+          <p-column field="phone" header="Phone" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+          <p-column field="address" header="Address" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
           <p-column header="" [style]="{'width':'0px'}">
             <template let-client="rowData" pTemplate="pTemplate" type="body">
               <button class="btn btn-default btn-xs" routerLink="/client/edit/{{client.id}}" *ngIf="client.hasOwnProperty('id')"><i class="fa fa-edit"></i></button>

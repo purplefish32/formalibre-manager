@@ -37,6 +37,15 @@ export class ElementsList extends fl_m.ListFromModel {
 
     let headers = this.getPrimeHeaders();
 
+    let elemConfig = config[env.g_conf_element]
+
+    elemConfig.model = elemConfig.model.map(elem =>{
+      if(!elem.hasOwnProperty('filter')) {
+        elem.filter = elemConfig.hasOwnProperty('filter') && elemConfig['filter']
+      }
+      return elem
+    })
+
     let editButtonVisible = !!__chain(config[env.g_conf_element], "crud", "edit")
     let viewButtonVisible = !!__chain(config[env.g_conf_element], "crud", "view")
 

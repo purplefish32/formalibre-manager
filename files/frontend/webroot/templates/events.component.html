@@ -14,11 +14,11 @@
       </div>
       <div class="box">
         <p-dataTable [value]="events">
-          <p-column field="ressource_id" header="Ressource ID"></p-column>
-          <p-column field="date" header="Date">
+          <p-column field="ressource_id" header="Ressource ID" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+          <p-column field="date" header="Date" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search">
             <template let-col="" let-row="rowData" pTemplate="pTemplate" type="body">{{date(row[col.field])}}</template>
           </p-column>
-          <p-column field="post" header="Post"></p-column>
+          <p-column field="post" header="Post" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
         </p-dataTable>
         <div class="callout callout-info" *ngIf="events && !events?.length">
           <p>There are no events yet. Feel free to add your first event using the "Add new Event" button.</p>

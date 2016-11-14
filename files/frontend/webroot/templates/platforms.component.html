@@ -14,16 +14,16 @@
       </div>
       <div class="box">
         <p-dataTable [value]="platforms">
-          <p-column field="name" header="Name"></p-column>
-          <p-column field="subdomain" header="Subdomain"></p-column>
-          <p-column field="description" header="Description"></p-column>
-          <p-column field="plan" header="Plan"></p-column>
-          <p-column field="end_date" header="End date"></p-column>
-          <p-column field="max_users" header="Max users"></p-column>
-          <p-column field="max_disk_space" header="Max disk space"></p-column>
-          <p-column field="contact_name" header="Contact"></p-column>
-          <p-column field="contact_email" header="Email"></p-column>
-          <p-column field="contact_phone" header="Phone"></p-column>
+          <p-column field="name" header="Name" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+          <p-column field="subdomain" header="Subdomain" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+          <p-column field="description" header="Description" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+          <p-column field="plan" header="Plan" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+          <p-column field="end_date" header="End date" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+          <p-column field="max_users" header="Max users" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+          <p-column field="max_disk_space" header="Max disk space" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+          <p-column field="contact_name" header="Contact" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+          <p-column field="contact_email" header="Email" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+          <p-column field="contact_phone" header="Phone" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
           <p-column header="" [style]="{'width':'0px'}">
             <template let-platform="rowData" pTemplate="pTemplate" type="body">
               <button class="btn btn-default btn-xs" routerLink="/platform/edit/{{platform.id}}" *ngIf="platform.hasOwnProperty('id')"><i class="fa fa-edit"></i></button>

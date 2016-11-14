@@ -49,12 +49,18 @@ export class Prime extends fl_element {
 }
 
 export class PrimeTableRow extends Prime {
-  constructor(classes = '', attr = [], field = "", header = "", type = 'string') {
+  constructor(classes = '', attr = [], field = "", header = "", filter = false, type = 'string') {
     if (!field.length || !header.length)
       throw "Missing element name or field for PrimeTableRow component"
 
     attr.push(`field="${field}"`)
     attr.push(`header="${header}"`)
+
+    if (filter) {
+      attr.push(`'[filter]'="true"`)
+      attr.push(`filterMatchMode="contains"`)
+      attr.push(`filterPlaceholder="Search"`)
+    }
 
     super(`column`, classes, attr)
     if (type == 'date') {
@@ -74,8 +80,8 @@ export class PrimeTable extends Prime {
       this.setHeaders(headers);
   }
 
-  addHeaderCol(attr: string[] = [], field = "", header = "", type = "string") {
-    return this.add(new PrimeTableRow('', attr, field, header, type))
+  addHeaderCol(attr: string[] = [], field = "", header = "", filter = false, type = "string") {
+    return this.add(new PrimeTableRow('', attr, field, header, filter, type))
   }
 
   // addCol(attr: string[] = [], data = "") {
@@ -91,7 +97,10 @@ export class PrimeTable extends Prime {
       return
 
     headers.forEach(
-      header => this.addHeaderCol([], header.field, header.name, header.type || 'string'))
+      header => {
+        let filter = header.hasOwnProperty('filter') && header.filter
+        this.addHeaderCol([], header.field, header.name, filter, header.type || 'string')
+      })
 
     return this
   }

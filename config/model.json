@@ -6,6 +6,7 @@
     "crud": {
       "edit": "true"
     },
+    "filter": true,
     "model": [{
       "index": true,
       "field": "id"
@@ -50,6 +51,7 @@
     "crud": {
       "edit": "true"
     },
+    "filter": true,
     "model": [{
       "index": true,
       "field": "id"
@@ -96,6 +98,7 @@
       "edit": "true",
       "view": "true"
     },
+    "filter": true,
     "model": [{
       "index": true,
       "field": "id"
@@ -121,6 +124,7 @@
     }]
   },
   "events": {
+    "filter": true,
     "model": [{
       "index": "true",
       "field": "id"
