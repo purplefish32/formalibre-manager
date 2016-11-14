@@ -34,6 +34,10 @@ export default class Event extends collection {
       this.getRessourceRelated(req, res)
     });
 
+    router.delete(path.join('/', 'ressource', ':id'), (req, res) => {
+      this.deleteRessourceRelated(req, res)
+    });
+
     router.post('/', (req, res) => {
       this.create(req, res)
     });
@@ -110,7 +114,18 @@ export default class Event extends collection {
   }
 
   delete(req, res) {
-    super.delete(req.params.id, function(err, result) {
+    super.deleteOne(req.params.id, function(err, result) {
+      if (err) {
+        res.status(500).send(err)
+      }
+      else {
+        res.status(204).send(result)
+      }
+    })
+  }
+
+  deleteRessourceRelated(req, res) {
+    super.delete({ ressource_id: req.params.id }, function(err, result) {
       if (err) {
         res.status(500).send(err)
       }

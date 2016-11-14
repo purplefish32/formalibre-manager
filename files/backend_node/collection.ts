@@ -34,8 +34,12 @@ export default class collection {
     this.accessor.findOneAndUpdate({ _id: mongodb.ObjectID(id) }, { $set: data }, cb)
   }
 
-  delete(id: string, cb) {
-    console.log(`Deleting ${id}`)
+  deleteOne(id: string, cb) {
     this.accessor.deleteOne({ _id: mongodb.ObjectID(id) }, cb)
   }
+
+  delete(param: Object = {}, cb) {
+    this.accessor.deleteOne(param, cb)
+  }
+
 }
