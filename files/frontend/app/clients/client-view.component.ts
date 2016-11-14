@@ -27,7 +27,7 @@ export class ClientViewComponent implements OnInit {
   date(d) {
     try {
       return moment(d).calendar()
-    } catch(e) {
+    } catch (e) {
       console.dir(e)
       return ""
     }
@@ -36,7 +36,7 @@ export class ClientViewComponent implements OnInit {
   currentDate() {
     try {
       return (new Date()).toString().split(' ').splice(1, 3).join(' ')
-    } catch(e) {
+    } catch (e) {
       console.dir(e)
       return ""
     }

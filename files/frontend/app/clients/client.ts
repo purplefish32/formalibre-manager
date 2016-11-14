@@ -2,7 +2,7 @@ import {ClientProfile} from './clientProfile'
 
 export class Client {
   constructor(profile: ClientProfile = null) {
-    if(profile) {
+    if (profile) {
       for (var property in profile) {
         if (property != 'events') {
           if (profile && profile.hasOwnProperty(property)) {

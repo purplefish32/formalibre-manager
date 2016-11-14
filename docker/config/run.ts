@@ -44,7 +44,7 @@ try {
     });
   }
 
-  let compileTemplate = function(env:any) : any {
+  let compileTemplate = function(env: any): any {
     env = JSON.stringify(env)
     let compiled = _.template(env);
     env = compiled(variables);

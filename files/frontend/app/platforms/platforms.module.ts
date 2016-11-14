@@ -9,7 +9,7 @@ import { PlatformsComponent }      from './platforms.component';
 import { PlatformDetailComponent } from './platform-detail.component';
 import { PlatformEditComponent } from './platform-edit.component';
 import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
-import {DataTableModule,SharedModule} from 'primeng/primeng';
+import {DataTableModule, SharedModule} from 'primeng/primeng';
 
 @NgModule({
   imports: [

@@ -3,7 +3,7 @@ import { PlatformDetailComponent } from './platform-detail.component'
 import { Platform } from './platform'
 import { PlatformsService } from './platforms.service'
 import 'rxjs/add/operator/toPromise';
-import {DataTableModule,SharedModule} from 'primeng/primeng';
+import {DataTableModule, SharedModule} from 'primeng/primeng';
 
 @Component({
   selector: 'platforms',

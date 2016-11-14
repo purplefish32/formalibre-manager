@@ -9,5 +9,5 @@ export class ClientProfile {
   phone: string;
   address: string;
   /*$  */
-  events:Event[]
+  events: Event[]
 }

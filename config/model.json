@@ -1,9 +1,9 @@
 {
-  "config" : {
-    "usePrimeNg":true
+  "config": {
+    "usePrimeNg": true
   },
   "servers": {
-    "crud":{
+    "crud": {
       "edit": "true"
     },
     "model": [{
@@ -47,7 +47,7 @@
     }]
   },
   "platforms": {
-    "crud":{
+    "crud": {
       "edit": "true"
     },
     "model": [{
@@ -99,7 +99,7 @@
     "model": [{
       "index": true,
       "field": "id"
-    },{
+    }, {
       "field": "firstname",
       "required": "true",
       "description": "(Client name)"
@@ -126,6 +126,7 @@
       "field": "id"
     }, {
       "field": "ressource_id",
+      "name": "Ressource ID",
       "required": "true",
       "type": "string",
       "required": "true"
@@ -133,7 +134,7 @@
       "field": "date",
       "type": "date",
       "required": "true",
-      "crud":{
+      "crud": {
         "edit": "false"
       }
     }, {

@@ -13,9 +13,9 @@ export class fl_htmlRenderer extends fl_renderer {
 
   render_elem(subs: string[], elem: string, classes: string = "", attrs: string[] = [], indentStr: string): string {
     let open = `<${elem}`
-    if(classes.length) {
-    	attrs.push('class="'+classes+'"'   )
-      open += " "+attrs.join(' ')
+    if (classes.length) {
+      attrs.push('class="' + classes + '"')
+      open += " " + attrs.join(' ')
     }
     open += ">"
 

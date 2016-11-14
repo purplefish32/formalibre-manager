@@ -9,19 +9,16 @@ import 'rxjs/add/operator/toPromise';
 @Component({
   selector: 'ClientEdit',
   templateUrl: 'templates/client-edit.component.html'
- })
+})
 
 export class ClientEditComponent implements OnInit {
-  client:Client = new Client();
+  client: Client = new Client();
 
   constructor(
     private clients: ClientsService,
     private route: ActivatedRoute,
     private router: Router
-  ) {
-    this.client = new Client();
-    console.dir(this.client);
-  }
+  ) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -48,8 +45,8 @@ export class ClientEditComponent implements OnInit {
   }
 
   onDelete() {
-    if(this.client.id != '') {
-      this.clients.delete(this.client.id).toPromise().then(client=>this.router.navigate(['clients']),()=>this.router.navigate(['clients']));
+    if (this.client.id != '') {
+      this.clients.delete(this.client.id).toPromise().then(client => this.router.navigate(['clients']), () => this.router.navigate(['clients']));
     }
   }
 

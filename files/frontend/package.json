@@ -1,6 +1,7 @@
 {
   "name": "manager_frontend_angular",
   "description": "Frontend for the manager with angular",
+  "private": true,
   "version": "0.0.1",
   "scripts": {
     "postinstall": "typings install",
@@ -22,9 +23,11 @@
     "@angular/upgrade": "2.0.0",
     "admin-lte": "^2.3.5",
     "angular2-in-memory-web-api": "0.0.20",
+    "angular2-moment": "^0.8.2",
     "bootstrap": "^3.3.6",
     "core-js": "^2.4.1",
     "font-awesome": "^4.5.0",
+    "github": "^6.0.3",
     "jquery": "2.2.4",
     "moment": "^2.15.2",
     "ng2-slim-loading-bar": "latest",

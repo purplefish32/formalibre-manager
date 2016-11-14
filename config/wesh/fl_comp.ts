@@ -6,7 +6,7 @@ export type Attributes = string | string[]
 
 
 // Possible renderable parameters (a renderable or an array of renderable)
-export type RenderableParam = fl_renderable | (fl_renderable|string)[]
+export type RenderableParam = fl_renderable | (fl_renderable | string)[]
 
 // Union type for possible container data
 // Could be either a free text that will be converted to a fl_text object
@@ -176,7 +176,7 @@ export class fl_container extends fl_renderable {
     // otherwise add to the origin element
     if (elem instanceof Array) {
       elem.forEach(e => {
-        if(typeof e == 'string')
+        if (typeof e == 'string')
           this.addText(<string>e)
         else
           this.add(e)

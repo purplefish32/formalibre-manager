@@ -13,7 +13,7 @@ export const ClientRouting: ModuleWithProviders = RouterModule.forChild([
   {
     path: 'client/new',
     component: ClientEditComponent
-  },  
+  },
   {
     path: 'client/edit/:id',
     component: ClientEditComponent

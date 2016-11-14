@@ -94,21 +94,21 @@ function setDefaultRoutes(app) {
 
 /////////////////////////////////////////////////////////////////////
 // INIT DB
-InitMongo('flm',mainRouter)
+InitMongo('flm', mainRouter)
 
 /////////////////////////////////////////////////////////////////////
 // ROUTER DEFINITION
 
-function loadRoute(basePath,router) {
+function loadRoute(basePath, router) {
   try {
     app.use(basePath, debugRoute, serverCommonCheck, router.routes())
-  } catch(e) {
+  } catch (e) {
     console.log(`Failed to mount ${basePath} router with error :`)
     console.dir(e)
   }
 }
 
 function mainRouter(db) {
-  router(loadRoute,db)
+  router(loadRoute, db)
   setDefaultRoutes(app)
 }

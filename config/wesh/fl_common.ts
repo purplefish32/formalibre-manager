@@ -32,8 +32,8 @@ export class Ol extends fl_element {
 export class Icon extends fl_element {
   constructor(logo, attr = [], bgcolor = "", data = "") {
     let classes = `fa fa-${logo}`
-    if(bgcolor!="")
-      classes+=` bg-${bgcolor}`
+    if (bgcolor != "")
+      classes += ` bg-${bgcolor}`
     super('i', classes, attr, data)
   }
 }

@@ -4,11 +4,11 @@ import * as fl_m from './fl_manager_comp'
 import * as fl_p from './fl_ng_prime'
 import * as fl_tl from './fl_timeline'
 
-function __chain(obj,field: string, ...restOfFields: string[]) {
-  if(obj.hasOwnProperty(field)) {
-    if(restOfFields.length) {
+function __chain(obj, field: string, ...restOfFields: string[]) {
+  if (obj.hasOwnProperty(field)) {
+    if (restOfFields.length) {
       restOfFields.unshift(obj[field])
-      return __chain.apply(null,restOfFields)
+      return __chain.apply(null, restOfFields)
     } else {
       return obj[field]
     }
@@ -16,13 +16,13 @@ function __chain(obj,field: string, ...restOfFields: string[]) {
   return undefined
 }
 
-function addNgRow(name: string, obj_name: string, ...args:any[]) {
+function addNgRow(name: string, obj_name: string, ...args: any[]) {
   // template inside binding to the current element
   // that contains the provided obj
   console.dir(args)
   let template = new fl_element("template", "", [`let-${obj_name}="rowData"`, `pTemplate`, `type="body"`])
 
-  args.forEach(arg=>template.add(arg))
+  args.forEach(arg => template.add(arg))
 
   return new fl_element(
     "p-column", "", [`"header"="${name}"`, `'[style]'="{'width':'0px'}"`]
@@ -40,9 +40,9 @@ export class ElementsList extends fl_m.ListFromModel {
     let editButtonVisible = !!__chain(config[env.g_conf_element], "crud", "edit")
     let viewButtonVisible = !!__chain(config[env.g_conf_element], "crud", "view")
 
-    if(config.config.usePrimeNg) {
+    if (config.config.usePrimeNg) {
       // create a table from headers
-      table = new fl_p.PrimeTable(`${env.g_element_table}`,'',[],headers)
+      table = new fl_p.PrimeTable(`${env.g_element_table}`, '', [], headers)
 
       let buttons = []
 
@@ -53,16 +53,16 @@ export class ElementsList extends fl_m.ListFromModel {
 
       // add edit button if necessary
       if (editButtonVisible || viewButtonVisible) {
-        table.add(addNgRow.call(this,'',env.g_local_object,...buttons))
+        table.add(addNgRow.call(this, '', env.g_local_object, ...buttons))
       }
     }
     else {
-      if(editButtonVisible) {
-        headers.push({name:'Edit',field:'edit'})
+      if (editButtonVisible) {
+        headers.push({ name: 'Edit', field: 'edit' })
       }
 
       table = new fl_c.Table('table', [`*ngIf="${env.g_element_table}?.length"`]).
-        setHeaders(headers.map(header=>header.name)).
+        setHeaders(headers.map(header => header.name)).
         addRow([`${env.g_angular_detail_comp}Detail`, `*ngFor="let i of ${env.g_element_table}"`, `'[${env.g_local_object}]'='i'`])
     }
 
@@ -273,22 +273,22 @@ export class TimelineView extends fl_c.Box {
     super()
     let timeline = new fl_tl.Timeline()
 
-    timeline.AddLabel('green',[`{{currentDate()}}`])
+    timeline.AddLabel('green', [`{{currentDate()}}`])
 
     let input = timeline.AddItem('envelope', "blue").addContent()
 
     input.addHeader("", 'Add a note')
-    .addBody([
-      new fl_m.ModelInput('note'),
-      fl_m.submitButton([`'(click)'="onSubmitNote()"`])
-    ])
+      .addBody([
+        new fl_m.ModelInput('note'),
+        fl_m.submitButton([`'(click)'="onSubmitNote()"`])
+      ])
 
     timeline.AddItem('envelope', "blue", "", [`*ngFor="let event of ${env.g_local_object}.events"`]).addContent()
-              .addHeader("{{date(event.date)}}", 'titel')
-              .addBody("{{event.post}}")
-              .addFooter(new fl_m.DeleteButton())
+      .addHeader("{{date(event.date)}}", 'titel')
+      .addBody("{{event.post}}")
+      .addFooter(new fl_m.DeleteButton())
 
-    timeline.AddIcon("circle","gray")
+    timeline.AddIcon("circle", "gray")
 
     this.add(new fl_c.BoxBody("box-profile", [], timeline))
   }

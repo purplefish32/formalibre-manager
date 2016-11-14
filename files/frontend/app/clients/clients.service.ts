@@ -13,15 +13,15 @@ import {SlimLoadingBarComponent, SlimLoadingBarService} from 'ng2-slim-loading-b
 import { EventsService } from '../events/events.service';
 import { Event } from '../events/event';
 
-function clone(obj){
-    if(obj == null || typeof(obj) != 'object')
-        return obj;
+function clone(obj) {
+  if (obj == null || typeof (obj) != 'object')
+    return obj;
 
-    var temp = new obj.constructor();
-    for(var key in obj)
-        temp[key] = clone(obj[key]);
+  var temp = new obj.constructor();
+  for (var key in obj)
+    temp[key] = clone(obj[key]);
 
-    return temp;
+  return temp;
 }
 
 @Injectable()
@@ -58,7 +58,7 @@ export class ClientsService {
     return published
   }
 
-  get(url:string):Observable<any> {
+  get(url: string): Observable<any> {
     this.onRequestStart()
     return this.onRequestEnd(
       this.http.get(url)
@@ -101,7 +101,7 @@ export class ClientsService {
 
   update(client: Client): Observable<Response> {
     const url = `${this.clientsUrl}/${client.id}`;
-    let dataToSend = clone( client )
+    let dataToSend = clone(client)
     delete dataToSend.id
     this.onRequestStart()
     return this.onRequestEnd(

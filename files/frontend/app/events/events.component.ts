@@ -3,7 +3,7 @@ import { EventDetailComponent } from './event-detail.component'
 import { Event } from './event'
 import { EventsService } from './events.service'
 import 'rxjs/add/operator/toPromise';
-import {DataTableModule,SharedModule} from 'primeng/primeng';
+import {DataTableModule, SharedModule} from 'primeng/primeng';
 
 @Component({
   selector: 'events',
