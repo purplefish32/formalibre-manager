@@ -207,6 +207,9 @@ class ClientController extends FOSRestController
         $client = $this->get('guzzle.client.api');
         $response = $client->request('DELETE', '/clients/'.$id, ['json' => []]);
 
+        $clientNode = $this->get('guzzle.client.node');
+        $responseNode = $clientNode->delete('/events/ressource/'.$id);
+    
         return json_decode($response->getBody(), true);
     }
 }
