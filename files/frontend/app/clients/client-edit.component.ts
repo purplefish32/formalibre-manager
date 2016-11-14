@@ -33,13 +33,13 @@ export class ClientEditComponent implements OnInit {
 
   onSubmit() {
     if(this.client.id) {
-      this.clients.update(this.client).toPromise().then(client=>this.router.navigate(['clients']),()=>this.router.navigate(['clients']));
-        (response) => {
+      this.clients.update(this.client).toPromise().then(
+        response => {
           this.router.navigate(['client', this.client.id])
         }
-      );
+      )
     } else {
-      this.clients.create(this.client).toPromise().then(client=>this.router.navigate(['clients']),()=>this.router.navigate(['clients']));
+      this.clients.create(this.client).toPromise().then(
         response => {
           this.router.navigate(['client', response.id])
         }
