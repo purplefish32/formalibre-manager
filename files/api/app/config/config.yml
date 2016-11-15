@@ -66,9 +66,14 @@ fos_rest:
 guzzle:
     clients:
         api:
-            base_url: "backend"
+            base_url: "http://backend"
             headers:
                 Accept: "application/json"
+        node:
+            base_url: "http://backend_node"
+            headers:
+                Accept: "application/json"
+
 
 nelmio_cors:
     paths:

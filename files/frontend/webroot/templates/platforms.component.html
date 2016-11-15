@@ -13,29 +13,28 @@
         <button class="btn btn-primary" routerLink="/platform/new">Add new Platform</button>
       </div>
       <div class="box">
-        <div class="box-body">
-          <table class="table" *ngIf="platforms?.length">
-            <tr>
-              <th>Name</th>
-              <th>Subdomain</th>
-              <th>Description</th>
-              <th>Plan</th>
-              <th>End date</th>
-              <th>Max users</th>
-              <th>Max disk space</th>
-              <th>Contact</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Edit</th>
-            </tr>
-            <tr PlatformDetail="PlatformDetail" *ngFor="let i of platforms" [platform]="i"></tr>
-          </table>
-          <div class="callout callout-info" *ngIf="platforms && !platforms?.length">
-            <p>There are no platforms yet. Feel free to add your first platform using the "Add new Platform" button.</p>
-          </div>
-          <div class="callout callout-info" *ngIf="!platforms">
-            <p>Loading...</p>
-          </div>
+        <p-dataTable [value]="platforms">
+          <p-column field="name" header="Name" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+          <p-column field="subdomain" header="Subdomain" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+          <p-column field="description" header="Description" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+          <p-column field="plan" header="Plan" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+          <p-column field="end_date" header="End date" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+          <p-column field="max_users" header="Max users" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+          <p-column field="max_disk_space" header="Max disk space" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+          <p-column field="contact_name" header="Contact" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+          <p-column field="contact_email" header="Email" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+          <p-column field="contact_phone" header="Phone" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+          <p-column header="" [style]="{'width':'0px'}">
+            <template let-platform="rowData" pTemplate="pTemplate" type="body">
+              <button class="btn btn-default btn-xs" routerLink="/platform/edit/{{platform.id}}" *ngIf="platform.hasOwnProperty('id')"><i class="fa fa-edit"></i></button>
+            </template>
+          </p-column>
+        </p-dataTable>
+        <div class="callout callout-info" *ngIf="platforms && !platforms?.length">
+          <p>There are no platforms yet. Feel free to add your first platform using the "Add new Platform" button.</p>
+        </div>
+        <div class="callout callout-info" *ngIf="!platforms">
+          <p>Loading...</p>
         </div>
       </div>
       <div class="box-footer">

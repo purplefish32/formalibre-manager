@@ -40,13 +40,13 @@ class ClientController extends FOSRestController
         $start = null == $offset ? 0 : $offset + 1;
         $limit = $paramFetcher->get('limit');
         $client = $this->get('guzzle.client.api');
-        $response = $client->get('clients?limit='.$limit.'&offset='.$offset);
+        $response = $client->get('/clients?limit='.$limit.'&offset='.$offset);
 
         return json_decode($response->getBody(), true);
     }
 
     /**
-     * Get a single server.
+     * Get a single client.
      *
      * @ApiDoc(
      *   output = "ClientBundle\Entity\Client",
@@ -59,7 +59,7 @@ class ClientController extends FOSRestController
      * @Annotations\View()
      *
      * @param Request $request the request object
-     * @param int     $id      the server id
+     * @param int     $id      the client id
      *
      * @return array
      *
@@ -68,13 +68,48 @@ class ClientController extends FOSRestController
     public function getClientAction(Request $request, $id)
     {
         $client = $this->get('guzzle.client.api');
-        $response = $client->get('clients/'.$id);
+        $response = $client->get('/clients/'.$id);
 
         return json_decode($response->getBody(), true);
     }
 
     /**
-     * Creates a new server from the submitted data.
+     * Get a single client history.
+     *
+     * @ApiDoc(
+     *   output = "ClientBundle\Entity\Client",
+     *   statusCodes = {
+     *     200 = "Returned when successful",
+     *     404 = "Returned when the note is not found"
+     *   }
+     * )
+     *
+     * @Annotations\View()
+     *
+     * @param Request $request the request object
+     * @param int     $id      the client id
+     *
+     * @return array
+     *
+     * @throws NotFoundHttpException when note not exist
+     */
+    public function getClientHistoryAction(Request $request, $id)
+    {
+        $client = $this->get('guzzle.client.api');
+        $responseApi = $client->get('/clients/'.$id);
+        $api = json_decode($responseApi->getBody(),true);
+
+        $clientNode = $this->get('guzzle.client.node');
+        $responseNode = $clientNode->get('/events/ressource/'.$id);
+        $node = json_decode($responseNode->getBody(),true);
+
+        $api['events'] = $node;
+
+        return $api;
+    }
+
+    /**
+     * Creates a new client from the submitted data.
      *
      * @ApiDoc(
      *   resource = true,
@@ -96,7 +131,7 @@ class ClientController extends FOSRestController
         $client = $this->get('guzzle.client.api');
         $responseBackend = $client->request(
         'POST',
-        'clients',
+        '/clients',
         [
           'json' => $clients,
         ]
@@ -119,7 +154,7 @@ class ClientController extends FOSRestController
     }
 
     /**
-     * Update existing server from the submitted data or create a new server at a specific location.
+     * Update existing client from the submitted data or create a new client at a specific location.
      *
      * @ApiDoc(
      *   resource = true,
@@ -136,7 +171,7 @@ class ClientController extends FOSRestController
      *
      * @return FormTypeInterface|RouteRedirectView
      *
-     * @throws NotFoundHttpException when server not exist
+     * @throws NotFoundHttpException when client not exist
      */
     public function putClientsAction(Request $request, $id)
     {
@@ -144,7 +179,7 @@ class ClientController extends FOSRestController
         $client = $this->get('guzzle.client.api');
         $response = $client->request(
         'PUT',
-        'clients/'.$id,
+        '/clients/'.$id,
         [
           'json' => $clients,
         ]
@@ -155,7 +190,7 @@ class ClientController extends FOSRestController
     }
 
     /**
-     * Removes a server.
+     * Removes a client.
      *
      * @ApiDoc(
      *   resource = true,
@@ -165,13 +200,16 @@ class ClientController extends FOSRestController
      * )
      *
      * @param Request $request the request object
-     * @param int     $id      the server id
+     * @param int     $id      the client id
      */
     public function deleteClientsAction(Request $request, $id)
     {
         $client = $this->get('guzzle.client.api');
-        $response = $client->request('DELETE', 'clients/'.$id, ['json' => []]);
+        $response = $client->request('DELETE', '/clients/'.$id, ['json' => []]);
 
+        $clientNode = $this->get('guzzle.client.node');
+        $responseNode = $clientNode->delete('/events/ressource/'.$id);
+    
         return json_decode($response->getBody(), true);
     }
 }

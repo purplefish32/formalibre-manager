@@ -25,6 +25,10 @@
       'rxjs': 'npm:rxjs',
       'angular2-in-memory-web-api': 'npm:angular2-in-memory-web-api',
       'ng2-slim-loading-bar': 'npm:ng2-slim-loading-bar',
+      'primeng': 'node_modules/primeng',
+      'moment': 'node_modules/moment',
+      'github': 'node_modules/github',
+      "ng2-popover": "node_modules/ng2-popover"
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -43,6 +47,21 @@
         main: 'index.js',
         defaultExtension: 'js'
       },
+      'moment': {
+        main: './moment.js',
+        defaultExtension: 'js'
+      },
+      'primeng': {
+        defaultExtension: 'js'
+      },
+      'github': {
+        main: './index.js',
+        defaultExtension: 'js'
+      },
+      "ng2-popover": {
+        "main": "index.js",
+        "defaultExtension": "js"
+      }
     }
   });
 })(this);

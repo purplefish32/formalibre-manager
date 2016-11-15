@@ -1,18 +1,79 @@
-import {fl_container, fl_element, fl_jadeRenderer, fl_text} from './fl_comp'
+import {fl_container, fl_element, fl_text} from './fl_comp'
 import * as fl_c from './fl_common'
 import * as fl_m from './fl_manager_comp'
+import * as fl_p from './fl_ng_prime'
+import * as fl_tl from './fl_timeline'
 
+function __chain(obj, field: string, ...restOfFields: string[]) {
+  if (obj.hasOwnProperty(field)) {
+    if (restOfFields.length) {
+      restOfFields.unshift(obj[field])
+      return __chain.apply(null, restOfFields)
+    } else {
+      return obj[field]
+    }
+  }
+  return undefined
+}
+
+function addNgRow(name: string, obj_name: string, ...args: any[]) {
+  // template inside binding to the current element
+  // that contains the provided obj
+  console.dir(args)
+  let template = new fl_element("template", "", [`let-${obj_name}="rowData"`, `pTemplate`, `type="body"`])
+
+  args.forEach(arg => template.add(arg))
+
+  return new fl_element(
+    "p-column", "", [`"header"="${name}"`, `'[style]'="{'width':'0px'}"`]
+  ).add(template)
+}
 
 export class ElementsList extends fl_m.ListFromModel {
   constructor(config, env) {
     super(config[env.g_conf_element].model)
 
-    let headers = this.getHeaders();
-    headers.push('Edit')
+    let table = null;
 
-    let table = new fl_c.Table('table', [`*ngIf="${env.g_element_table}?.length"`]).
-      setHeaders(headers).
-      addRow([`${env.g_angular_detail_comp}Detail`, `*ngFor="let i of ${env.g_element_table}"`, `'[${env.g_local_object}]'='i'`])
+    let headers = this.getPrimeHeaders();
+
+    let elemConfig = config[env.g_conf_element]
+
+    elemConfig.model = elemConfig.model.map(elem =>{
+      if(!elem.hasOwnProperty('filter')) {
+        elem.filter = elemConfig.hasOwnProperty('filter') && elemConfig['filter']
+      }
+      return elem
+    })
+
+    let editButtonVisible = !!__chain(config[env.g_conf_element], "crud", "edit")
+    let viewButtonVisible = !!__chain(config[env.g_conf_element], "crud", "view")
+
+    if (config.config.usePrimeNg) {
+      // create a table from headers
+      table = new fl_p.PrimeTable(`${env.g_element_table}`, '', [], headers)
+
+      let buttons = []
+
+      if (editButtonVisible)
+        buttons.push(fl_m.editButton(env.g_local_object))
+      if (viewButtonVisible)
+        buttons.push(fl_m.viewButton(env.g_local_object))
+
+      // add edit button if necessary
+      if (editButtonVisible || viewButtonVisible) {
+        table.add(addNgRow.call(this, '', env.g_local_object, ...buttons))
+      }
+    }
+    else {
+      if (editButtonVisible) {
+        headers.push({ name: 'Edit', field: 'edit' })
+      }
+
+      table = new fl_c.Table('table', [`*ngIf="${env.g_element_table}?.length"`]).
+        setHeaders(headers.map(header => header.name)).
+        addRow([`${env.g_angular_detail_comp}Detail`, `*ngFor="let i of ${env.g_element_table}"`, `'[${env.g_local_object}]'='i'`])
+    }
 
     let menuBar = new fl_c.BoxFooter().add(
       new fl_m.Button([`routerLink="${env.g_edit_route}"`], env.g_new_button_title))
@@ -61,9 +122,8 @@ export class ElementsEdit extends fl_m.ListFromModel {
     let fieldSet = new fl_element('fieldset')
       .add(new fl_c.Legend(`${env.g_title_singular} details`))
 
-    let formContainer = new fl_c.Box()
-      .add(fieldSet)
-
+    let formBody = new fl_c.BoxBody("", fieldSet)
+    let formContainer = new fl_c.Box("", formBody)
 
     let capitalize = s =>
       s.toLowerCase().replace(/\b./g, a => a.toUpperCase())
@@ -71,11 +131,11 @@ export class ElementsEdit extends fl_m.ListFromModel {
     let menuBar = new fl_c.BoxFooter()
       .add(fl_m.submitButton([`'(click)'="onSubmit()"`, `'[disabled]'="!elementForm.form.valid"`]))
       .add(new fl_c.Span('', [`'[hidden]'="!${env.g_local_object} || !${env.g_local_object}.id"`])
-        .add(fl_m.deleteButton([`'(click)'="onDelete()"`]))
+        .add(new fl_m.DeleteButton())
       )
 
-
-    config[env.g_conf_element].model.filter(element => !element.index)
+    config[env.g_conf_element].model
+      .filter(element => !element.index && !__chain(element, "crud", "edit"))
       .forEach(function(element) {
         if (!element.name)
           element.name = capitalize(element.field)
@@ -109,7 +169,7 @@ export class ElementsEdit extends fl_m.ListFromModel {
 
         }
         else
-          formGroup.add(new fl_m.ModelInput(env.g_local_object, element.field, attr))
+          formGroup.add(new fl_m.ModelInput([env.g_local_object, element.field], attr))
 
         fieldSet.add(formGroup)
 
@@ -135,6 +195,137 @@ export class ElementEditPage extends fl_m.MainCol {
           isactive: true
         }])
     ).add(new ElementsEdit(config, env))
+  }
+
+  tohtml(renderer): string {
+    return this.render(renderer)
+  }
+}
+
+export class ElementsView extends fl_m.ListFromModel {
+  constructor(config, env) {
+    super(config[env.g_conf_element].model)
+
+    let boxDetail = new fl_c.Box("",
+      new fl_c.Legend(`${env.g_title_singular} Details`)
+    )
+
+    let capitalize = s =>
+      s.toLowerCase().replace(/\b./g, a => a.toUpperCase())
+
+    let menuBar = new fl_c.BoxFooter()
+      //.add(fl_m.editButton([`'(click)'="onSubmit()"`, `'[disabled]'="!elementForm.form.valid"`]))
+      .add(new fl_c.Span('', [`'[hidden]'="!${env.g_local_object} || !${env.g_local_object}.id"`])
+        .add(fl_m.deleteButton([`'(click)'="onDelete()"`]))
+      )
+
+    config[env.g_conf_element].model
+      .filter(element => !element.index)
+      .forEach(function(element) {
+        if (!element.name)
+          element.name = capitalize(element.field)
+
+        boxDetail.add(new fl_m.Label(element.name, []))
+
+        if (element.description)
+          boxDetail.add(new fl_text(" " + element.description))
+
+        boxDetail.add(new fl_m.ModelText(env.g_local_object, element.field))
+      })
+
+    let boxHistory = new fl_c.Box()
+
+    this.add([
+      boxDetail,
+      menuBar])
+  }
+}
+
+
+export class ProfileDesc extends fl_c.Box {
+  constructor(config, env) {
+    super("box-primary")
+
+    let capitalize = s =>
+      s.toLowerCase().replace(/\b./g, a => a.toUpperCase())
+
+    this.add(new fl_c.BoxBody("box-profile")
+      .add(new fl_c.Img(
+        "profile-user-img img-responsive img-circle",
+        ["src='https://avatars1.githubusercontent.com/u/5183366?v=3&s=120'"]))
+      .add("h1", "profile-username text-center", [], env.f('firstname') + " " + env.f('lastname'))
+      .add(new fl_m.ListGroupUnbordered("", [], config[env.g_conf_element].model
+        .filter(element => !element.index)
+        .map(function(element) {
+          if (!element.name)
+            element.name = capitalize(element.field)
+
+          let item = new fl_m.ListGroupItem("", [], [
+            new fl_c.B("", [], `${element.name} : `),
+            new fl_text(env.f(element.field))
+          ])
+
+          return item
+        })))
+      .add(new fl_c.BoxFooter("", [
+        new fl_m.EditButton("", env.g_local_object),
+        new fl_m.DeleteButton()
+      ])
+      )
+    )
+  }
+}
+
+
+export class TimelineView extends fl_c.Box {
+  constructor(config, env) {
+    super()
+    let timeline = new fl_tl.Timeline()
+
+    timeline.AddLabel('green', [`{{currentDate()}}`])
+
+    let input = timeline.AddItem('envelope', "blue").addContent()
+
+    input.addHeader("", 'Add a note')
+      .addBody([
+        new fl_m.ModelInput('note'),
+        fl_m.submitButton([`'(click)'="onSubmitNote()"`])
+      ])
+
+    timeline.AddItem('envelope', "blue", "", [`*ngFor="let event of ${env.g_local_object}.events"`]).addContent()
+      .addHeader("{{date(event.date)}}", 'TBD Title')
+      .addBody("{{event.post}}")
+      .addFooter(['TBD Some Random footer content',fl_m.deleteButton("")])
+
+    timeline.AddIcon("circle", "gray")
+
+    this.add(new fl_c.BoxBody("box-profile", [], timeline))
+  }
+}
+
+export class ProfileView extends fl_m.ListFromModel {
+  constructor(config, env) {
+    super(config[env.g_conf_element].model, [
+      new fl_c.Layout('md', 3, "", [], new ProfileDesc(config, env)),
+      new fl_c.Layout('md', 9, "", [], new TimelineView(config, env))
+    ])
+  }
+}
+
+export class ElementViewPage extends fl_m.MainCol {
+  constructor(config, env) {
+    super();
+
+    this.add(new fl_m.PageHeaders(
+      `${env.f('firstname')} ${env.f('lastname')}`, [{
+        name: env.g_title,
+        isactive: false,
+        link: env.g_list_route
+      }, {
+          name: 'View ' + env.g_title_singular,
+          isactive: true
+        }])
+    ).add(new ProfileView(config, env))
   }
 
   tohtml(renderer): string {

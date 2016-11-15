@@ -1,5 +1,12 @@
 {
+  "config": {
+    "usePrimeNg": true
+  },
   "servers": {
+    "crud": {
+      "edit": "true"
+    },
+    "filter": true,
     "model": [{
       "index": true,
       "field": "id"
@@ -41,6 +48,10 @@
     }]
   },
   "platforms": {
+    "crud": {
+      "edit": "true"
+    },
+    "filter": true,
     "model": [{
       "index": true,
       "field": "id"
@@ -83,10 +94,15 @@
     }]
   },
   "clients": {
+    "crud": {
+      "edit": "true",
+      "view": "true"
+    },
+    "filter": true,
     "model": [{
       "index": true,
       "field": "id"
-    },{
+    }, {
       "field": "firstname",
       "required": "true",
       "description": "(Client name)"
@@ -104,6 +120,29 @@
       "required": "true"
     }, {
       "field": "address",
+      "required": "true"
+    }]
+  },
+  "events": {
+    "filter": true,
+    "model": [{
+      "index": "true",
+      "field": "id"
+    }, {
+      "field": "ressource_id",
+      "name": "Ressource ID",
+      "required": "true",
+      "type": "string",
+      "required": "true"
+    }, {
+      "field": "date",
+      "type": "date",
+      "required": "true",
+      "crud": {
+        "edit": "false"
+      }
+    }, {
+      "field": "post",
       "required": "true"
     }]
   }

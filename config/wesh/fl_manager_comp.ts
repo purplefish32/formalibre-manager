@@ -1,7 +1,6 @@
 import * as fl_c from './fl_common'
 import * as fl_bc from './fl_breadcrumb'
-import * as fl_m from './fl_manager_comp'
-import {fl_container, fl_element, fl_jadeRenderer} from './fl_comp'
+import {fl_container, fl_element, fl_renderable, ElementData} from './fl_comp'
 
 export function getFields(type, data) {
   return data.model
@@ -22,8 +21,8 @@ export class PageHeaders extends fl_c.Section {
 
 export class ListFromModel extends fl_c.SectionContent {
   protected model: any;
-  constructor(model) {
-    super();
+  constructor(model, data: ElementData = []) {
+    super(data);
     this.model = model;
   }
 
@@ -39,6 +38,28 @@ export class ListFromModel extends fl_c.SectionContent {
     return list;
   }
 
+  getPrimeHeaders() {
+    let list = this.model
+      .filter(element => !element.index)
+      .map(function(element) {
+        if (!element.name)
+          element.name = element.field.toLowerCase().replace(/\b./g, a => a.toUpperCase())
+        return element
+      })
+    return list;
+  }
+
+}
+
+export function viewButton(type) {
+  let linkAttr = [
+    `routerLink="/${type}/{{${type}.id}}"`,
+    `*ngIf="${type}.hasOwnProperty('id')"`
+  ]
+
+  let link = new Button(linkAttr, "", "eye", "btn-default btn-xs")
+
+  return link
 }
 
 export function editButton(type) {
@@ -47,19 +68,19 @@ export function editButton(type) {
     `*ngIf="${type}.hasOwnProperty('id')"`
   ]
 
-  let link = new fl_m.Button(linkAttr, "", "edit", "btn-default btn-xs")
+  let link = new Button(linkAttr, "", "edit", "btn-default btn-xs")
 
   return link
 }
 
 export function deleteButton(linkAttr) {
-  let link = new fl_m.Button(linkAttr, "Delete", null, "btn-danger")
+  let link = new Button(linkAttr, "Delete", null, "btn-danger")
 
   return link
 }
 
 export function submitButton(linkAttr) {
-  let link = new fl_m.Button(linkAttr, "Submit")
+  let link = new Button(linkAttr, "Submit")
 
   return link
 }
@@ -70,12 +91,18 @@ export class ListDetail extends fl_container {
 
     this.details.forEach(field => this.add(new fl_c.TableCol('', [], field)))
 
-    this.add(new fl_c.TableCol().add(fl_m.editButton(type)))
+    this.add(new fl_c.TableCol().add(editButton(type)))
   }
 }
 
 export class ModelInput extends fl_c.ModelInput {
-  constructor(model, name, attr) {
+  constructor(model, attr = []) {
+    super(model, "", attr)
+  }
+}
+
+export class ModelText extends fl_c.ModelText {
+  constructor(model, name, attr = []) {
     super(model, name, "", attr)
   }
 }
@@ -102,10 +129,80 @@ export class Button extends fl_c.Button {
   }
 }
 
+export class EditButton extends Button {
+  constructor(classes = "", type: string) {
+    let linkAttr = [
+      `routerLink="/${type}/edit/{{${type}.id}}"`,
+      `*ngIf="${type}.hasOwnProperty('id')"`
+    ]
+    super(linkAttr, "", "pencil", `btn-primary ${classes}`)
+  }
+}
+
+export class PopoverContent extends fl_element {
+  constructor(id, title, content) {
+    super('popover-content', '', [`#${id}=''`, `title= "${title}"`, `placement= "bottom"`, `'[animation]' = "true"`, `'[closeOnClickOutside]' = "true"`], content)
+  }
+}
+
+export class RawDeleteButton extends Button {
+  constructor(classes = "") {
+    let linkAttr = [
+      `'(click)'="onDelete()"`
+    ]
+
+    super(linkAttr, "", "trash-o", `btn-danger ${classes}`)
+  }
+}
+
+export class DeleteButton extends fl_container {
+  private static counter = 0
+  constructor(classes = "") {
+    super()
+    DeleteButton.counter++
+
+    let Id = "DeleteButton"+DeleteButton.counter.toString(36)
+
+    let popoverContent = new PopoverContent(Id, 'Sure to delete ?', [
+      new fl_c.B('', [],
+        new fl_c.Span('', `style="color: #C21F39"`, 'Delete')
+      ),
+      new RawDeleteButton()
+    ])
+
+    let fakeDeleteButton = new Button([`'[popover]' = "${Id}"`], "", "trash-o", `btn-danger`)
+
+    this.add([popoverContent, fakeDeleteButton])
+  }
+}
+
 export class MainCol extends fl_c.MainCol {
   constructor() {
     super()
     this.addSelf(new ProgressLoader)
+  }
+}
+
+export class ListGroup extends fl_c.Ul {
+  constructor(classes = "", attrs = [], data: ElementData = null) {
+    super(`list-group ${classes}`, attrs, data)
+  }
+}
+
+export class ListGroupUnbordered extends ListGroup {
+  constructor(classes: string | fl_element | fl_element[] = "",
+    attrs = [], data: ElementData = null) {
+    if (typeof classes != 'string') {
+      data = classes
+      classes = ""
+    }
+    super(`list-group-unbordered ${classes}`, attrs, data)
+  }
+}
+
+export class ListGroupItem extends fl_c.Li {
+  constructor(classes = "", attrs = [], data: ElementData = null) {
+    super(`list-group-item ${classes}`, attrs, data)
   }
 }
 

@@ -1,0 +1,12 @@
+{
+  "config": {
+    "special_char": "$",
+    "placeholder_short": "<!--#",
+    "placeholder_short_end": "-->",
+    "placeholder_long1": "<!--",
+    "placeholder_long2": "-->",
+    "tagfile": "tag_html.coffee",
+    "connector": "db.coffee",
+    "data_file": "model.json"
+  }
+}

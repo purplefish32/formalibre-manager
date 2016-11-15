@@ -13,25 +13,25 @@
         <button class="btn btn-primary" routerLink="/client/new">Add new Client</button>
       </div>
       <div class="box">
-        <div class="box-body">
-          <table class="table" *ngIf="clients?.length">
-            <tr>
-              <th>Firstname</th>
-              <th>Lastname</th>
-              <th>Organisation</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Address</th>
-              <th>Edit</th>
-            </tr>
-            <tr ClientDetail="ClientDetail" *ngFor="let i of clients" [client]="i"></tr>
-          </table>
-          <div class="callout callout-info" *ngIf="clients && !clients?.length">
-            <p>There are no clients yet. Feel free to add your first client using the "Add new Client" button.</p>
-          </div>
-          <div class="callout callout-info" *ngIf="!clients">
-            <p>Loading...</p>
-          </div>
+        <p-dataTable [value]="clients">
+          <p-column field="firstname" header="Firstname" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+          <p-column field="lastname" header="Lastname" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+          <p-column field="organisation" header="Organisation" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+          <p-column field="email" header="Email" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+          <p-column field="phone" header="Phone" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+          <p-column field="address" header="Address" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+          <p-column header="" [style]="{'width':'0px'}">
+            <template let-client="rowData" pTemplate="pTemplate" type="body">
+              <button class="btn btn-default btn-xs" routerLink="/client/edit/{{client.id}}" *ngIf="client.hasOwnProperty('id')"><i class="fa fa-edit"></i></button>
+              <button class="btn btn-default btn-xs" routerLink="/client/{{client.id}}" *ngIf="client.hasOwnProperty('id')"><i class="fa fa-eye"></i></button>
+            </template>
+          </p-column>
+        </p-dataTable>
+        <div class="callout callout-info" *ngIf="clients && !clients?.length">
+          <p>There are no clients yet. Feel free to add your first client using the "Add new Client" button.</p>
+        </div>
+        <div class="callout callout-info" *ngIf="!clients">
+          <p>Loading...</p>
         </div>
       </div>
       <div class="box-footer">

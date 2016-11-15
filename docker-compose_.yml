@@ -1,0 +1,350 @@
+version: '2'
+
+#Tag of services to start
+run:
+  #- main
+
+#Common variables to use as template
+#For example "<%=http%>" anywhere in a service or in a tags_params section
+variables:
+  http: 80
+
+
+# List of parameters to be added to service with specific tags
+# common subsection is added to every services
+tags_params:
+  common:
+    environment:
+      TEST: test
+  http_port:
+    ports:
+      - '<%=http%>:<%=http%>'
+  npm_service:
+    image: treyjones/npm:latest
+  ts_service:
+    image: milanaleksic/typescript
+
+#soon tobe done
+#pass params to tags_params
+# for instance
+#  npm_service(mnt_point):
+#    image: treyjones/npm:latest
+#    volume:
+#       - ${mnt_point}:/npm
+
+#service import from other files
+# for instance
+# import:
+#     - lb_service.yml(<%=http%>)
+
+
+
+services:
+  lb:
+    restart: always
+    image: 'dockercloud/haproxy:latest'
+    ports:
+      # Carbon
+      - '2003:2003'
+      - '2004:2004'
+      - '7002:7002'
+
+      # Logstash
+      - '5044:5044'
+
+      # Elasticsearch
+      - '9200:9200'
+      - '9300:9300'
+
+      #mongodb
+      - '27017:27017'
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    links:
+      - frontend
+      - api
+      - adminer
+      - carbon
+      - graphite
+      - grafana
+      - kibana
+      - shinken
+      - logstash
+      - db_mongo
+    tags:
+      - main
+      - lb
+      - http_port
+
+  adminer:
+    restart: always
+    image: clue/adminer
+    links:
+      - db
+    environment:
+      VIRTUAL_HOST: http://adminer.manager.loc
+    tags:
+      - debug
+
+  grafana:
+    restart: always
+    image: grafana/grafana
+    links:
+      - graphite
+    environment:
+      VIRTUAL_HOST: http://grafana.manager.loc
+    volumes:
+      - grafana:/var/lib/grafana
+    tags:
+      - graph
+
+  carbon:
+    restart: always
+    build: docker/carbon
+    volumes:
+      - whisper:/opt/graphite/storage/whisper/:rw
+    environment:
+      TCP_PORTS: "2003, 2004, 7002"
+      VIRTUAL_HOST: http://carbon.manager.loc
+    tags:
+      - graph
+
+  graphite:
+    restart: always
+    build: docker/graphite
+    volumes:
+      - whisper:/opt/graphite/storage/whisper/:rw
+    links:
+      - carbon
+    environment:
+      VIRTUAL_HOST: http://graphite.manager.loc
+    tags:
+      - graph
+
+  db:
+    restart: always
+    image: mysql:5.7
+    volumes:
+      - mysql:/var/lib/mysql
+    environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: db
+        MYSQL_USER: user
+        MYSQL_PASSWORD: pass
+    tags:
+      - main
+      - db
+
+  #FRONTEND ANGULAR START
+  frontend:
+    restart: always
+    image: php:7-apache
+    volumes:
+      - ./files/frontend/webroot:/var/www/html/
+      - ./files/frontend/node_modules:/var/www/html/node_modules
+    links:
+      - api
+      - frontend_tsc
+    environment:
+      VIRTUAL_HOST: http://manager.loc
+      API_URL: http://api.manager.loc/app_dev.php
+    tags:
+      - main
+      - frontend
+
+  frontend_npm:
+    volumes:
+      - ./files/frontend:/npm
+    tags:
+      - main
+      - frontend
+      - npm_service
+
+
+  frontend_tsc:
+    volumes:
+      - ./files/frontend/:/home/developer/workspace
+    command: tsc -p tsconfig.json
+    links:
+      - frontend_npm
+    tags:
+      - main
+      - frontend
+      - ts_service
+  #/FRONTEND ANGULAR START
+
+  api:
+    restart: always
+    image: formalibre/manager-api
+    volumes:
+      - ./files/api/:/var/www/html/:rw
+      - api_logs:/var/www/html/var/logs/:rw
+      - api_cache:/var/www/html/var/cache/:rw
+      - api_sessions:/var/www/html/var/sessions/:rw
+    links:
+      - backend
+      - backend_node
+    environment:
+      VIRTUAL_HOST: http://api.manager.loc
+    tags:
+      - main
+      - api
+
+  # Symfony backend
+  backend:
+    restart: always
+    image: formalibre/manager-backend
+    volumes:
+      - ./files/backend/:/var/www/html/:rw
+      - backend_logs:/var/www/html/var/logs/:rw
+      - backend_cache:/var/www/html/var/cache/:rw
+      - backend_sessions:/var/www/html/var/sessions/:rw
+    links:
+      - db
+    ports:
+      - 88:80 # This should not be exposed in production
+    environment:
+        SYMFONY__DATABASE_NAME: db
+        SYMFONY__DATABASE_USER: user
+        SYMFONY__DATABASE_PASSWORD: pass
+    tags:
+      - main
+      - backend
+
+  # Node backend (events)
+  db_mongo:
+    restart: always
+    image: mongo
+    volumes:
+      - mongo:/data/db/:rw
+    tags:
+      - main
+      - db
+
+  backend_node:
+    restart: always
+    image: node:onbuild
+    volumes:
+      - ./files/backend_node/:/usr/src/app/:rw
+    links:
+      - db_mongo
+    ports:
+      - 89:80 # This should not be exposed in production
+    tags:
+      - main
+      - backend
+
+  backend_node_npm:
+    volumes:
+      - ./files/backend_node:/npm
+    tags:
+      - main
+      - backend
+      - npm_service
+
+  tsc_node:
+    image: milanaleksic/typescript
+    volumes:
+      - ./files/backend_node/:/home/developer/workspace
+    command: tsc -p tsconfig.json
+    tags:
+      - main
+      - backend
+
+### Configuration
+  config_npm:
+    image: treyjones/npm:latest
+    volumes:
+      - ./config/wesh:/npm
+    command: npm install
+    tags:
+      - config
+      - npm_service
+
+  config_tsc:
+    volumes:
+      - ./config/wesh/:/home/developer/workspace
+    command: tsc -p tsconfig.json
+    links:
+      - config_npm
+    tags:
+      - config
+      - ts_service
+
+  config_nodemon:
+    image: tumbumer/alpine-nodemon
+    volumes:
+      - .:/app
+    links:
+      - config_tsc
+    command: nodemon ./config/wesh/app/main.js -w ./config
+    tags:
+      - config
+
+#ELK Stack
+  # Elasticsearch
+  es:
+    restart: always
+    image: elasticsearch
+    command: elasticsearch -Des.network.host=0.0.0.0
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+    expose:
+      - "9200"
+      - "9300"
+    environment:
+      TCP_PORTS: "9200, 9300"
+    tags:
+      - graph
+      - db
+
+  # Kibana
+  kibana:
+    restart: always
+    build: ./docker/kibana
+    links:
+      - es
+    environment:
+      # TCP_PORTS: "5601"
+      VIRTUAL_HOST: http://kibana.manager.loc
+      ELASTICSEARCH_URL: http://es:9200
+
+  logstash:
+    restart: always
+    build: ./docker/logstash
+    command: logstash -f /etc/logstash/conf.d/logstash.conf
+    volumes:
+      - ./docker/logstash/config:/etc/logstash/conf.d
+    links:
+      - es
+    expose:
+      - "5044"
+    environment:
+      TCP_PORTS: "5044"
+    tags:
+      - graph
+
+  shinken:
+    restart: always
+    build:
+      context: ./docker/shinken
+    environment:
+      VIRTUAL_HOST: http://shinken.manager.loc
+      TZ: Europe/Paris
+    #volumes:
+    #   - ./custom_configs:/etc/shinken/custom_configs
+    #   - ./extra_plugins:/usr/local/custom_plugins
+
+volumes:
+  mysql:
+  api_logs:
+  api_cache:
+  api_sessions:
+  backend_logs:
+  backend_cache:
+  backend_sessions:
+  mongo:
+  whisper:
+  es_data:
+  grafana:

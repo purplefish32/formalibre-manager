@@ -1,5 +1,12 @@
 # First setup
 
+docker-compose up -d
+docker-compose exec api composer install
+docker-compose exec backend bash -c 'composer install; bin/console doctrine:schema:create; bin/console doctrine:schema:update --force'
+docker-compose exec api  bash -c "chmod 777 var/cache var/logs var -R"
+docker-compose exec backend  bash -c "chmod 777 var/cache var/logs var -R"
+
+
 docker exec -i -t [api_machine_name] composer install
 docker exec -i -t [backend_machine_name] bash -c 'composer install; bin/console doctrine:schema:create; bin/console doctrine:schema:update --force'
 
@@ -30,4 +37,3 @@ tsc
 * on console2
 cd config/wesh/app
 nodemon main.js
-

@@ -15,6 +15,7 @@ import { DashboardComponent }      from './dashboard/dashboard.component';
 import { ServersModule }      from './servers/servers.module';
 import { PlatformsModule }      from './platforms/platforms.module';
 import { ClientsModule }      from './clients/clients.module';
+import { EventsModule }      from './events/events.module';
 import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
 
 
@@ -27,6 +28,7 @@ import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
     ServersModule,
     PlatformsModule,
     ClientsModule,
+    EventsModule,
     SlimLoadingBarModule.forRoot()
   ],
   declarations: [

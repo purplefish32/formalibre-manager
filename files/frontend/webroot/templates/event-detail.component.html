@@ -1,0 +1,6 @@
+<td>{{event.ressource_id}}</td>
+<td>{{event.date}}</td>
+<td>{{event.post}}</td>
+<td>
+<button class="btn btn-default btn-xs" routerLink="/event/edit/{{event.id}}" *ngIf="event.hasOwnProperty('id')"><i class="fa fa-edit"></i></button>
+</td>

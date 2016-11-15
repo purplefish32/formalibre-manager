@@ -1,24 +1,20 @@
- import { NgModule }      from '@angular/core';
- import { CommonModule } from '@angular/common';
- import { RouterModule } from '@angular/router';
- import { FormsModule }   from '@angular/forms';
- import { HttpModule }    from '@angular/http';
-//
-// import {
-//   LocationStrategy,
-//   HashLocationStrategy
-// } from '@angular/common';
-//
-// import { AppComponent }  from './app.component';
-// import { routing } from './app.routing'
-//
-// import { DashboardComponent }      from './dashboard/dashboard.component';
- import { ClientRouting }      from './clients.routing';
- import { ClientsService }      from './clients.service';
- import { ClientsComponent }      from './clients.component';
- import { ClientDetailComponent } from './client-detail.component';
- import { ClientEditComponent } from './client-edit.component';
- import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
+import { NgModule }      from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { FormsModule }   from '@angular/forms';
+import { HttpModule }    from '@angular/http';
+import { DataTableModule, SharedModule } from 'primeng/primeng';
+
+import { ClientRouting }      from './clients.routing';
+import { ClientsService }      from './clients.service';
+/*$ clients @ import_modules */
+import { ClientsComponent } from './clients.component'
+import { ClientDetailComponent } from './client-detail.component'
+import { ClientEditComponent } from './client-edit.component'
+import { ClientViewComponent } from './client-view.component'
+/*$  */
+import { SlimLoadingBarModule } from 'ng2-slim-loading-bar'
+import { PopoverModule } from "ng2-popover"
 
 @NgModule({
   imports: [
@@ -27,17 +23,20 @@
     HttpModule,
     RouterModule,
     ClientRouting,
+    DataTableModule,
+    PopoverModule,
     SlimLoadingBarModule.forRoot()
   ],
   declarations: [
+    /*$ clients @ list_modules */
     ClientsComponent,
     ClientDetailComponent,
-    ClientEditComponent
+    ClientEditComponent,
+    ClientViewComponent,
+    /*$  */
   ],
   providers: [
-//    {provide: LocationStrategy, useClass: HashLocationStrategy},
     ClientsService,
   ],
-  //bootstrap: [ AppComponent ]
 })
 export class ClientsModule { }

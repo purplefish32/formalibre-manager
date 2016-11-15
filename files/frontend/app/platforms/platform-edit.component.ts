@@ -4,6 +4,7 @@ import { Router }            from '@angular/router';
 import { PlatformsService } from './platforms.service';
 import { Platform } from './platform'
 import 'rxjs/add/operator/toPromise';
+import { PopoverModule } from "ng2-popover"
 
 @Component({
   selector: 'PlatformEdit',

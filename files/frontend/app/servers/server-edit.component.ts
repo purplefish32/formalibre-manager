@@ -4,6 +4,7 @@ import { Router }            from '@angular/router';
 import { ServersService } from './servers.service';
 import { Server } from './server'
 import 'rxjs/add/operator/toPromise';
+import { PopoverModule } from "ng2-popover"
 
 @Component({
   selector: 'ServerEdit',

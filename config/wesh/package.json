@@ -2,7 +2,7 @@
   "name": "jaml",
   "description": "Jaml is a simple JavaScript library which makes HTML generation easy and pleasurable.",
   "version": "0.0.1",
-  "main": "jaml.js",
+  "main": "app/main.js",
   "scripts": {
     "postinstall": "typings install",
     "typings": "typings"

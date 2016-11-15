@@ -11,9 +11,6 @@ import {SlimLoadingBarComponent, SlimLoadingBarService} from 'ng2-slim-loading-b
 
 @Injectable()
 export class ServersService {
-
-  servers = [];
-
   private headers = new Headers({ 'Content-Type': 'application/json' });
   private serversUrl = base_url + '/servers';  // URL to web servers api
 
