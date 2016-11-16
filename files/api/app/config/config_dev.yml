@@ -26,7 +26,8 @@ guzzle:
     clients:
         api:
             base_url: "http://backend/app_dev.php"
-
+            headers:
+                Accept: "application/json"
         # uncomment to get logging in your browser
         # you may have to allow bigger header sizes in your Web server configuration
         #firephp:
