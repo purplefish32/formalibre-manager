@@ -39,8 +39,8 @@ export class ElementsList extends fl_m.ListFromModel {
 
     let elemConfig = config[env.g_conf_element]
 
-    elemConfig.model = elemConfig.model.map(elem =>{
-      if(!elem.hasOwnProperty('filter')) {
+    elemConfig.model = elemConfig.model.map(elem => {
+      if (!elem.hasOwnProperty('filter')) {
         elem.filter = elemConfig.hasOwnProperty('filter') && elemConfig['filter']
       }
       return elem
@@ -254,25 +254,39 @@ export class ProfileDesc extends fl_c.Box {
         "profile-user-img img-responsive img-circle",
         ["src='https://avatars1.githubusercontent.com/u/5183366?v=3&s=120'"]))
       .add("h1", "profile-username text-center", [], env.f('firstname') + " " + env.f('lastname'))
+      .add('p', 'text-center text-muted', [], env.f('organisation'))
       .add(new fl_m.ListGroupUnbordered("", [], config[env.g_conf_element].model
-        .filter(element => !element.index)
+        .filter(element => !element.index && element.field != 'firstname' && element.field != 'lastname' && element.field != 'organisation')
         .map(function(element) {
           if (!element.name)
             element.name = capitalize(element.field)
 
+          let text
+
+          if (element.field == 'email') {
+            //
+            //let str = env.f('email')
+            //console.log (str)
+            text = new fl_element('a', '', [`href="mailto:${env.f('email')}"`], env.f('email'))
+          }
+          else {
+            text = new fl_text(env.f(element.field))
+          }
+
           let item = new fl_m.ListGroupItem("", [], [
-            new fl_c.B("", [], `${element.name} : `),
-            new fl_text(env.f(element.field))
+            //new fl_c.B("", [], `${element.name} : `),
+            text
           ])
 
           return item
         })))
-      .add(new fl_c.BoxFooter("", [
-        new fl_m.EditButton("", env.g_local_object),
-        new fl_m.DeleteButton()
-      ])
-      )
+
     )
+    )
+    this.add(new fl_c.BoxFooter("", [
+      new fl_m.EditButton("", env.g_local_object),
+      new fl_m.DeleteButton()
+    ])
   }
 }
 
@@ -288,27 +302,27 @@ export class TimelineView extends fl_c.Box {
 
     input.addHeader("", 'Add a note')
       .addBody([
-        new fl_m.ModelInput('note'),
-        fl_m.submitButton([`'(click)'="onSubmitNote()"`])
+        new fl_m.ModelInput('note')
       ])
+      .addFooter(fl_m.submitButton([`'(click)'="onSubmitNote()"`]))
 
     timeline.AddItem('envelope', "blue", "", [`*ngFor="let event of ${env.g_local_object}.events"`]).addContent()
-      .addHeader("{{date(event.date)}}", 'TBD Title')
+      .addHeader("{{date(event.date)}}", 'Event')
       .addBody("{{event.post}}")
-      .addFooter(['TBD Some Random footer content',fl_m.deleteButton("")])
+      .addFooter([fl_m.deleteButton("")])
 
-    timeline.AddIcon("circle", "gray")
+    timeline.AddIcon("clock-o", "gray")
 
     this.add(new fl_c.BoxBody("box-profile", [], timeline))
   }
 }
 
-export class ProfileView extends fl_m.ListFromModel {
+export class ProfileView extends fl_c.SectionContent {
   constructor(config, env) {
-    super(config[env.g_conf_element].model, [
+    super(new fl_element('div', 'row', [], [
       new fl_c.Layout('md', 3, "", [], new ProfileDesc(config, env)),
       new fl_c.Layout('md', 9, "", [], new TimelineView(config, env))
-    ])
+    ]))
   }
 }
 
@@ -317,12 +331,12 @@ export class ElementViewPage extends fl_m.MainCol {
     super();
 
     this.add(new fl_m.PageHeaders(
-      `${env.f('firstname')} ${env.f('lastname')}`, [{
+      `Client Profile`, [{
         name: env.g_title,
         isactive: false,
         link: env.g_list_route
       }, {
-          name: 'View ' + env.g_title_singular,
+          name: `${env.f('firstname')} ${env.f('lastname')}`,
           isactive: true
         }])
     ).add(new ProfileView(config, env))
