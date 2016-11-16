@@ -26,16 +26,12 @@ body .loader {
     border-top: 1px solid rgb(200, 200, 200);
 }
 
-.ui-state-default,
-.ui-widget-content
-.ui-state-default,
-.ui-widget-header
-.ui-state-default {
-    table-layout:auto;
-    border-bottom: none;
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    table-layout: auto;
+    /*border-bottom: none;
     border-left: none;
-    border-right: none;
-    border-top: 1px solid rgb(200, 200, 200);
+    border-right: none;*/
+    border: 1px solid rgb(200, 200, 200);
     background: #ffffff;
     font-weight: normal;
     color: #555555;
@@ -72,16 +68,12 @@ body .loader {
   border:none;
 }*/
 
-.ui-datatable thead th,
-.ui-datatable tbody td,
-.ui-datatable tfoot td,
-.ui-datatable tfoot th {
+.ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td, .ui-datatable tfoot th {
     padding: 4px 10px;
     overflow: hidden;
     border: none;
 }
 
-.ui-datatable thead th,
-.ui-datatable tfoot td {
+.ui-datatable thead th, .ui-datatable tfoot td {
     text-align: left;
 }

@@ -27,7 +27,7 @@ export class ClientViewComponent implements OnInit {
 
   date(d) {
     try {
-      return moment(d).calendar()
+      return moment(d).fromNow()
     } catch (e) {
       console.dir(e)
       return ""

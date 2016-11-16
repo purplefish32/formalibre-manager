@@ -108,7 +108,7 @@ export class TimelineItemContent extends fl_element {
 
   addHeader(date: string, data: ElementData = []) {
     this.add([
-      new fl_c.Span("time", [], [new fl_c.Icon("clock-o", []), new fl_text(date)]),
+      new fl_c.Span("time", [], [new fl_c.Icon("clock-o", []), new fl_text(` ${date}`)]),
       new fl_c.H(3, "timeline-header", [], data)
     ])
     return this
