@@ -17,11 +17,7 @@ export class ServersService {
   private serversUrl = base_url + '/servers';  // URL to web servers api
 
   constructor(private http: Http, private progressLoader: SlimLoadingBarService) {
-      console.log('Server service initialized...');
-  }
-
-  private handleError(error: any): Promise<any> {
-    return Promise.reject(error.message || error);
+    console.log('Server service initialized...');
   }
 
   onRequestStart() {

@@ -45,10 +45,6 @@ export class ClientsService {
     return this.events.create(event)
   }
 
-  private handleError(error: any): Promise<any> {
-    return Promise.reject(error.message || error);
-  }
-
   onRequestStart() {
     this.progressLoader.start();
   }

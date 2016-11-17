@@ -29,7 +29,7 @@ export class ClientEditComponent implements OnInit {
   }
 
   onSubmit() {
-    if(this.client.id) {
+    if (this.client.id) {
       this.clients.update(this.client).subscribe(
         response => {
           this.router.navigate(['client', this.client.id])

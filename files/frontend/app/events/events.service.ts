@@ -19,10 +19,6 @@ export class EventsService {
   constructor(private http: Http, private progressLoader: SlimLoadingBarService) {
   }
 
-  private handleError(error: any): Promise<any> {
-    return Promise.reject(error.message || error);
-  }
-
   onRequestStart() {
     this.progressLoader.start();
   }
