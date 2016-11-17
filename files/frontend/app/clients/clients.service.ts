@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http, Response} from '@angular/http';
-import 'rxjs/add/operator/toPromise';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
-import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/operator/share';
+import 'rxjs/add/observable/merge';
+import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/mergeMap';
 import { Client } from './client';
 import { ClientProfile } from './clientProfile';
@@ -24,6 +24,8 @@ function clone(obj) {
   return temp;
 }
 
+declare var base_url: string
+
 @Injectable()
 export class ClientsService {
 
@@ -36,16 +38,11 @@ export class ClientsService {
     private http: Http,
     private progressLoader: SlimLoadingBarService,
     private events: EventsService) {
-    this.getClients()
   }
 
   onModify(id, text: string): Observable<Event[]> {
     let event = new Event(id, text)
     return this.events.create(event)
-  }
-
-  private handleError(error: any): Promise<any> {
-    return Promise.reject(error.message || error);
   }
 
   onRequestStart() {
@@ -58,6 +55,9 @@ export class ClientsService {
     return published
   }
 
+
+  cache: Client[] = []
+
   get(url: string): Observable<any> {
     this.onRequestStart()
     return this.onRequestEnd(
@@ -67,7 +67,9 @@ export class ClientsService {
   }
 
   getClients(): Observable<ClientProfile[]> {
-    return this.get(this.clientsUrl)
+    return Observable.merge(
+      Observable.of(this.cache),
+      this.get(this.clientsUrl).map(response => this.cache = response));
   }
 
   getClient(id: string): Observable<ClientProfile> {

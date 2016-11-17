@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http, Response} from '@angular/http';
-import 'rxjs/add/operator/toPromise';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
-import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/operator/share';
+import 'rxjs/add/observable/merge';
+import 'rxjs/add/observable/of';
 import { Event } from './event';
 import {SlimLoadingBarComponent, SlimLoadingBarService} from 'ng2-slim-loading-bar';
+
+declare var base_url: string
 
 @Injectable()
 export class EventsService {
@@ -15,11 +17,6 @@ export class EventsService {
   private eventsUrl = base_url + '/events';  // URL to web events api
 
   constructor(private http: Http, private progressLoader: SlimLoadingBarService) {
-    this.getEvents()
-  }
-
-  private handleError(error: any): Promise<any> {
-    return Promise.reject(error.message || error);
   }
 
   onRequestStart() {
@@ -32,19 +29,25 @@ export class EventsService {
     return published
   }
 
-  getEvents(): Observable<Event[]> {
+  cache: Event[] = []
+
+  get(url: string): Observable<any> {
     this.onRequestStart()
     return this.onRequestEnd(
-      this.http.get(this.eventsUrl)
+      this.http.get(url)
         .map(response => response.json())
     )
   }
 
+  getEvents(): Observable<Event[]> {
+    return Observable.merge(
+      Observable.of(this.cache),
+      this.get(this.eventsUrl).map(response => this.cache = response));
+  }
+
   getEvent(id: string): Observable<Event> {
-    var promise = this.getEvents().toPromise()
-      .then(events => events.find(event => event.id === id))
-      .catch(this.handleError);
-    return Observable.fromPromise(promise);
+    console.log('requesting events ' + id)
+    return this.get(this.eventsUrl + `/` + id)
   }
 
   delete(id: string): Observable<Response> {

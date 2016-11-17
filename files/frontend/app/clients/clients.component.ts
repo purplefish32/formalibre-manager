@@ -2,13 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ClientDetailComponent } from './client-detail.component'
 import { ClientProfile } from './clientProfile'
 import { ClientsService } from './clients.service'
-import 'rxjs/add/operator/toPromise';
 import {DataTableModule, SharedModule} from 'primeng/primeng';
 
 @Component({
   selector: 'clients',
   templateUrl: 'templates/clients.component.html',
-  providers: [ClientDetailComponent, ClientsService, DataTableModule]
+  providers: [ClientDetailComponent, DataTableModule]
 })
 export class ClientsComponent implements OnInit {
   clients: ClientProfile[];
@@ -23,7 +22,7 @@ export class ClientsComponent implements OnInit {
 
   getClients(): void {
     console.log('fetching clients');
-    this.clientsService.getClients().toPromise().then(
+    this.clientsService.getClients().subscribe(
       clients => {
         this.clients = clients;
         console.dir(this.clients);

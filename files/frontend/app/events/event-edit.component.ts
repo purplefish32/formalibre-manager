@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Router }            from '@angular/router';
 import { EventsService } from './events.service';
 import { Event } from './event'
-import 'rxjs/add/operator/toPromise';
 import { PopoverModule } from "ng2-popover"
 
 @Component({
@@ -27,21 +26,21 @@ export class EventEditComponent implements OnInit {
     this.route.params.subscribe(params => {
       let id = params['id'];
       if (id)
-        this.events.getEvent(id).toPromise().then(event => this.event = event);
+        this.events.getEvent(id).subscribe(event => this.event = event);
     });
   }
 
   onSubmit() {
     if (this.event.id) {
-      this.events.update(this.event).toPromise().then(event => this.router.navigate(['events']), () => this.router.navigate(['events']));
+      this.events.update(this.event).subscribe(event => this.router.navigate(['events']), () => this.router.navigate(['events']));
     } else {
-      this.events.create(this.event).toPromise().then(event => this.router.navigate(['events']), () => this.router.navigate(['events']));
+      this.events.create(this.event).subscribe(event => this.router.navigate(['events']), () => this.router.navigate(['events']));
     }
   }
 
   onDelete() {
     if (this.event.id != '') {
-      this.events.delete(this.event.id).toPromise().then(event => this.router.navigate(['events']), () => this.router.navigate(['events']));
+      this.events.delete(this.event.id).subscribe(event => this.router.navigate(['events']), () => this.router.navigate(['events']));
     }
   }
 

@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Router }            from '@angular/router';
 import { ServersService } from './servers.service';
 import { Server } from './server'
-import 'rxjs/add/operator/toPromise';
 import { PopoverModule } from "ng2-popover"
 
 @Component({
@@ -27,21 +26,21 @@ export class ServerEditComponent implements OnInit {
     this.route.params.subscribe(params => {
       let id = params['id'];
       if (id)
-        this.servers.getServer(id).toPromise().then(server => this.server = server);
+        this.servers.getServer(id).subscribe(server => this.server = server);
     });
   }
 
   onSubmit() {
     if (this.server.id) {
-      this.servers.update(this.server).toPromise().then(server => this.router.navigate(['servers']), () => this.router.navigate(['servers']));
+      this.servers.update(this.server).subscribe(server => this.router.navigate(['servers']), () => this.router.navigate(['servers']));
     } else {
-      this.servers.create(this.server).toPromise().then(server => this.router.navigate(['servers']), () => this.router.navigate(['servers']));
+      this.servers.create(this.server).subscribe(server => this.router.navigate(['servers']), () => this.router.navigate(['servers']));
     }
   }
 
   onDelete() {
     if (this.server.id != '') {
-      this.servers.delete(this.server.id).toPromise().then(server => this.router.navigate(['servers']), () => this.router.navigate(['servers']));
+      this.servers.delete(this.server.id).subscribe(server => this.router.navigate(['servers']), () => this.router.navigate(['servers']));
     }
   }
 

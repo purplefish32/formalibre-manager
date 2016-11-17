@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http, Response} from '@angular/http';
-import 'rxjs/add/operator/toPromise';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
-import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/operator/share';
+import 'rxjs/add/observable/merge';
+import 'rxjs/add/observable/of';
 import { Server } from './server';
 import {SlimLoadingBarComponent, SlimLoadingBarService} from 'ng2-slim-loading-bar';
+
+declare var base_url: string
 
 @Injectable()
 export class ServersService {
@@ -15,11 +17,7 @@ export class ServersService {
   private serversUrl = base_url + '/servers';  // URL to web servers api
 
   constructor(private http: Http, private progressLoader: SlimLoadingBarService) {
-    this.getServers()
-  }
-
-  private handleError(error: any): Promise<any> {
-    return Promise.reject(error.message || error);
+    console.log('Server service initialized...');
   }
 
   onRequestStart() {
@@ -32,19 +30,26 @@ export class ServersService {
     return published
   }
 
-  getServers(): Observable<Server[]> {
+  get(url: string): Observable<any> {
     this.onRequestStart()
     return this.onRequestEnd(
-      this.http.get(this.serversUrl)
+      this.http.get(url)
         .map(response => response.json())
     )
   }
 
+  cache: Server[] = []
+
+  getServers(): Observable<Server[]> {
+    console.log('requesting servers')
+    return Observable.merge(
+      Observable.of(this.cache),
+      this.get(this.serversUrl).map(response => this.cache = response));
+  }
+
   getServer(id: string): Observable<Server> {
-    var promise = this.getServers().toPromise()
-      .then(servers => servers.find(server => server.id === id))
-      .catch(this.handleError);
-    return Observable.fromPromise(promise);
+    console.log('requesting server ' + id)
+    return this.get(this.serversUrl + `/` + id)
   }
 
   delete(id: string): Observable<Response> {
