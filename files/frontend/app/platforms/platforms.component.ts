@@ -2,13 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { PlatformDetailComponent } from './platform-detail.component'
 import { Platform } from './platform'
 import { PlatformsService } from './platforms.service'
-import 'rxjs/add/operator/toPromise';
 import {DataTableModule, SharedModule} from 'primeng/primeng';
 
 @Component({
   selector: 'platforms',
   templateUrl: 'templates/platforms.component.html',
-  providers: [PlatformDetailComponent, PlatformsService, DataTableModule]
+  providers: [PlatformDetailComponent, DataTableModule]
 })
 export class PlatformsComponent implements OnInit {
   platforms: Platform[];
@@ -23,7 +22,7 @@ export class PlatformsComponent implements OnInit {
 
   getPlatforms(): void {
     console.log('fetching platforms');
-    this.platformsService.getPlatforms().toPromise().then(
+    this.platformsService.getPlatforms().subscribe(
       platforms => {
         this.platforms = platforms;
         console.dir(this.platforms);

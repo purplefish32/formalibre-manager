@@ -5,7 +5,6 @@ import { ClientsService } from './clients.service';
 import { ClientProfile } from './clientProfile'
 import { Event } from '../events/event'
 import { EventsService } from '../events/events.service'
-import 'rxjs/add/operator/toPromise';
 import * as moment from 'moment'
 import { PopoverModule } from "ng2-popover"
 
@@ -44,7 +43,7 @@ export class ClientViewComponent implements OnInit {
   }
 
   loadClientDetail(id) {
-    this.clients.getClientProfile(id).toPromise().then(client => this.client = client);
+    this.clients.getClientProfile(id).subscribe(client => this.client = client);
   }
 
   ngOnInit() {
@@ -57,7 +56,7 @@ export class ClientViewComponent implements OnInit {
 
   onDelete() {
     if (this.client.id != '') {
-      this.clients.delete(this.client.id).toPromise().then(client => this.router.navigate(['clients']), () => this.router.navigate(['clients']));
+      this.clients.delete(this.client.id).subscribe(client => this.router.navigate(['clients']), () => this.router.navigate(['clients']));
     }
   }
 
@@ -65,6 +64,6 @@ export class ClientViewComponent implements OnInit {
     let id = this.client.id
     let event = new Event(this.client.id, this.note)
     this.note = ""
-    this.events.create(event).toPromise().then(response => this.loadClientDetail(id))
+    this.events.create(event).subscribe(response => this.loadClientDetail(id))
   }
 }

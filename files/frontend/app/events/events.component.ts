@@ -2,13 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { EventDetailComponent } from './event-detail.component'
 import { Event } from './event'
 import { EventsService } from './events.service'
-import 'rxjs/add/operator/toPromise';
 import {DataTableModule, SharedModule} from 'primeng/primeng';
 
 @Component({
   selector: 'events',
   templateUrl: 'templates/events.component.html',
-  providers: [EventDetailComponent, EventsService, DataTableModule, SharedModule]
+  providers: [EventDetailComponent, DataTableModule, SharedModule]
 })
 export class EventsComponent implements OnInit {
   events: Event[];
@@ -27,7 +26,7 @@ export class EventsComponent implements OnInit {
 
   getEvents(): void {
     console.log('fetching events');
-    this.eventsService.getEvents().toPromise().then(
+    this.eventsService.getEvents().subscribe(
       events => {
         this.events = events;
         console.dir(this.events);

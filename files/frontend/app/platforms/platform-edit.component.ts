@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Router }            from '@angular/router';
 import { PlatformsService } from './platforms.service';
 import { Platform } from './platform'
-import 'rxjs/add/operator/toPromise';
 import { PopoverModule } from "ng2-popover"
 
 @Component({
@@ -27,21 +26,21 @@ export class PlatformEditComponent implements OnInit {
     this.route.params.subscribe(params => {
       let id = params['id'];
       if (id)
-        this.platforms.getPlatform(id).toPromise().then(platform => this.platform = platform);
+        this.platforms.getPlatform(id).subscribe(platform => this.platform = platform);
     });
   }
 
   onSubmit() {
     if (this.platform.id) {
-      this.platforms.update(this.platform).toPromise().then(platform => this.router.navigate(['platforms']), () => this.router.navigate(['platforms']));
+      this.platforms.update(this.platform).subscribe(platform => this.router.navigate(['platforms']), () => this.router.navigate(['platforms']));
     } else {
-      this.platforms.create(this.platform).toPromise().then(platform => this.router.navigate(['platforms']), () => this.router.navigate(['platforms']));
+      this.platforms.create(this.platform).subscribe(platform => this.router.navigate(['platforms']), () => this.router.navigate(['platforms']));
     }
   }
 
   onDelete() {
     if (this.platform.id != '') {
-      this.platforms.delete(this.platform.id).toPromise().then(platform => this.router.navigate(['platforms']), () => this.router.navigate(['platforms']));
+      this.platforms.delete(this.platform.id).subscribe(platform => this.router.navigate(['platforms']), () => this.router.navigate(['platforms']));
     }
   }
 

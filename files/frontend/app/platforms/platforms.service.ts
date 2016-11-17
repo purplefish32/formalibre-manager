@@ -4,10 +4,13 @@ import 'rxjs/add/operator/toPromise';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
-import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/operator/share';
+import 'rxjs/add/observable/merge';
+import 'rxjs/add/observable/of';
 import { Platform } from './platform';
 import {SlimLoadingBarComponent, SlimLoadingBarService} from 'ng2-slim-loading-bar';
+
+declare var base_url: string
 
 @Injectable()
 export class PlatformsService {
@@ -15,7 +18,6 @@ export class PlatformsService {
   private platformsUrl = base_url + '/platforms';  // URL to web platforms api
 
   constructor(private http: Http, private progressLoader: SlimLoadingBarService) {
-    this.getPlatforms()
   }
 
   private handleError(error: any): Promise<any> {
@@ -32,19 +34,25 @@ export class PlatformsService {
     return published
   }
 
-  getPlatforms(): Observable<Platform[]> {
+  get(url: string): Observable<any> {
     this.onRequestStart()
     return this.onRequestEnd(
-      this.http.get(this.platformsUrl)
+      this.http.get(url)
         .map(response => response.json())
     )
   }
 
+  cache: Platform[] = []
+
+  getPlatforms(): Observable<Platform[]> {
+    return Observable.merge(
+      Observable.of(this.cache),
+      this.get(this.platformsUrl).map(response => this.cache = response));
+  }
+
   getPlatform(id: string): Observable<Platform> {
-    var promise = this.getPlatforms().toPromise()
-      .then(platforms => platforms.find(platform => platform.id === id))
-      .catch(this.handleError);
-    return Observable.fromPromise(promise);
+    console.log('requesting platform ' + id)
+    return this.get(this.platformsUrl + `/` + id)
   }
 
   delete(id: string): Observable<Response> {
