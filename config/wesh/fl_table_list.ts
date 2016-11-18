@@ -3,6 +3,7 @@ import * as fl_c from './fl_common'
 import * as fl_m from './fl_manager_comp'
 import * as fl_p from './fl_ng_prime'
 import * as fl_tl from './fl_timeline'
+import fl_mdeditor from './fl_mdeditor'
 
 function __chain(obj, field: string, ...restOfFields: string[]) {
   if (obj.hasOwnProperty(field)) {
@@ -167,6 +168,8 @@ export class ElementsEdit extends fl_m.ListFromModel {
 
           formGroup.add(select)
 
+        } else if (element.type === "markdown") {
+          formGroup.add(new fl_mdeditor(`${env.g_local_object}.${element.field}`))
         }
         else
           formGroup.add(new fl_m.ModelInput([env.g_local_object, element.field], attr))

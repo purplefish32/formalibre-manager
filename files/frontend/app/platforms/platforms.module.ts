@@ -11,6 +11,7 @@ import { PlatformEditComponent } from './platform-edit.component';
 import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
 import {DataTableModule, SharedModule} from 'primeng/primeng';
 import { PopoverModule } from "ng2-popover"
+import { MarkdownModule } from '../tools/markdown/markdown.module'
 
 @NgModule({
   imports: [
@@ -21,6 +22,7 @@ import { PopoverModule } from "ng2-popover"
     PlatformsRouting,
     DataTableModule,
     PopoverModule,
+    MarkdownModule,
     SlimLoadingBarModule.forRoot(),
   ],
   declarations: [

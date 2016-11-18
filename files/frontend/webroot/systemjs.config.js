@@ -28,6 +28,9 @@
       'primeng': 'node_modules/primeng',
       'moment': 'node_modules/moment',
       'github': 'node_modules/github',
+      "simplemde": "node_modules/simplemde",
+      "markdown-to-html-pipe": "node_modules/markdown-to-html-pipe",
+      "marked": "node_modules/marked",
       "ng2-popover": "node_modules/ng2-popover"
     },
     // packages tells the System loader how to load when no filename and/or no extension
@@ -57,6 +60,18 @@
       'github': {
         main: './index.js',
         defaultExtension: 'js'
+      },
+      'simplemde': {
+        main: './dist/simplemde.min.js',
+        defaultExtension: 'js'
+      },
+      "markdown-to-html-pipe": {
+        "main": "index.js",
+        "defaultExtension": "js"
+      },
+      "marked": {
+        "main": "index.js",
+        "defaultExtension": "js"
       },
       "ng2-popover": {
         "main": "index.js",

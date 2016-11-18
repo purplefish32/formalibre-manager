@@ -66,6 +66,11 @@ export class PrimeTableRow extends Prime {
     if (type == 'date') {
       let template = new fl_element("template", "", [`'let-col'=''`, `let-row="rowData"`, `pTemplate`, `type="body"`], `{{date(row[col.field])}}`)
       this.add(template)
+    } else if (type == 'markdown') {
+      let template = new fl_element("template", "", [`let-server="rowData"`, `pTemplate`, `type="body"`],
+        new fl_element('div', '', [`'[innerHTML]'="server.description|MarkdownToHtml"`])
+      )
+      this.add(template)
     }
   }
 }
