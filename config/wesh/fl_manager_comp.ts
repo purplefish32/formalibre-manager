@@ -161,7 +161,7 @@ export class DeleteButton extends fl_container {
     super()
     DeleteButton.counter++
 
-    let Id = "DeleteButton"+DeleteButton.counter.toString(36)
+    let Id = "DeleteButton" + DeleteButton.counter.toString(36)
 
     let popoverContent = new PopoverContent(Id, 'Sure to delete ?', [
       new fl_c.B('', [],

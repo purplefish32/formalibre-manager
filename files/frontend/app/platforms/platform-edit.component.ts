@@ -16,7 +16,7 @@ export class PlatformEditComponent implements OnInit {
   constructor(
     private platforms: PlatformsService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
   ) {
     this.platform = new Platform();
     console.dir(this.platform);

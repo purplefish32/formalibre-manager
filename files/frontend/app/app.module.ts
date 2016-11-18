@@ -19,7 +19,6 @@ import { EventsModule }      from './events/events.module';
 import { MarkdownModule}           from './tools/markdown/markdown.module'
 import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
 
-
 @NgModule({
   imports: [
     BrowserModule,
@@ -35,7 +34,7 @@ import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
   ],
   declarations: [
     AppComponent,
-    DashboardComponent,
+    DashboardComponent
   ],
   exports: [
     MarkdownModule,

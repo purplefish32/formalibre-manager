@@ -28,7 +28,7 @@ import { MarkdownModule } from '../tools/markdown/markdown.module'
   declarations: [
     PlatformsComponent,
     PlatformDetailComponent,
-    PlatformEditComponent
+    PlatformEditComponent,
   ],
   providers: [
     PlatformsService,

@@ -7,7 +7,7 @@ import {DataTableModule, SharedModule} from 'primeng/primeng';
 @Component({
   selector: 'platforms',
   templateUrl: 'templates/platforms.component.html',
-  providers: [PlatformDetailComponent, DataTableModule]
+  providers: [PlatformDetailComponent, DataTableModule],
 })
 export class PlatformsComponent implements OnInit {
   platforms: Platform[];

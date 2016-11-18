@@ -1,5 +1,11 @@
 # First setup
 
+## requierment
+ - docker-compose 1.8.0 minimum
+
+
+## setup
+
 docker-compose up -d
 docker-compose exec api composer install
 docker-compose exec backend bash -c 'composer install; bin/console doctrine:schema:create; bin/console doctrine:schema:update --force'

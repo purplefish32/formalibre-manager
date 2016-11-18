@@ -29,7 +29,7 @@ import { MarkdownModule } from '../tools/markdown/markdown.module'
   declarations: [
     ServersComponent,
     ServerDetailComponent,
-    ServerEditComponent
+    ServerEditComponent,
   ],
   providers: [
     ServersService,

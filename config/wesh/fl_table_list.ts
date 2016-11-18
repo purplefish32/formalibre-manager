@@ -20,7 +20,6 @@ function __chain(obj, field: string, ...restOfFields: string[]) {
 function addNgRow(name: string, obj_name: string, ...args: any[]) {
   // template inside binding to the current element
   // that contains the provided obj
-  console.dir(args)
   let template = new fl_element("template", "", [`let-${obj_name}="rowData"`, `pTemplate`, `type="body"`])
 
   args.forEach(arg => template.add(arg))
