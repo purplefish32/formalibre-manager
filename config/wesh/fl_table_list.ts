@@ -255,7 +255,7 @@ export class ProfileDesc extends fl_c.Box {
     this.add(new fl_c.BoxBody("box-profile")
       .add(new fl_c.Img(
         "profile-user-img img-responsive img-circle",
-        ["src='https://avatars1.githubusercontent.com/u/5183366?v=3&s=120'"]))
+        ["src='https://s2.qwant.com/thumbr/0x0/4/a/98de14eaff0c84daa8230b0e2128cb/b_1_q_0_p_0.jpg?u=http%3A%2F%2Fgamershispanos.net%2Fforo%2FThemes%2FGamersHispanos%2Fimages%2Fuser-placeholder.png&q=0&b=1&p=0&a=1'"]))
       .add("h1", "profile-username text-center", [], env.f('firstname') + " " + env.f('lastname'))
       .add('p', 'text-center text-muted', [], env.f('organisation'))
       .add(new fl_m.ListGroupUnbordered("", [], config[env.g_conf_element].model
