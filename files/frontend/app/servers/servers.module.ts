@@ -12,6 +12,7 @@ import { ServerDetailComponent } from './server-detail.component';
 import { ServerEditComponent } from './server-edit.component';
 import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
 import { PopoverModule } from "ng2-popover"
+import { MarkdownModule } from '../tools/markdown/markdown.module'
 
 @NgModule({
   imports: [
@@ -23,11 +24,12 @@ import { PopoverModule } from "ng2-popover"
     PopoverModule,
     SlimLoadingBarModule.forRoot(),
     DataTableModule,
+    MarkdownModule,
   ],
   declarations: [
     ServersComponent,
     ServerDetailComponent,
-    ServerEditComponent
+    ServerEditComponent,
   ],
   providers: [
     ServersService,

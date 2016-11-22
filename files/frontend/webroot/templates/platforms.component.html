@@ -16,7 +16,11 @@
         <p-dataTable [value]="platforms">
           <p-column field="name" header="Name" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
           <p-column field="subdomain" header="Subdomain" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
-          <p-column field="description" header="Description" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+          <p-column field="description" header="Description" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search">
+            <template let-server="rowData" pTemplate="pTemplate" type="body">
+              <div [innerHTML]="server.description|MarkdownToHtml"></div>
+            </template>
+          </p-column>
           <p-column field="plan" header="Plan" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
           <p-column field="end_date" header="End date" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
           <p-column field="max_users" header="Max users" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>

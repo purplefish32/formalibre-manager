@@ -16,8 +16,8 @@ import { ServersModule }      from './servers/servers.module';
 import { PlatformsModule }      from './platforms/platforms.module';
 import { ClientsModule }      from './clients/clients.module';
 import { EventsModule }      from './events/events.module';
+import { MarkdownModule}           from './tools/markdown/markdown.module'
 import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
-
 
 @NgModule({
   imports: [
@@ -29,14 +29,19 @@ import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
     PlatformsModule,
     ClientsModule,
     EventsModule,
+    MarkdownModule,
     SlimLoadingBarModule.forRoot()
   ],
   declarations: [
     AppComponent,
-    DashboardComponent,
+    DashboardComponent
+  ],
+  exports: [
+    MarkdownModule,
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
+    MarkdownModule,
   ],
   bootstrap: [AppComponent]
 })

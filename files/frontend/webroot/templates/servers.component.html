@@ -18,7 +18,11 @@
           <p-column field="ip" header="IP" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
           <p-column field="provider" header="Provider" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
           <p-column field="type" header="Type" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
-          <p-column field="description" header="Description" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+          <p-column field="description" header="Description" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search">
+            <template let-server="rowData" pTemplate="pTemplate" type="body">
+              <div [innerHTML]="server.description|MarkdownToHtml"></div>
+            </template>
+          </p-column>
           <p-column header="" [style]="{'width':'0px'}">
             <template let-server="rowData" pTemplate="pTemplate" type="body">
               <button class="btn btn-default btn-xs" routerLink="/server/edit/{{server.id}}" *ngIf="server.hasOwnProperty('id')"><i class="fa fa-edit"></i></button>
