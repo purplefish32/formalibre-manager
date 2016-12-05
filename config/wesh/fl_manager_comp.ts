@@ -141,14 +141,14 @@ export class EditButton extends Button {
 
 export class PopoverContent extends fl_element {
   constructor(id, title, content) {
-    super('popover-content', '', [`#${id}=''`, `title= "${title}"`, `placement= "bottom"`, `'[animation]' = "true"`, `'[closeOnClickOutside]' = "true"`], content)
+    super('popover-content', '', [`#${id}=''`, `title= "${title}"`, `placement= "bottom"`, `[animation] = "true"`, `[closeOnClickOutside] = "true"`], content)
   }
 }
 
 export class RawDeleteButton extends Button {
   constructor(classes = "") {
     let linkAttr = [
-      `'(click)'="onDelete()"`
+      `(click)="onDelete()"`
     ]
 
     super(linkAttr, "", "trash-o", `btn-danger ${classes}`)
@@ -170,7 +170,7 @@ export class DeleteButton extends fl_container {
       new RawDeleteButton()
     ])
 
-    let fakeDeleteButton = new Button([`'[popover]' = "${Id}"`], "", "trash-o", `btn-danger`)
+    let fakeDeleteButton = new Button([`[popover] = "${Id}"`], "", "trash-o", `btn-danger`)
 
     this.add([popoverContent, fakeDeleteButton])
   }
@@ -208,6 +208,6 @@ export class ListGroupItem extends fl_c.Li {
 
 export class ProgressLoader extends fl_element {
   constructor() {
-    super("ng2-slim-loading-bar", "", `'[color]'="'blue'"`)
+    super("ng2-slim-loading-bar", "", `[color]="'blue'"`)
   }
 }

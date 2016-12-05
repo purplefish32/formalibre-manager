@@ -19,6 +19,6 @@ import * as fl_c from './fl_common'
 // contains TimelineElement herited element
 export default class fl_mdeditor extends fl_element {
   constructor(text) {
-    super("mdeditor", "", [`'[(content)]'="${text}"`])
+    super("mdeditor", "", [`[(content)]="${text}"`])
   }
 }

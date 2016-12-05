@@ -57,7 +57,7 @@ export class PrimeTableRow extends Prime {
     attr.push(`header="${header}"`)
 
     if (filter) {
-      attr.push(`'[filter]'="true"`)
+      attr.push(`[filter]="true"`)
       attr.push(`filterMatchMode="contains"`)
       attr.push(`filterPlaceholder="Search"`)
     }
@@ -68,7 +68,7 @@ export class PrimeTableRow extends Prime {
       this.add(template)
     } else if (type == 'markdown') {
       let template = new fl_element("template", "", [`let-server="rowData"`, `pTemplate`, `type="body"`],
-        new fl_element('div', '', [`'[innerHTML]'="server.description|MarkdownToHtml"`])
+        new fl_element('div', '', [`[innerHTML]="server.description|MarkdownToHtml"`])
       )
       this.add(template)
     }
@@ -79,7 +79,7 @@ export class PrimeTable extends Prime {
   constructor(value = '', classes = '', attr = [], headers) {
     if (!value.length)
       throw "Missing binding value for PrimeTable"
-    attr.push(`'[value]'="${value}"`)
+    attr.push(`[value]="${value}"`)
     super(`dataTable`, classes, attr)
     if (headers)
       this.setHeaders(headers);

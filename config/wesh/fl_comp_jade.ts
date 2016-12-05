@@ -24,8 +24,21 @@ export class fl_jadeRenderer extends fl_renderer {
     return html;
   }
 
+  private static escapeAngular(attr: string): string {
+    return attr.replace(/^([\[\(]+[^\)\]]*[\)\]]+)/gm, "'$1'")
+  }
+
+  private static armonizeAttr(attr: string): string {
+    if(typeof attr != 'string') {
+      console.log("Attribute is not a string:",attr)
+      console.trace()
+      throw("Attribute is not a string")
+    }
+    return fl_jadeRenderer.escapeAngular(attr.trim())
+  }
+
   private static attr(attrs: string[]): string {
-    return attrs.length ? '(' + attrs.join(', ') + ')' : ""
+    return attrs.length ? '(' + attrs.map(fl_jadeRenderer.armonizeAttr).join(', ') + ')' : ""
   }
 
   private static clas(str): string {

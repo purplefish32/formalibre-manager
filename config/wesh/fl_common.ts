@@ -127,7 +127,7 @@ export class ModelInput extends TextInput {
       model = model.join('.')
     }
     attr.push(`name ='${name}'`)
-    attr.push(`'[(ngModel)]'='${model}'`)
+    attr.push(`[(ngModel)]='${model}'`)
     classes += " form-control"
     super(classes, attr)
   }
