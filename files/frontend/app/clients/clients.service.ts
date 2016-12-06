@@ -1,43 +1,24 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http, Response} from '@angular/http';
+import { Response} from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/share';
-import 'rxjs/add/observable/merge';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/mergeMap'
 import { Client } from './client';
 import { ClientProfile } from './clientProfile';
-import {SlimLoadingBarComponent, SlimLoadingBarService} from 'ng2-slim-loading-bar';
 import { EventsService } from '../events/events.service';
 import { Event } from '../events/event';
-
-function clone(obj) {
-  if (obj == null || typeof (obj) != 'object')
-    return obj;
-
-  var temp = new obj.constructor();
-  for (var key in obj)
-    temp[key] = clone(obj[key]);
-
-  return temp;
-}
-
-declare var base_url: string
+import { ServiceTools } from '../tools/servicetools/servicetools.service'
 
 @Injectable()
 export class ClientsService {
-
-  clients = [];
-
-  private headers = new Headers({ 'Content-Type': 'application/json' });
-  private clientsUrl = base_url + '/clients';  // URL to web clients api
+  public context = {
+    apiRoute: "clients", // Route to web events api
+    name: "Client"
+  }
 
   constructor(
-    private http: Http,
-    private progressLoader: SlimLoadingBarService,
-    private events: EventsService) {
+    private events: EventsService,
+    private servicetools: ServiceTools) {
+    servicetools.setRoute(this.context)
   }
 
   onModify(id, text: string): Observable<Event[]> {
@@ -45,74 +26,42 @@ export class ClientsService {
     return this.events.create(event)
   }
 
-  onRequestStart() {
-    this.progressLoader.start();
-  }
-
-  onRequestEnd(obs) {
-    var published = obs.share();
-    published.subscribe(() => this.progressLoader.complete())
-    return published
-  }
-
-
-  cache: Client[] = []
-
-  get(url: string): Observable<any> {
-    this.onRequestStart()
-    return this.onRequestEnd(
-      this.http.get(url)
-        .map(response => response.json())
-    )
-  }
-
-  getClients(): Observable<ClientProfile[]> {
-    return Observable.merge(
-      Observable.of(this.cache),
-      this.get(this.clientsUrl).map(response => this.cache = response));
+  all(): Observable<ClientProfile[]> {
+    return this.servicetools.all(this.context)
   }
 
   getClient(id: string): Observable<ClientProfile> {
-    return this.get(`${this.clientsUrl}/${id}`)
+    return this.servicetools.get(this.context,id)
   }
 
   getClientProfile(id: string): Observable<ClientProfile> {
-    return this.get(`${this.clientsUrl}/${id}/history`)
+    return this.servicetools.get(this.context,id, { urlAppend: "history" })
   }
 
   delete(id: string): Observable<Response> {
-    let url = `${this.clientsUrl}/${id}`;
-    this.onRequestStart()
-    return this.onRequestEnd(
-      this.http.delete(url, { headers: this.headers })
-    )
+    return this.servicetools.delete(this.context,id)
   }
 
   create(client: Client): Observable<Client[]> {
-    this.onRequestStart()
-    return this.onRequestEnd(
-      this.http
-        .post(this.clientsUrl, JSON.stringify(client), { headers: this.headers })
-        .flatMap(response => {
-          let result: Client = response.json()
-          return this.onModify(result.id, "Client created.")
-            .map(data => result)
-        })
+    let onResult = (obs) =>
+      obs.mergeMap(response => {
+        let result: Client = response.json()
+        return this.onModify(result.id, "Client created.")
+          .map(data => result)
+      })
+
+    return this.servicetools.create(
+      this.context,
+      client,
+      {},
+      onResult
     )
   }
 
   update(client: Client): Observable<Response> {
-    const url = `${this.clientsUrl}/${client.id}`;
-    let dataToSend = clone(client)
-    delete dataToSend.id
-    this.onRequestStart()
-    return this.onRequestEnd(
-      this.http
-        .put(url, JSON.stringify(dataToSend), { headers: this.headers })
-        .flatMap(response => {
-          return this.onModify(client.id, "Client data updated.")
-        })
-    )
+    let onResult = (obs) =>
+      obs.mergeMap(response => this.onModify(client.id, "Client created."))
+    return this.servicetools.update(this.context,client, {}, onResult)
   }
 
 }

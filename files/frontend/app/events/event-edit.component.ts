@@ -26,7 +26,7 @@ export class EventEditComponent implements OnInit {
     this.route.params.subscribe(params => {
       let id = params['id'];
       if (id)
-        this.events.getEvent(id).subscribe(event => this.event = event);
+        this.events.get(id).subscribe(event => this.event = event);
     });
   }
 

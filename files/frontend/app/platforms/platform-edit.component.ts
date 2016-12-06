@@ -26,7 +26,7 @@ export class PlatformEditComponent implements OnInit {
     this.route.params.subscribe(params => {
       let id = params['id'];
       if (id)
-        this.platforms.getPlatform(id).subscribe(platform => this.platform = platform);
+        this.platforms.get(id).subscribe(platform => this.platform = platform);
     });
   }
 

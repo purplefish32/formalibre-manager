@@ -22,7 +22,7 @@ export class PlatformsComponent implements OnInit {
 
   getPlatforms(): void {
     console.log('fetching platforms');
-    this.platformsService.getPlatforms().subscribe(
+    this.platformsService.all().subscribe(
       platforms => {
         this.platforms = platforms;
         console.dir(this.platforms);
