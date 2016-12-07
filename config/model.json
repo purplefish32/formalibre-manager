@@ -3,6 +3,7 @@
     "usePrimeNg": true
   },
   "servers": {
+    "type": "Server",
     "crud": {
       "edit": "true"
     },
@@ -48,6 +49,7 @@
     }]
   },
   "platforms": {
+    "type": "Platform",
     "crud": {
       "edit": "true"
     },
@@ -70,6 +72,7 @@
     }, {
       "field": "end_date",
       "name": "End date",
+      "type": "date",
       "required": "true"
     }, {
       "field": "max_users",
@@ -94,6 +97,7 @@
     }]
   },
   "clients": {
+    "type": "Client",
     "crud": {
       "edit": "true",
       "view": "true"
@@ -124,6 +128,7 @@
     }]
   },
   "events": {
+    "type": "Event",
     "filter": true,
     "model": [{
       "index": "true",

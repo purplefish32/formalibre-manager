@@ -22,7 +22,9 @@
             </template>
           </p-column>
           <p-column field="plan" header="Plan" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
-          <p-column field="end_date" header="End date" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+          <p-column field="end_date" header="End date" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search">
+            <template let-col="" let-row="rowData" pTemplate="pTemplate" type="body">{{date(row[col.field])}}</template>
+          </p-column>
           <p-column field="max_users" header="Max users" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
           <p-column field="max_disk_space" header="Max disk space" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
           <p-column field="contact_name" header="Contact" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>

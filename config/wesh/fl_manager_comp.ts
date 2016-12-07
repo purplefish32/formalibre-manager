@@ -1,5 +1,6 @@
 import * as fl_c from './fl_common'
 import * as fl_bc from './fl_breadcrumb'
+import * as fl_p from './fl_ng_prime'
 import {fl_container, fl_element, fl_renderable, ElementData} from './fl_comp'
 
 export function getFields(type, data) {
@@ -209,5 +210,11 @@ export class ListGroupItem extends fl_c.Li {
 export class ProgressLoader extends fl_element {
   constructor() {
     super("ng2-slim-loading-bar", "", `[color]="'blue'"`)
+  }
+}
+
+export class DateEditor extends fl_p.DateEditor {
+  constructor(model,classes) {
+    super(model, true, new fl_c.Span(classes, [`style= "margin-left:35px"`], `{{${model}|date}}`))
   }
 }

@@ -50,6 +50,16 @@ body .loader {
     background: none;
 }
 
+.ui-calendar.ui-calendar-w-btn input {
+    width: 100%;
+}
+
+
+.ui-calendar {
+    width: 100%;
+}
+
+
 
 /*.ui-widget-content {
   border:none;

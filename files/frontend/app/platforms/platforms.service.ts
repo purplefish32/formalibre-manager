@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { Response} from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { ServiceTools } from '../tools/servicetools/servicetools.service'
-import { Platform } from './platform';
+import { Platform, PlatformSerial } from './platform';
 
 type LocalType = Platform
+class SerializedType extends PlatformSerial {}
 
 @Injectable()
 export class PlatformsService {
@@ -15,6 +16,10 @@ export class PlatformsService {
 
   constructor(private servicetools: ServiceTools) {
     servicetools.setRoute(this.context)
+  }
+
+  serialize(data: LocalType): SerializedType {
+    return SerializedType.fromPlatform(data)
   }
 
   all(): Observable<LocalType[]> {
@@ -30,10 +35,10 @@ export class PlatformsService {
   }
 
   create(platform: LocalType): Observable<LocalType[]> {
-    return this.servicetools.create(this.context,platform)
+    return this.servicetools.create(this.context, this.serialize(platform))
   }
 
   update(platform: LocalType): Observable<Response> {
-    return this.servicetools.update(this.context,platform)
+    return this.servicetools.update(this.context, this.serialize(platform))
   }
 }

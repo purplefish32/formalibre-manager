@@ -12,7 +12,7 @@ export class Client {
       }
     }
   }
-  /*$ clients/model@generate_if */
+  /*$ clients@generate_if */
   id: string;
   name: string;
   lastname: string;

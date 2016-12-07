@@ -39,12 +39,11 @@ export class TableCol extends fl_element {
   }
 }
 
-
 export class Prime extends fl_element {
-  constructor(elem, classes = '', attr = []) {
+  constructor(elem, classes = '', attr = [], data: ElementData = null) {
     if (!elem.length)
       throw "Missing element name for ng-prime component"
-    super(`p-` + elem, classes, attr)
+    super(`p-` + elem, classes, attr, data)
   }
 }
 
@@ -108,5 +107,16 @@ export class PrimeTable extends Prime {
       })
 
     return this
+  }
+}
+
+export class DateEditor extends Prime {
+  constructor(model, showIcon = true, data: ElementData = null) {
+    super('calendar', '', [`'[(ngModel)]'="${model}"`,
+                           `'[showIcon]'="${showIcon}"`,
+                           `name="first"`,
+                           `placeholder="dd/mm/yyyy"`,
+                           `dataType="date"`,
+                           `dateFormat="dd/mm/yy"`], data)
   }
 }

@@ -169,6 +169,8 @@ export class ElementsEdit extends fl_m.ListFromModel {
 
         } else if (element.type === "markdown") {
           formGroup.add(new fl_mdeditor(`${env.g_local_object}.${element.field}`))
+        } else if (element.type === "date") {
+          formGroup.add(new fl_m.DateEditor(`${env.g_local_object}.${element.field}`,"form-control"))
         }
         else
           formGroup.add(new fl_m.ModelInput([env.g_local_object, element.field], attr))
