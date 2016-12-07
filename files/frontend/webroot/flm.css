@@ -77,3 +77,17 @@ body .loader {
 .ui-datatable thead th, .ui-datatable tfoot td {
     text-align: left;
 }
+
+
+/* Admin LTE tweak */
+
+
+/* change zindex to be compatible with primeng growl */
+
+.main-header-flm-tweak {
+    z-index: 999
+}
+
+label {
+    display: block;
+}
