@@ -23,7 +23,7 @@ module.exports =
 
   generate_if:(str,obj,meta)->
     #@debug str,obj,meta
-    obj.forEach (elem) =>
+    obj.model.forEach (elem) =>
       str += @rc if str isnt ''
       str += meta.indent+elem.field
       str += ": "
@@ -33,9 +33,84 @@ module.exports =
         str+='string'
       else if elem.type is 'joint'
         str+='string'
+      else if elem.type is 'markdown'
+        str+='string'
+      else if elem.type is 'date'
+        str+='Date'
       else
         str+='unsuported'
       str += ";"
+    str
+
+  generate_ser_if:(str,obj,meta)->
+    #@debug str,obj,meta
+    obj.model.forEach (elem) =>
+      str += @rc if str isnt ''
+      str += meta.indent+elem.field
+      str += ": "
+      if !(elem.type?)
+        str+='string'
+      else if elem.type is 'option'
+        str+='string'
+      else if elem.type is 'joint'
+        str+='string'
+      else if elem.type is 'markdown'
+        str+='string'
+      else if elem.type is 'date'
+        str+='string'
+      else
+        str+='unsuported'
+      str += ";"
+    str
+
+  generate_constructor:(str,obj,meta)->
+    ##@debug str,obj,meta
+    str += @rc if str isnt ''
+    indent = meta.indent
+    str += indent + "from"+obj.type+"Serial(obj) {"
+    obj.model.forEach (elem) =>
+      str += @rc if str isnt ''
+      str += meta.indent+"  this."+elem.field
+      str += "= "
+      if !(elem.type?)
+        str+='obj.'+elem.field
+      else if elem.type is 'option'
+        str+='obj.'+elem.field
+      else if elem.type is 'joint'
+        str+='obj.'+elem.field
+      else if elem.type is 'markdown'
+        str+='obj.'+elem.field
+      else if elem.type is 'date'
+        str+='new Date(obj.'+elem.field+")"
+      else
+        str+='unsuported'
+    str += @rc if str isnt ''
+    str += meta.indent+"}"
+    str
+
+  generate_ser_constructor:(str,obj,meta)->
+    ##@debug str,obj,meta
+    str += @rc if str isnt ''
+    indent = meta.indent
+    str += indent + "from"+obj.type+"(obj) {"
+    obj.model.forEach (elem) =>
+      str += @rc if str isnt ''
+      str += meta.indent+"  this."+elem.field
+      str += "= "
+      if !(elem.type?)
+        str+='obj.'+elem.field
+      else if elem.type is 'option'
+        str+='obj.'+elem.field
+      else if elem.type is 'joint'
+        str+='obj.'+elem.field
+      else if elem.type is 'markdown'
+        str+='obj.'+elem.field
+      else if elem.type is 'date'
+        str+='obj.'+elem.field+".toISOString()"
+      else
+        str+='unsuported'
+    str += @rc if str isnt ''
+    str += meta.indent+"}"
     str
 
   capitalize:(word)->word.charAt(0).toUpperCase() + word.slice 1

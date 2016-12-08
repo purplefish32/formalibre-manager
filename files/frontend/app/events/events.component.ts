@@ -26,7 +26,7 @@ export class EventsComponent implements OnInit {
 
   getEvents(): void {
     console.log('fetching events');
-    this.eventsService.getEvents().subscribe(
+    this.eventsService.all().subscribe(
       events => {
         this.events = events;
         console.dir(this.events);

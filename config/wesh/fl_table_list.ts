@@ -25,7 +25,7 @@ function addNgRow(name: string, obj_name: string, ...args: any[]) {
   args.forEach(arg => template.add(arg))
 
   return new fl_element(
-    "p-column", "", [`"header"="${name}"`, `'[style]'="{'width':'0px'}"`]
+    "p-column", "", [`"header"="${name}"`, `[style]="{'width':'0px'}"`]
   ).add(template)
 }
 
@@ -72,7 +72,7 @@ export class ElementsList extends fl_m.ListFromModel {
 
       table = new fl_c.Table('table', [`*ngIf="${env.g_element_table}?.length"`]).
         setHeaders(headers.map(header => header.name)).
-        addRow([`${env.g_angular_detail_comp}Detail`, `*ngFor="let i of ${env.g_element_table}"`, `'[${env.g_local_object}]'='i'`])
+        addRow([`${env.g_angular_detail_comp}Detail`, `*ngFor="let i of ${env.g_element_table}"`, `[${env.g_local_object}]='i'`])
     }
 
     let menuBar = new fl_c.BoxFooter().add(
@@ -129,8 +129,8 @@ export class ElementsEdit extends fl_m.ListFromModel {
       s.toLowerCase().replace(/\b./g, a => a.toUpperCase())
 
     let menuBar = new fl_c.BoxFooter()
-      .add(fl_m.submitButton([`'(click)'="onSubmit()"`, `'[disabled]'="!elementForm.form.valid"`]))
-      .add(new fl_c.Span('', [`'[hidden]'="!${env.g_local_object} || !${env.g_local_object}.id"`])
+      .add(fl_m.submitButton([`(click)="onSubmit()"`, `[disabled]="!elementForm.form.valid"`]))
+      .add(new fl_c.Span('', [`[hidden]="!${env.g_local_object} || !${env.g_local_object}.id"`])
         .add(new fl_m.DeleteButton())
       )
 
@@ -152,7 +152,7 @@ export class ElementsEdit extends fl_m.ListFromModel {
 
         if (element.type === "option") {
           attr.push(`name="${element.field}"`)
-          attr.push([`'[(ngModel)]'='${env.g_local_object}.${element.field}'`])
+          attr.push(`[(ngModel)]='${env.g_local_object}.${element.field}'`)
 
           let option = function(val, desc, selected) {
             let attr = [`value="${val}"`]
@@ -169,6 +169,8 @@ export class ElementsEdit extends fl_m.ListFromModel {
 
         } else if (element.type === "markdown") {
           formGroup.add(new fl_mdeditor(`${env.g_local_object}.${element.field}`))
+        } else if (element.type === "date") {
+          formGroup.add(new fl_m.DateEditor(`${env.g_local_object}.${element.field}`,"form-control"))
         }
         else
           formGroup.add(new fl_m.ModelInput([env.g_local_object, element.field], attr))
@@ -216,9 +218,9 @@ export class ElementsView extends fl_m.ListFromModel {
       s.toLowerCase().replace(/\b./g, a => a.toUpperCase())
 
     let menuBar = new fl_c.BoxFooter()
-      //.add(fl_m.editButton([`'(click)'="onSubmit()"`, `'[disabled]'="!elementForm.form.valid"`]))
-      .add(new fl_c.Span('', [`'[hidden]'="!${env.g_local_object} || !${env.g_local_object}.id"`])
-        .add(fl_m.deleteButton([`'(click)'="onDelete()"`]))
+      //.add(fl_m.editButton([`(click)="onSubmit()"`, `[disabled]="!elementForm.form.valid"`]))
+      .add(new fl_c.Span('', [`[hidden]="!${env.g_local_object} || !${env.g_local_object}.id"`])
+        .add(fl_m.deleteButton([`(click)="onDelete()"`]))
       )
 
     config[env.g_conf_element].model
@@ -282,13 +284,13 @@ export class ProfileDesc extends fl_c.Box {
 
           return item
         })))
+    )
 
-    )
-    )
     this.add(new fl_c.BoxFooter("", [
-      new fl_m.EditButton("", env.g_local_object),
-      new fl_m.DeleteButton()
-    ])
+        new fl_m.EditButton("", env.g_local_object),
+        new fl_m.DeleteButton()
+      ])
+    )
   }
 }
 
@@ -306,7 +308,7 @@ export class TimelineView extends fl_c.Box {
       .addBody([
         new fl_m.ModelInput('note')
       ])
-      .addFooter(fl_m.submitButton([`'(click)'="onSubmitNote()"`]))
+      .addFooter(fl_m.submitButton([`(click)="onSubmitNote()"`]))
 
     timeline.AddItem('envelope', "blue", "", [`*ngFor="let event of ${env.g_local_object}.events"`]).addContent()
       .addHeader("{{date(event.date)}}", 'Event')

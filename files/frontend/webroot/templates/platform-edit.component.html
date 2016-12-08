@@ -33,7 +33,7 @@
               </div>
               <div class="form-group">
                 <label>End date</label>
-                <input class="form-control" required="required" name="end_date" [(ngModel)]="platform.end_date" type="text"/>
+                <p-calendar [(ngModel)]="platform.end_date" [showIcon]="true" name="first" placeholder="dd/mm/yyyy" dataType="date" dateFormat="dd/mm/yy"><span class="form-control" style="margin-left:35px">{{platform.end_date|date}}</span></p-calendar>
               </div>
               <div class="form-group">
                 <label>Max users</label>

@@ -26,7 +26,7 @@ export class ServerEditComponent implements OnInit {
     this.route.params.subscribe(params => {
       let id = params['id'];
       if (id)
-        this.servers.getServer(id).subscribe(server => this.server = server);
+        this.servers.get(id).subscribe(server => this.server = server);
     });
   }
 

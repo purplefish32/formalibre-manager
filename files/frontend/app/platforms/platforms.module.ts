@@ -9,7 +9,7 @@ import { PlatformsComponent }      from './platforms.component';
 import { PlatformDetailComponent } from './platform-detail.component';
 import { PlatformEditComponent } from './platform-edit.component';
 import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
-import {DataTableModule, SharedModule} from 'primeng/primeng';
+import {DataTableModule, SharedModule, CalendarModule} from 'primeng/primeng';
 import { PopoverModule } from "ng2-popover"
 import { MarkdownModule } from '../tools/markdown/markdown.module'
 
@@ -21,6 +21,7 @@ import { MarkdownModule } from '../tools/markdown/markdown.module'
     RouterModule,
     PlatformsRouting,
     DataTableModule,
+    CalendarModule,
     PopoverModule,
     MarkdownModule,
     SlimLoadingBarModule.forRoot(),

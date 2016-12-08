@@ -3,7 +3,7 @@ export class Event {
     this.ressource_id = ressource_id
     this.post = post
   }
-  /*$ events/model@generate_if */
+  /*$ events@generate_if */
   id: string;
   ressource_id: string;
   date: string;

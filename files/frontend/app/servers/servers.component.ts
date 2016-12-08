@@ -22,7 +22,7 @@ export class ServersComponent implements OnInit {
 
   getServers(): void {
     console.log('fetching servers');
-    this.serversService.getServers().subscribe(
+    this.serversService.all().subscribe(
       servers => {
         this.servers = servers;
         console.dir(this.servers);

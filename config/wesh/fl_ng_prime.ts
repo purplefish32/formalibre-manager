@@ -39,12 +39,11 @@ export class TableCol extends fl_element {
   }
 }
 
-
 export class Prime extends fl_element {
-  constructor(elem, classes = '', attr = []) {
+  constructor(elem, classes = '', attr = [], data: ElementData = null) {
     if (!elem.length)
       throw "Missing element name for ng-prime component"
-    super(`p-` + elem, classes, attr)
+    super(`p-` + elem, classes, attr, data)
   }
 }
 
@@ -57,7 +56,7 @@ export class PrimeTableRow extends Prime {
     attr.push(`header="${header}"`)
 
     if (filter) {
-      attr.push(`'[filter]'="true"`)
+      attr.push(`[filter]="true"`)
       attr.push(`filterMatchMode="contains"`)
       attr.push(`filterPlaceholder="Search"`)
     }
@@ -68,7 +67,7 @@ export class PrimeTableRow extends Prime {
       this.add(template)
     } else if (type == 'markdown') {
       let template = new fl_element("template", "", [`let-server="rowData"`, `pTemplate`, `type="body"`],
-        new fl_element('div', '', [`'[innerHTML]'="server.description|MarkdownToHtml"`])
+        new fl_element('div', '', [`[innerHTML]="server.description|MarkdownToHtml"`])
       )
       this.add(template)
     }
@@ -79,7 +78,7 @@ export class PrimeTable extends Prime {
   constructor(value = '', classes = '', attr = [], headers) {
     if (!value.length)
       throw "Missing binding value for PrimeTable"
-    attr.push(`'[value]'="${value}"`)
+    attr.push(`[value]="${value}"`)
     super(`dataTable`, classes, attr)
     if (headers)
       this.setHeaders(headers);
@@ -108,5 +107,16 @@ export class PrimeTable extends Prime {
       })
 
     return this
+  }
+}
+
+export class DateEditor extends Prime {
+  constructor(model, showIcon = true, data: ElementData = null) {
+    super('calendar', '', [`'[(ngModel)]'="${model}"`,
+                           `'[showIcon]'="${showIcon}"`,
+                           `name="first"`,
+                           `placeholder="dd/mm/yyyy"`,
+                           `dataType="date"`,
+                           `dateFormat="dd/mm/yy"`], data)
   }
 }

@@ -6,9 +6,15 @@ export class Section extends fl_element {
   }
 }
 
-export class MainCol extends fl_element {
+export class Div extends fl_element {
+  constructor(classes = "", attr: Attributes = null, data = null) {
+    super('div', classes, attr, data)
+  }
+}
+
+export class MainCol extends Div {
   constructor(screen = 'md', len = 12) {
-    super('div', 'row')
+    super('row')
     this.add("div", `col-${screen}-${len}`).setForOrigin()
   }
 }
@@ -38,13 +44,13 @@ export class Icon extends fl_element {
   }
 }
 
-export class BoxGeneric extends fl_element {
+export class BoxGeneric extends Div {
   constructor(classes: string | ElementData = "", type = 'box', data: ElementData = []) {
     if (typeof classes != 'string') {
       data = classes
       classes = ""
     }
-    super('div', `${type} ${classes}`, [], data)
+    super(`${type} ${classes}`, [], data)
   }
 }
 
@@ -66,9 +72,9 @@ export class BoxFooter extends BoxGeneric {
   }
 }
 
-export class BoxInfo extends fl_element {
+export class BoxInfo extends Div {
   constructor(data, classes = "", attrs: string[] = []) {
-    super('div', 'callout callout-info ', attrs)
+    super('callout callout-info ', attrs)
     this.add('p', classes, [], data).setForOrigin()
   }
 }
@@ -91,8 +97,8 @@ export class Legend extends fl_element {
   constructor(text) { super('legend', '', [], text) }
 }
 
-export class FormGroup extends fl_element {
-  constructor() { super('div', 'form-group') }
+export class FormGroup extends Div {
+  constructor() { super('form-group') }
 }
 
 export class Label extends fl_element {
@@ -127,7 +133,7 @@ export class ModelInput extends TextInput {
       model = model.join('.')
     }
     attr.push(`name ='${name}'`)
-    attr.push(`'[(ngModel)]'='${model}'`)
+    attr.push(`[(ngModel)]='${model}'`)
     classes += " form-control"
     super(classes, attr)
   }

@@ -1,82 +1,44 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http, Response} from '@angular/http';
-import 'rxjs/add/operator/toPromise';
+import { Response} from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/share';
-import 'rxjs/add/observable/merge';
-import 'rxjs/add/observable/of';
-import { Platform } from './platform';
-import {SlimLoadingBarComponent, SlimLoadingBarService} from 'ng2-slim-loading-bar';
+import { ServiceTools } from '../tools/servicetools/servicetools.service'
+import { Platform, PlatformSerial } from './platform';
 
-declare var base_url: string
+type LocalType = Platform
+class SerializedType extends PlatformSerial {}
 
 @Injectable()
 export class PlatformsService {
-  private headers = new Headers({ 'Content-Type': 'application/json' });
-  private platformsUrl = base_url + '/platforms';  // URL to web platforms api
-
-  constructor(private http: Http, private progressLoader: SlimLoadingBarService) {
+  public context = {
+    apiRoute: "platforms" , // Route to web platform api
+    name: "Platform"
   }
 
-  onRequestStart() {
-    this.progressLoader.start();
+  constructor(private servicetools: ServiceTools) {
+    servicetools.setRoute(this.context)
   }
 
-  onRequestEnd(obs) {
-    var published = obs.share();
-    published.subscribe(() => this.progressLoader.complete())
-    return published
+  serialize(data: LocalType): SerializedType {
+    return SerializedType.fromPlatform(data)
   }
 
-  get(url: string): Observable<any> {
-    this.onRequestStart()
-    return this.onRequestEnd(
-      this.http.get(url)
-        .map(response => response.json())
-    )
+  all(): Observable<LocalType[]> {
+    return this.servicetools.all(this.context)
   }
 
-  cache: Platform[] = []
-
-  getPlatforms(): Observable<Platform[]> {
-    return Observable.merge(
-      Observable.of(this.cache),
-      this.get(this.platformsUrl).map(response => this.cache = response));
-  }
-
-  getPlatform(id: string): Observable<Platform> {
-    console.log('requesting platform ' + id)
-    return this.get(this.platformsUrl + `/` + id)
+  get(id: string): Observable<LocalType> {
+    return this.servicetools.get(this.context,id)
   }
 
   delete(id: string): Observable<Response> {
-    let url = `${this.platformsUrl}/${id}`;
-    this.onRequestStart()
-    return this.onRequestEnd(
-      this.http.delete(url, { headers: this.headers })
-    )
+    return this.servicetools.delete(this.context,id)
   }
 
-  create(platform: Platform): Observable<Platform[]> {
-    this.onRequestStart()
-    return this.onRequestEnd(
-      this.http
-        .post(this.platformsUrl, JSON.stringify(platform), { headers: this.headers })
-        .map(response => response.json())
-    )
+  create(platform: LocalType): Observable<LocalType[]> {
+    return this.servicetools.create(this.context, this.serialize(platform))
   }
 
-  update(platform: Platform): Observable<Response> {
-    const url = `${this.platformsUrl}/${platform.id}`;
-    let dataToSend = platform
-    delete dataToSend.id
-    this.onRequestStart()
-    return this.onRequestEnd(
-      this.http
-        .put(url, JSON.stringify(dataToSend), { headers: this.headers })
-    )
+  update(platform: LocalType): Observable<Response> {
+    return this.servicetools.update(this.context, this.serialize(platform))
   }
-
 }

@@ -4,6 +4,8 @@ import { Platform } from './platform'
 import { PlatformsService } from './platforms.service'
 import {DataTableModule, SharedModule} from 'primeng/primeng';
 
+declare let moment
+
 @Component({
   selector: 'platforms',
   templateUrl: 'templates/platforms.component.html',
@@ -16,13 +18,17 @@ export class PlatformsComponent implements OnInit {
     this.getPlatforms();
   }
 
+  date(d) {
+    return moment(d).format("D/M/YYYY")
+  }
+
   constructor(
     private platformsService: PlatformsService
   ) { }
 
   getPlatforms(): void {
     console.log('fetching platforms');
-    this.platformsService.getPlatforms().subscribe(
+    this.platformsService.all().subscribe(
       platforms => {
         this.platforms = platforms;
         console.dir(this.platforms);

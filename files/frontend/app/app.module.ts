@@ -17,7 +17,9 @@ import { PlatformsModule }      from './platforms/platforms.module';
 import { ClientsModule }      from './clients/clients.module';
 import { EventsModule }      from './events/events.module';
 import { MarkdownModule}           from './tools/markdown/markdown.module'
+import { ServiceToolsModule } from './tools/servicetools/servicetools.module'
 import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
+import { MessagesModule}           from './tools/messages/messages.module'
 
 @NgModule({
   imports: [
@@ -30,7 +32,9 @@ import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
     ClientsModule,
     EventsModule,
     MarkdownModule,
-    SlimLoadingBarModule.forRoot()
+    ServiceToolsModule,
+    SlimLoadingBarModule.forRoot(),
+    MessagesModule,
   ],
   declarations: [
     AppComponent,
